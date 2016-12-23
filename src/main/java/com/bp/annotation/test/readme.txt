@@ -1,0 +1,4 @@
+FirstAnnotation.java和 UseFirstAnnotation.java是一对测试代码。
+这个是测试使用annotation的。
+ColumnAnnotation、TableAnnotation、SqlUseAnnotation是一组代码，
+综合使用annotation，具有使用价值
