@@ -141,7 +141,7 @@ public class SortUtil {
 	 * @return
 	 */
 	public List<Integer> bubblSort3(List<Integer> resource, boolean isAsc) {
-		if (isAsc) {
+		/*if (isAsc) {
 			Collections.sort(resource, (Integer a, Integer b) -> {
 				return -1 * b.compareTo(a);
 			});
@@ -149,7 +149,7 @@ public class SortUtil {
 			Collections.sort(resource, (Integer a, Integer b) -> {
 				return b.compareTo(a);
 			});
-		}
+		}*/
 
 		return resource;
 	}
