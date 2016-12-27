@@ -16,10 +16,10 @@ public class TimeUtil {
 	/**
 	 * 获得当前精确的时间，精确到毫秒。
 	 * 
-	 * @return
+	 * @return 当前时间
 	 */
 	public static String currentTimePrecise() {
-		String time = null;
+		String time ;
 		Date d = new Date();
 		SimpleDateFormat s = new SimpleDateFormat("yyyy-MM-dd HH:mm:ss:SSS");
 		time = s.format(d);
@@ -30,11 +30,11 @@ public class TimeUtil {
 	/**
 	 * 根据参数的格式输出当前时间。 格式：yyyy-MM-dd HH:mm:ss:SSS
 	 * 
-	 * @param format
-	 * @return
+	 * @param format 时间格式
+	 * @return 当前时间
 	 */
 	public static String currentTimeByFormat(String format) {
-		String time = null;
+		String time;
 		Date d = new Date();
 		SimpleDateFormat s = new SimpleDateFormat(format);
 		time = s.format(d);
@@ -44,17 +44,38 @@ public class TimeUtil {
 	/**
 	 * 将当前时间转换成长的数字。
 	 * 
-	 * @return
+	 * @return 当前时间
 	 */
 	public static Long currentTimeToLong() {
 		return new Date().getTime();
 	}
 
 	/**
+	 * 查询给定时间的毫秒数
+	 * @param year 年>=1900
+	 * @param month 月>=1
+	 * @param day 日>=1
+	 * @param hour 时>=1
+ 	 * @param min 分>=1
+	 * @param sec 秒:>=1
+	 * @return 给定时间的毫秒数
+	 */
+	public static Long getSpecialTime2Long(int year,int month,int day,int hour,int min,int sec){
+//		year - 减 1900 的年份。
+//		month - 0-11 之间的月份。
+//		date - 一月中 1-31 之间的某一天。
+//		hrs - 0-23 之间的小时数。
+//		min - 0-59 之间的分钟数。
+//		sec - 0-59 之间的秒数。
+		return new Date(year -1900,month -1, day, hour -1 ,min -1, sec -1).getTime();
+	}
+
+
+	/**
 	 * 获得两位的月份或日
 	 * 
-	 * @param s
-	 * @return
+	 * @param s 当前的月或者天
+	 * @return 两位的时间
 	 */
 	public static String getYueOrDayByFormat(int s) {
 		return getYueOrDayByFormat("" + s);
@@ -63,8 +84,8 @@ public class TimeUtil {
 	/**
 	 * 获得两位的月份或日
 	 * 
-	 * @param s
-	 * @return
+	 * @param s 当前的月或者天
+	 * @return 两位的时间
 	 */
 	public static String getYueOrDayByFormat(long s) {
 		return getYueOrDayByFormat("" + s);
@@ -73,8 +94,8 @@ public class TimeUtil {
 	/**
 	 * 获得两位的月份或日
 	 * 
-	 * @param s
-	 * @return
+	 * @param s 当前的月或者天
+	 * @return 两位的时间
 	 */
 	public static String getYueOrDayByFormat(String s) {
 		if (null == s || s.length() == 0) {
@@ -91,8 +112,8 @@ public class TimeUtil {
 	/**
 	 * 获取上个月
 	 * 
-	 * @param month
-	 * @return
+	 * @param month 本月
+	 * @return 上个月
 	 */
 	public static String getBeforeMonth(String month) {
 		return getBeforeMonth(Integer.parseInt(month));
@@ -101,8 +122,8 @@ public class TimeUtil {
 	/**
 	 * 获取上个月
 	 * 
-	 * @param month
-	 * @return
+	 * @param month 本月
+	 * @return 上月
 	 */
 	public static String getBeforeMonth(int month) {
 		if (month > 12 || month < 1) {
@@ -118,8 +139,7 @@ public class TimeUtil {
 	
 	/**
 	 * 获取今天是星期几
-	 * @param dt
-	 * @return
+	 * @return 今天
 	 */
 	public static String getWeekOfDate(){
 		return getWeekOfDate(new Date());
@@ -127,8 +147,7 @@ public class TimeUtil {
 	
 	/**
 	 * 获取数字型的今天是星期几,1,2,3,4,5,6,7
-	 * @param dt
-	 * @return
+	 * @return 今天
 	 */
 	public static Integer getWeekOfDate1(){
 		return getWeekOfDate1(new Date());
@@ -136,8 +155,8 @@ public class TimeUtil {
 	
 	/**
 	 * 获取一个日期是星期几
-	 * @param dt
-	 * @return
+	 * @param dt 时间
+	 * @return 周几
 	 */
 	public static String getWeekOfDate(Date dt) {
 		String[] weekDays = { "星期日", "星期一", "星期二", "星期三", "星期四", "星期五", "星期六" };
@@ -149,8 +168,8 @@ public class TimeUtil {
 	}
 	/**
 	 * 获取数字型的周几，根据一个给定的日期
-	 * @param dt
-	 * @return
+	 * @param dt 时间
+	 * @return 周几
 	 */
 	public static Integer getWeekOfDate1(Date dt) {
 		Calendar cal = Calendar.getInstance();
@@ -179,5 +198,9 @@ public class TimeUtil {
 		
 //		// System.out.println(TimeUtil.getYueOrDayByFormat("122"));
 //		System.out.println(TimeUtil.getBeforeMonth(1));
+
+
+		//根据给定的时间，获取一个其毫秒数
+		System.out.println(TimeUtil.getSpecialTime2Long(2016,12,26,14,43,1));
 	}
 }

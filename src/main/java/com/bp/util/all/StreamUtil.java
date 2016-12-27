@@ -235,6 +235,7 @@ public class StreamUtil {
         FileWriter fileWriter = new FileWriter(new File(filePath), isAppend);
         fileWriter.write(something);
         fileWriter.close();
+        System.out.println("file wirte over!");
 
     }
 
