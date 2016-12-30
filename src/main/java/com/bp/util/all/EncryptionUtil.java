@@ -1,5 +1,9 @@
 package com.bp.util.all;
 
+import sun.misc.BASE64Decoder;
+import sun.misc.BASE64Encoder;
+
+import java.io.IOException;
 import java.security.MessageDigest;
 
 /**
@@ -51,4 +55,34 @@ public class EncryptionUtil {
 		}
 
 	}
+
+
+	/**
+	 * 将字符串加密成base64
+	 * @param resource
+	 * @return
+	 */
+	public static String base_64_Encoder(String resource){
+		String ret = null;
+		ret = new BASE64Encoder().encode(resource.getBytes());
+		System.out.println("加密前:"+resource+" 加密后:"+ret);
+		return ret;
+	}
+
+	/**
+	 * 将base64的密码解密
+	 * @param resource
+	 * @return
+	 */
+	public  static String base_64_Decoder(String resource){
+		String ret = null;
+		try {
+			ret = new String(new BASE64Decoder().decodeBuffer(resource));
+		} catch (IOException e) {
+			e.printStackTrace();
+		}
+
+		return  ret;
+	}
+
 }
