@@ -50,8 +50,8 @@ public class RequestUtil {
                 break;
             case GET:
                 request = new HttpGet(queryParams.toString());
-                Header header = new BasicHeader("Authorization","");
-                request.setHeader(header);
+//                Header header = new BasicHeader("Authorization","");
+//                request.setHeader(header);
                 break;
 
             default:
