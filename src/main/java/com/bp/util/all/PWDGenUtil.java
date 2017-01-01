@@ -17,8 +17,6 @@ public class PWDGenUtil {
 
     public String nums = "0123456789";
     public String letters = "abcdefghijklmnopqrstuvwxyzABCDEFGHIJKLMNOPQRSTUVWXYZ";
-    private List<String> pwds = new ArrayList<String>();
-    private LinkedList<String> linkedList = new LinkedList<String>();
 
 
     /**
@@ -28,8 +26,9 @@ public class PWDGenUtil {
      * @param len  长度
      * @param path 生成的路径
      */
-    public void genPuleNumDic(String numsOrLetters,int len, String path) {
+    public void genDic(String numsOrLetters, int len, String path) {
         int index = StaticValue.START_INDEX.getValue();
+        List<String> pwds = new ArrayList<String>();
         boolean flag = false;
         while (true) {
             //初始化这个列表
@@ -78,12 +77,14 @@ public class PWDGenUtil {
     /**
      * 产生密码本：纯粹数字的，
      * 长度超过6位就速度非常的慢
+     *
      * @param numsOrLetters 数据源
-     * @param len 最大长度
-     * @param filePath 文件位置
+     * @param len           最大长度
+     * @param filePath      文件位置
      */
-    public void genPuleNumDic2(String numsOrLetters,int len, String filePath) {
+    public void genDic2(String numsOrLetters, int len, String filePath) {
         StringBuilder sb = new StringBuilder();
+        LinkedList<String> linkedList = new LinkedList<String>();
         //初始化列表
         for (int i = 0; i < numsOrLetters.length(); i++) {
             linkedList.addLast("" + numsOrLetters.charAt(i));
@@ -105,8 +106,8 @@ public class PWDGenUtil {
         }
 
         //将剩余的继续写入到linkedList中
-        for(String next : linkedList){
-            if (linkedList.size() > 0){
+        for (String next : linkedList) {
+            if (linkedList.size() > 0) {
                 sb.append(next + "\n");
                 System.out.println(next);
             }
@@ -120,9 +121,42 @@ public class PWDGenUtil {
         }
     }
 
+    /**
+     * 生成一个纯数字的字典
+     *
+     * @param path 文件路径
+     * @param len  长度
+     */
+    public void genPuleNumDic(String path, int len) {
+        genDic2(nums, len, path);
+    }
+
+    /**
+     * 生成一个纯字符的字典
+     *
+     * @param path 文件路径
+     * @param len  长度
+     */
+    public void genPuleLetterDic(String path, int len) {
+        genDic2(this.letters, len, path);
+    }
+
+    /**
+     * 生成一个既有数字又有字符的字典
+     * @param path 文件路径
+     * @param len 长度
+     */
+    public void genNumAndLetterDic(String path, int len) {
+        genDic2(this.nums + this.letters, len, path);
+    }
+
     public static void main(String[] args) {
 
+//        PWDGenUtil pu = new PWDGenUtil();
+//        pu.genDic2("0123456789", 6, "E:\\tmp\\bp.dic");//7位：85600Kb
+
+        //创建一个既有数字又有字符的字典
         PWDGenUtil pu = new PWDGenUtil();
-        pu.genPuleNumDic2("0123456789", 6, "E:\\tmp\\bp.dic");//7位：85600Kb
+        pu.genNumAndLetterDic("e:/baopan.dic",6);
     }
 }
