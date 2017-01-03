@@ -50,8 +50,8 @@ public class RequestUtil {
                 break;
             case GET:
                 request = new HttpGet(queryParams.toString());
-//                Header header = new BasicHeader("Authorization","");
-//                request.setHeader(header);
+                Header header = new BasicHeader("Authorization", "Basic "+getCDNString(param));
+                request.setHeader(header);
                 break;
 
             default:
@@ -85,31 +85,43 @@ public class RequestUtil {
         return result;
     }
 
-    public enum HttpRequestType {
-        PUT, DELETE, POST, GET;
-    }
-
 
     public static void main(String[] args) {
-//        String url = "http://10.75.138.225:8080/asset/list";
-//        Map<String, Object> map = new HashMap<String, Object>();
-//        map.put("pageSize", "3");
-//        map.put("titleOrdigest", "baopan");
-//        RequestUtil.executeRequest(HttpRequestType.GET, url, map);
+        RequestUtil requestUtil = new RequestUtil();
+        requestUtil.createCDN();
 
+    }
 
-//        String url = "http://toolbox.cache.lecloud.com/purge/api";
-//        Map<String, Object> map = new HashMap<String, Object>();
-//        map.put("url", "http://static.scloud.letv.com/currentbp/20161230_1");
-//        map.put("type", "1");
-//        RequestUtil.executeRequest(HttpRequestType.GET, url, map);
-
+    public void createCDN() {
         String url = "http://api.open.lecloud.com/cdn/domain";
         Map<String, Object> map = new HashMap<String, Object>();
-        map.put("userid", "874511");
+        map.put("userid", "777777");
         map.put("secretkey", "djek5iv83jrn59ckdnem68xh3k8fbw91");
         RequestUtil.executeRequest(HttpRequestType.GET, url, map);
     }
 
+    public static String getCDNString(Map<String, Object> map) {
+        String result = "" + map.get("userid") + "GET" + "/cdn/domain" + map.get("secretkey");
+        System.out.println("result:" + result);
 
+        String md5_result = null;
+        try {
+            md5_result = EncryptionUtil.md5_32(result);
+        } catch (Exception e) {
+            e.printStackTrace();
+        }
+
+        String base64 = EncryptionUtil.base_64_Encoder("" + map.get("userid") + ":" + md5_result);
+        System.out.println("base64:" + base64);
+        return base64;
+    }
+
+
+}
+
+/**
+ * 请求类型
+ */
+enum HttpRequestType {
+    PUT, DELETE, POST, GET;
 }
