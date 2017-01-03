@@ -29,9 +29,4 @@ public class Memoizerl<A,V> implements Computable<A,V>{
     }
 }
 
-class ExpensiveFunction implements Computable<String,BigInteger>{
 
-    public BigInteger compute(String arg) throws InterruptedException {
-        return new BigInteger(arg);
-    }
-}
