@@ -21,7 +21,7 @@ public class DownLoadIMGByUrl {
 
 	//"http://www.imooc.com/static/lib/jwplayer/1.0.0/jwplayer.flash.swf"
 	public static void main(String[] args) throws IOException {
-		System.out.println(downLoadImgByUrl("http://zuyunfei.com/images/public_key_cryptography.png"));
+		System.out.println(downLoadImgByUrl("ftp://ygdy8:ygdy8@yg76.dydytt.net:3417/[阳光电影-www.ygdy8.com]鬼吹灯之精绝古城01.mp4"));
 	}
 	
 	/**
