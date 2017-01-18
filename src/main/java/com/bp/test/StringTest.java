@@ -59,7 +59,7 @@ public class StringTest {
 	}
 
 	public static final void main(String[] args) {
-		
+		StringTest stringTest = new StringTest();
 		
 		
 //		StringTest st = new StringTest();
@@ -72,6 +72,18 @@ public class StringTest {
 //		String path="";
 //		path = new String("abcdefABCDEF");
 //		System.out.println(path.indexOf(41) );
+
+		//测试除数为0的这种情况
+		stringTest.isZero(10,0);
+	}
+
+	/**
+	 * 测试除数为0的这种情况
+	 * @param read 被除数
+	 * @param totals 除数
+	 */
+	public void isZero(int read,int totals){
+		System.out.println(String.format("%d", read * 100 / totals) + "%");
 	}
 	
 	public void isWin() {
