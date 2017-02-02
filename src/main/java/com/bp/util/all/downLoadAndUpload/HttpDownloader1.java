@@ -67,9 +67,9 @@ public class HttpDownloader1 {
         System.out.println("===>initProgress: len:" + len);
 
         //线程的数量
-        if (len <= this.threadMaxNum){
-            this.threadNum = (int)len;
-        }else{
+        if (len <= this.threadMaxNum) {
+            this.threadNum = (int) len;
+        } else {
             this.threadNum = this.threadMaxNum;
         }
 
@@ -205,12 +205,17 @@ public class HttpDownloader1 {
     /**
      * 用更多的线程下载
      */
-    public void useMoreThreadDownloadFile(){
+    public void useMoreThreadDownloadFile() {
         System.out.println("===>start download .....");
         fileSize = getDownloadFileSize();
 
         //将一个文件分片，划分线程数
         initProgress(fileSize);
+
+        for (int i = 0; i < this.threadNum; i++) {
+            DownLoadThread downLoadThread = new DownLoadThread();
+            downLoadThread.run();
+        }
 
     }
 
@@ -220,7 +225,8 @@ public class HttpDownloader1 {
         private long end = 0;
         private int whichProgress = 0;//需要下载的是哪个分片
 
-        public DownLoadThread(){}
+        public DownLoadThread() {
+        }
 
         public DownLoadThread(long start, long end, int whichProgress) {
             this.start = start;
