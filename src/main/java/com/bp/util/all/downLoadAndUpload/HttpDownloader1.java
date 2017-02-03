@@ -19,6 +19,7 @@ import java.io.*;
  */
 public class HttpDownloader1 {
 
+    private long fileSize = 0;
     private int threadNum = 0;
     private int threadMaxNum = 5;
     private int cacheMax = 8 * 1024 * 50;//每个文件的大小50Kb
@@ -57,12 +58,20 @@ public class HttpDownloader1 {
      * @return 分片
      */
     private int[] initProgress(long fileAllSize) {
+        //分片的数量
         long len = fileAllSize / cacheMax;
         if (0 != fileAllSize % cacheMax) {
             len++;
         }
 
         System.out.println("===>initProgress: len:" + len);
+
+        //线程的数量
+        if (len <= this.threadMaxNum){
+            this.threadNum = (int)len;
+        }else{
+            this.threadNum = this.threadMaxNum;
+        }
 
         return new int[(int) len];
     }
@@ -184,10 +193,25 @@ public class HttpDownloader1 {
         return -1L;
     }
 
+    /**
+     * 使用一个线程下载
+     */
     public void useOneThreadDownloadFile() {
         System.out.println("===>start download .....");
         DownLoadThread downLoadThread = new DownLoadThread(0, getDownloadFileSize(), 0);
         downLoadThread.run();
+    }
+
+    /**
+     * 用更多的线程下载
+     */
+    public void useMoreThreadDownloadFile(){
+        System.out.println("===>start download .....");
+        fileSize = getDownloadFileSize();
+
+        //将一个文件分片，划分线程数
+        initProgress(fileSize);
+
     }
 
 
@@ -195,6 +219,8 @@ public class HttpDownloader1 {
         private long start = 0;
         private long end = 0;
         private int whichProgress = 0;//需要下载的是哪个分片
+
+        public DownLoadThread(){}
 
         public DownLoadThread(long start, long end, int whichProgress) {
             this.start = start;
@@ -218,7 +244,6 @@ public class HttpDownloader1 {
             try {
                 HttpResponse response = httpclient.execute(httpget);
 
-                System.out.println("===>2222headers:" + JSON.toJSONString(response.getAllHeaders()));
 
                 inputStream = new BufferedInputStream(response.getEntity().getContent());
                 fileOutputStream = new FileOutputStream(tmpFile);
