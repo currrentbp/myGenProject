@@ -10,6 +10,7 @@ import org.apache.http.impl.client.HttpClients;
 import org.apache.http.util.EntityUtils;
 
 import java.io.*;
+import java.util.Date;
 
 /**
  * 我自己写的一个断点下载
@@ -32,6 +33,8 @@ public class HttpDownloader1 {
     //http://localhost:8080/uploadController/download?id=1
     //http://mirrors.cnnic.cn/apache/tomcat/tomcat-9/v9.0.0.M17/bin/apache-tomcat-9.0.0.M17.zip
     private String requestUrl = "http://mirrors.cnnic.cn/apache/tomcat/tomcat-9/v9.0.0.M17/bin/apache-tomcat-9.0.0.M17.zip";
+    private String oldFileName = "";
+    private String tail = "";
 
 
     /*
@@ -46,7 +49,12 @@ public class HttpDownloader1 {
 //        httpDownloader1.initProgress(10);
 //        System.out.println("----:" + httpDownloader1.canDownloadWithThread());
 //        System.out.println("----:fileSize:" + httpDownloader1.getDownloadFileSize());
-        httpDownloader1.useOneThreadDownloadFile();
+//        httpDownloader1.useOneThreadDownloadFile();
+        long time1 = new Date().getTime();
+        httpDownloader1.useMoreThreadDownloadFile();
+        long time2 = new Date().getTime();
+        System.out.println("===>used time:" + (time2 - time1));
+
 
     }
 
@@ -73,7 +81,36 @@ public class HttpDownloader1 {
             this.threadNum = this.threadMaxNum;
         }
 
+        //初始化名称等其他属性
+        this.oldFileName = getOldFileName();
+        this.tail = getTail();
+
+
         return new int[(int) len];
+    }
+
+    /**
+     * 获取下载的文件的后缀
+     *
+     * @return 后缀
+     */
+    private String getTail() {
+        String name = this.oldFileName;
+        String t = name.substring(name.lastIndexOf("."));
+        System.out.println("tail:" + t);
+        return t;
+    }
+
+    /**
+     * 根据URL获取文件名称
+     *
+     * @return 文件名称
+     */
+    private String getOldFileName() {
+        String url = this.requestUrl;
+        String name = url.substring(url.lastIndexOf("/") + 1);
+        System.out.println("name:" + name);
+        return name;
     }
 
     /**
@@ -86,6 +123,7 @@ public class HttpDownloader1 {
         for (int i = 0; i < progress.length; i++) {
             if (progress[i] == ProgressStatus.NO_START.getKey()) {
                 result = i;
+                progress[i] = ProgressStatus.DOWNLOAD_ING.getKey();
                 break;
             }
         }
@@ -103,8 +141,10 @@ public class HttpDownloader1 {
      */
     private synchronized boolean changeProgress(int index, int newStatus, int oldStatus) {
         int oldStatus1 = progress[index];
+        System.out.println("===>changeProgress: index:" + index + " newStatus:" + newStatus + " oldStatus:" + oldStatus + " oldStatus1:" + oldStatus1);
         //0:未开始，1：下载完成，2：下载中，3：写入完成
-        if (oldStatus == oldStatus1) {
+        //原状态不能吻合，错误
+        if (oldStatus != oldStatus1) {
             return false;
         }
 
@@ -113,20 +153,6 @@ public class HttpDownloader1 {
         return true;
     }
 
-    /**
-     * 写入一个文件或者释放一个文件的写入锁
-     *
-     * @return 修改成功与否
-     */
-    public synchronized boolean writeOrReleaseFile(boolean writeOrRelease) {
-        if (writeOrRelease ^ isWrite) {
-            return false;
-        }
-
-        this.isWrite = writeOrRelease;
-
-        return true;
-    }
 
     /**
      * 判断是否能够使用多线程下载
@@ -138,8 +164,8 @@ public class HttpDownloader1 {
 
         HttpGet httpget = new HttpGet(requestUrl);
         httpget.addHeader("Range", "bytes=" + 0 + "-" + 99);
-        HttpResponse response = null;
-        String result = "";
+        HttpResponse response;
+        String result;
         try {
             response = httpclient.execute(httpget);
             int statusCode = response.getStatusLine().getStatusCode();
@@ -165,18 +191,18 @@ public class HttpDownloader1 {
      *
      * @return 文件大小
      */
-    public Long getDownloadFileSize() {
+    private Long getDownloadFileSize() {
         CloseableHttpClient httpclient = HttpClients.createDefault();
 
         HttpGet httpget = new HttpGet(requestUrl);
         httpget.addHeader("Range", "bytes=" + 0 + "-" + 99);
-        HttpResponse response = null;
+        HttpResponse response;
         Long contentLength = -1L;
         try {
             response = httpclient.execute(httpget);
             int statusCode = response.getStatusLine().getStatusCode();
 
-//            System.out.println("===>statusCode:" + statusCode);
+            System.out.println("===>statusCode:" + statusCode);
             System.out.println("===>headers:" + JSON.toJSONString(response.getAllHeaders()));
             Header[] headers = response.getHeaders("Content-Range");
             if (headers.length > 0) {
@@ -191,6 +217,85 @@ public class HttpDownloader1 {
         }
 
         return -1L;
+    }
+
+
+    /**
+     * 将临时文件拼接起来
+     *
+     * @return 是否完成拼接
+     */
+    private boolean pickUpFile() {
+
+        for (int i = 0; i < progress.length; i++) {
+            while (true) {
+                System.out.println("===>progress status:" + JSON.toJSONString(progress));
+                //如果需要拼接的分片的状态不对，就睡眠2秒
+                if (ProgressStatus.NO_START.getKey() == progress[i] || progress[i] == ProgressStatus.DOWNLOAD_ING.getKey()
+                        || progress[i] == ProgressStatus.WRITE_ING.getKey()) {
+                    System.out.println("===>progress :" + i + " progress status:" + ProgressStatus.getValueByKey(progress[i]) +
+                            " ,and will sleep 2 seconds!!");
+                    try {
+                        Thread.sleep(2 * 1000L);
+                    } catch (InterruptedException e) {
+                        e.printStackTrace();
+                    }
+                }
+
+                //需要拼接的状态
+                if (progress[i] == ProgressStatus.DOWNLOAD_OK.getKey()) {
+                    System.out.println("===>progress :" + i + " progress status:" + ProgressStatus.getValueByKey(progress[i]));
+                    changeProgress(i, ProgressStatus.WRITE_ING.getKey(), ProgressStatus.DOWNLOAD_OK.getKey());
+
+                    InputStream inputStream = null;
+                    OutputStream outputStream = null;
+                    try {
+                        File outputFile = new File(this.baseTMPFilePath + this.fileName + ".zip");
+                        if (!outputFile.exists()) {
+                            outputFile.createNewFile();
+                        }
+
+                        inputStream = new FileInputStream(new File(this.baseTMPFilePath + this.fileName + "_" + i + ".tmp"));
+                        outputStream = new FileOutputStream(outputFile, true);
+
+                        byte[] cache = new byte[1024];
+                        while (-1 != (inputStream.read(cache))) {
+                            outputStream.write(cache);
+                        }
+                    } catch (Exception e) {
+                        System.out.println("===>pickUpFile: error:" + e.getMessage());
+                    } finally {
+                        //关闭资源
+                        if (null != outputStream) {
+                            try {
+                                outputStream.flush();
+                                outputStream.close();
+                            } catch (IOException e) {
+                                e.printStackTrace();
+                            }
+                        }
+                        if (null != inputStream) {
+                            try {
+                                inputStream.close();
+                            } catch (IOException e) {
+                                e.printStackTrace();
+                            }
+                        }
+
+                    }
+                }
+
+                //修改分片的状态，并删除已经追加成功的临时文件
+                changeProgress(i, ProgressStatus.WRITE_OK.getKey(), ProgressStatus.WRITE_ING.getKey());
+                File rmFile = new File(this.baseTMPFilePath + this.fileName + "_" + i + ".tmp");
+                rmFile.delete();
+                //完成本次的输入
+                break;
+            }
+        }
+
+
+        return false;
     }
 
     /**
@@ -210,17 +315,25 @@ public class HttpDownloader1 {
         fileSize = getDownloadFileSize();
 
         //将一个文件分片，划分线程数
-        initProgress(fileSize);
+        progress = initProgress(fileSize);
 
+        //this.threadNum
         for (int i = 0; i < this.threadNum; i++) {
+            System.out.println("===>启动线程：threadNum:" + (i + 1) + " .....");
             DownLoadThread downLoadThread = new DownLoadThread();
-            downLoadThread.run();
+            downLoadThread.start();
         }
+
+        pickUpFile();
+
 
     }
 
 
-    class DownLoadThread implements Runnable {
+    /**
+     * 专门用于下载的线程
+     */
+    class DownLoadThread extends Thread {
         private long start = 0;
         private long end = 0;
         private int whichProgress = 0;//需要下载的是哪个分片
@@ -237,44 +350,64 @@ public class HttpDownloader1 {
 
         @Override
         public void run() {
-            BufferedInputStream inputStream = null;
-            FileOutputStream fileOutputStream = null;
-            //.jpg
-            File tmpFile = new File(baseTMPFilePath + fileName + "_" + whichProgress + ".zip");
-            CloseableHttpClient httpclient = HttpClients.createDefault();
+            //循环下载===>开始
+            while (true) {
+                //获取需要下载的分片
+                this.whichProgress = getNextRequestProgress();
+                if (this.whichProgress == -1) {
+                    System.out.println("===>thread: id:" + Thread.currentThread().getId() +
+                            " this progress is end!!! progress:" + this.whichProgress);
+                    return;
+                }
 
-            System.out.println("===>下载的分片：开始：" + start + "结束：" + end + " 分片：" + whichProgress);
-            HttpGet httpget = new HttpGet(requestUrl);
-            httpget.addHeader("Range", "bytes=" + start + "-" + end);
+                this.start = this.whichProgress * cacheMax;
+                this.end = (this.whichProgress + 1) * cacheMax - 1;
 
-            try {
-                HttpResponse response = httpclient.execute(httpget);
+                //下载每一个分片的内容
+                System.out.println("===>thread: id:" + Thread.currentThread().getId() +
+                        "下载的分片：开始：" + start + "结束：" + end + " 分片：" + whichProgress);
+                BufferedInputStream inputStream = null;
+                FileOutputStream fileOutputStream = null;
+                //.jpg
+                File tmpFile = new File(baseTMPFilePath + fileName + "_" + whichProgress + ".tmp");
+                CloseableHttpClient httpclient = HttpClients.createDefault();
 
 
-                inputStream = new BufferedInputStream(response.getEntity().getContent());
-                fileOutputStream = new FileOutputStream(tmpFile);
+                HttpGet httpget = new HttpGet(requestUrl);
+                httpget.addHeader("Range", "bytes=" + start + "-" + end);
+
+                try {
+                    HttpResponse response = httpclient.execute(httpget);
+
+
+                    inputStream = new BufferedInputStream(response.getEntity().getContent());
+                    fileOutputStream = new FileOutputStream(tmpFile);
 
 //                response.getEntity().writeTo(fileOutputStream);
 
-                byte[] cache = new byte[1024];
-                int size = 0;
-                while (-1 != (size = inputStream.read(cache))) {
-                    fileOutputStream.write(cache, 0, size);
-                }
+                    byte[] cache = new byte[1024];
+                    int size = 0;
+                    while (-1 != (size = inputStream.read(cache))) {
+                        fileOutputStream.write(cache, 0, size);
+                    }
 
 
-                System.out.println("===>download 分片：" + whichProgress + " is over!!!");
-            } catch (IOException e) {
-                e.printStackTrace();
-            } finally {
-                try {
-//                    fileOutputStream.flush();
-                    fileOutputStream.close();
+                    System.out.println("===>thread: id: " + Thread.currentThread().getId() +
+                            " download 分片：" + whichProgress + " is over!!!");
+                    changeProgress(whichProgress, ProgressStatus.DOWNLOAD_OK.getKey(), ProgressStatus.DOWNLOAD_ING.getKey());
                 } catch (IOException e) {
                     e.printStackTrace();
+                } finally {
+                    try {
+//                    fileOutputStream.flush();
+                        fileOutputStream.close();
+                    } catch (IOException e) {
+                        e.printStackTrace();
+                    }
                 }
-            }
 
+            }
+            //循环下载===>结束
 
         }
     }
@@ -298,6 +431,15 @@ public class HttpDownloader1 {
         private ProgressStatus(int key, String value) {
             this.key = key;
             this.value = value;
+        }
+
+        public static String getValueByKey(int key) {
+            for (ProgressStatus progressStatus : ProgressStatus.values()) {
+                if (progressStatus.key == key) {
+                    return progressStatus.getValue();
+                }
+            }
+            return null;
         }
 
         public String getValue() {
