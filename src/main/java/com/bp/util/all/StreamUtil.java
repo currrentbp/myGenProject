@@ -207,8 +207,9 @@ public class StreamUtil {
 
     /**
      * 将一些内容写入一个文件中
+     *
      * @param something 添加内容
-     * @param filePath 文件路径
+     * @param filePath  文件路径
      * @throws IOException 异常
      */
     public static void writeSomethingToFile(String something, String filePath) throws IOException {
@@ -238,6 +239,36 @@ public class StreamUtil {
         System.out.println("file wirte over!");
 
     }
+
+
+
+    /**
+     * 产生一个字符流的写入流
+     *
+     * @param filePath 写入的文件路径
+     * @return 文件写入流
+     */
+    public static FileWriter createFileWriter(String filePath) {
+        return createFileWriter(filePath,true);
+    }
+    /**
+     * 产生一个字符流的写入流
+     *
+     * @param filePath 写入的文件路径
+     * @param isAppend 是否追加
+     * @return 文件写入流
+     */
+    public static FileWriter createFileWriter(String filePath, boolean isAppend) {
+        FileWriter fileWriter = null;
+        try {
+            fileWriter = new FileWriter(new File(filePath), isAppend);
+        } catch (IOException e) {
+            e.printStackTrace();
+        }
+        return fileWriter;
+    }
+
+
 
     /**
      * 根据keys中的多个关键字查询，例如：2|3|4，其中多个关键字之间是用"|"分割的。

@@ -2,6 +2,7 @@ package com.bp.util.all;
 
 import com.bp.staticValue.StaticValue;
 
+import java.io.FileWriter;
 import java.io.IOException;
 import java.util.ArrayList;
 import java.util.LinkedList;
@@ -122,6 +123,60 @@ public class PWDGenUtil {
     }
 
     /**
+     * 生成密码本，纯粹是数字的密码本，
+     *
+     * @param length   开始长度，不能小于0
+     * @param filePath 生成文件的路径
+     */
+    public void genDic3(int length, String filePath) {
+        genDic3(length, length, filePath);
+    }
+
+    /**
+     * 生成密码本，纯粹是数字的密码本，
+     *
+     * @param startLength 开始长度，不能小于0
+     * @param endLength   最长的长度，不能小于开始长度
+     * @param filePath    生成文件的路径
+     */
+    public void genDic3(int startLength, int endLength, String filePath) {
+        if (startLength < 0 || endLength < startLength || CheckUtil.isEmpty(filePath)) {
+            return;
+        }
+
+        FileWriter fileWriter = StreamUtil.createFileWriter(filePath);
+        for (int i = startLength; i <= endLength; i++) {
+            createStaticLenNum(i, fileWriter);
+        }
+    }
+
+    /**
+     * 产生一个固定长度的数字密码串
+     *
+     * @param length     长度
+     * @param fileWriter 写入流
+     */
+    private void createStaticLenNum(int length, FileWriter fileWriter) {
+        int[] nums = new int[length];
+        String snums = null;
+
+        while(true){
+
+        }
+
+    }
+
+    /**
+     * 是否需要进位
+     * @param resource 原数据
+     * @param append 加数
+     * @return 是否进位
+     */
+    private boolean isBeyond(int resource, int append) {
+        return resource + append >= 10;
+    }
+
+    /**
      * 生成一个纯数字的字典
      *
      * @param path 文件路径
@@ -143,8 +198,9 @@ public class PWDGenUtil {
 
     /**
      * 生成一个既有数字又有字符的字典
+     *
      * @param path 文件路径
-     * @param len 长度
+     * @param len  长度
      */
     public void genNumAndLetterDic(String path, int len) {
         genDic2(this.nums + this.letters, len, path);
@@ -157,6 +213,6 @@ public class PWDGenUtil {
 
         //创建一个既有数字又有字符的字典
         PWDGenUtil pu = new PWDGenUtil();
-        pu.genNumAndLetterDic("e:/baopan.dic",6);
+        pu.genNumAndLetterDic("e:/baopan.dic", 2);
     }
 }
