@@ -23,9 +23,8 @@ public class HttpDownloader1 {
     private long fileSize = 0;
     private int threadNum = 0;
     private int threadMaxNum = 5;
-    private int cacheMax = 8 * 1024 * 50;//每个文件的大小50Kb
+    private int cacheMax = 500 * 1024;//每个文件的大小500Kb
     private static int[] progress;//0:未开始，1：下载完成，2：下载中，3：写入完成，4：写入中
-    private boolean isWrite = false;//是否在写入一个文件
     private String fileName = "tomcat";//文件名称
     //    private String requestUrl = "http://mirrors.cnnic.cn/apache/tomcat/tomcat-9/v9.0.0.M17/bin/apache-tomcat-9.0.0.M17.zip";//请求地址
     private String baseTMPFilePath = "E:\\tmp\\20170203\\";//临时文件的路径
@@ -35,6 +34,7 @@ public class HttpDownloader1 {
     private String requestUrl = "http://mirrors.cnnic.cn/apache/tomcat/tomcat-9/v9.0.0.M17/bin/apache-tomcat-9.0.0.M17.zip";
     private String oldFileName = "";
     private String tail = "";
+    private String tmpTail = ".tmp";
 
 
     /*
@@ -250,12 +250,12 @@ public class HttpDownloader1 {
                     InputStream inputStream = null;
                     OutputStream outputStream = null;
                     try {
-                        File outputFile = new File(this.baseTMPFilePath + this.fileName + ".zip");
+                        File outputFile = new File(this.baseTMPFilePath + this.fileName + tail);
                         if (!outputFile.exists()) {
                             outputFile.createNewFile();
                         }
 
-                        inputStream = new FileInputStream(new File(this.baseTMPFilePath + this.fileName + "_" + i + ".tmp"));
+                        inputStream = new FileInputStream(new File(this.baseTMPFilePath + this.fileName + "_" + i + tmpTail));
                         outputStream = new FileOutputStream(outputFile, true);
 
                         byte[] cache = new byte[1024];
@@ -366,10 +366,10 @@ public class HttpDownloader1 {
                 //下载每一个分片的内容
                 System.out.println("===>thread: id:" + Thread.currentThread().getId() +
                         "下载的分片：开始：" + start + "结束：" + end + " 分片：" + whichProgress);
-                BufferedInputStream inputStream = null;
+                BufferedInputStream inputStream ;
                 FileOutputStream fileOutputStream = null;
                 //.jpg
-                File tmpFile = new File(baseTMPFilePath + fileName + "_" + whichProgress + ".tmp");
+                File tmpFile = new File(baseTMPFilePath + fileName + "_" + whichProgress + tmpTail);
                 CloseableHttpClient httpclient = HttpClients.createDefault();
 
 
