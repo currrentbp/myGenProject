@@ -1,5 +1,6 @@
 package com.bp.util.all;
 
+import com.alibaba.fastjson.JSON;
 import com.bp.staticValue.StaticValue;
 
 import java.io.FileWriter;
@@ -16,6 +17,7 @@ import java.util.List;
  */
 public class PWDGenUtil {
 
+    private long count = 0;
     public String nums = "0123456789";
     public String letters = "abcdefghijklmnopqrstuvwxyzABCDEFGHIJKLMNOPQRSTUVWXYZ";
 
@@ -147,6 +149,17 @@ public class PWDGenUtil {
         FileWriter fileWriter = StreamUtil.createFileWriter(filePath);
         for (int i = startLength; i <= endLength; i++) {
             createStaticLenNum(i, fileWriter);
+            try {
+                fileWriter.flush();
+            } catch (IOException e) {
+                e.printStackTrace();
+            }
+        }
+
+        try {
+            fileWriter.close();
+        } catch (IOException e) {
+            e.printStackTrace();
         }
     }
 
@@ -160,16 +173,85 @@ public class PWDGenUtil {
         int[] nums = new int[length];
         String snums = null;
 
-        while(true){
+        while (true) {
+            count++;
+            if(count /10000 !=0 && count%10000 ==0){
+                System.out.println("===>输出数据数量："+(count/10000)+" 万条");
+            }
+            //先不管进位的问题，
+            try {
+                fileWriter.write(getNums1(nums));
+            } catch (IOException e) {
+                e.printStackTrace();
+            }
+            //考虑进位的问题
+            boolean isB = numBeyond(nums);
+            if (isB) {
+                break;
+            }
 
         }
 
     }
 
     /**
+     * 类似进位问题，从倒数第二位开始，
+     *
+     * @param nums 原始的数据
+     * @return 是否溢出
+     */
+    public boolean numBeyond(int[] nums) {
+        boolean flag = false;
+        if(nums.length == 1){
+            return true;
+        }
+        for (int i = 1; i < nums.length; i++) {
+            int k = nums[i];
+            boolean isB = isBeyond(nums[i], 1);
+            if (i == nums.length - 1 && isB) {//如果是最高位，而且溢出了，表示不需要再生成密码了，因为已经溢出了
+                flag = true;
+                break;
+            }
+
+            if (isB) {
+                nums[i] = 0;
+                continue;
+            } else {
+                nums[i] = k + 1;
+                flag = false;
+                break;
+            }
+        }
+        return flag;
+    }
+
+    /**
+     * 每次在最后一位修改10次，获得10组不同的数字串
+     *
+     * @param nums 最近的一个密码
+     * @return 获取10组密码
+     */
+    private String getNums1(int[] nums) {
+        StringBuilder result = new StringBuilder("");
+        String s = "";
+        for (int i = nums.length - 1; i > 0; i--) {
+            s = s + nums[i];
+        }
+
+        for (int j = 0; j < 10; j++) {
+            result.append(s + j + "\n");
+        }
+
+//        System.out.println("===>getNums1:result:" + result);
+
+        return result.toString();
+    }
+
+    /**
      * 是否需要进位
+     *
      * @param resource 原数据
-     * @param append 加数
+     * @param append   加数
      * @return 是否进位
      */
     private boolean isBeyond(int resource, int append) {
@@ -212,7 +294,26 @@ public class PWDGenUtil {
 //        pu.genDic2("0123456789", 6, "E:\\tmp\\bp.dic");//7位：85600Kb
 
         //创建一个既有数字又有字符的字典
+//        PWDGenUtil pu = new PWDGenUtil();
+//        pu.genNumAndLetterDic("e:/baopan.dic", 2);
+
+//        //test
+//        PWDGenUtil pu = new PWDGenUtil();
+//        int[] s = new int[3];
+//        s[0] = 0;
+//        s[1] = 2;
+//        s[2] = 3;
+//        pu.getNums1(s);
+
+//        //test
+//        PWDGenUtil pu = new PWDGenUtil();
+//        int[] s = new int[3];
+//        s[0] = 0;
+//        s[1] = 9;
+//        s[2] = 9;
+//        System.out.println(pu.numBeyond(s));
+
         PWDGenUtil pu = new PWDGenUtil();
-        pu.genNumAndLetterDic("e:/baopan.dic", 2);
+        pu.genDic3(1, 9, "E:\\tmp\\bp.dic");//7位：85600Kb
     }
 }
