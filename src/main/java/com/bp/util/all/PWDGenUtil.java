@@ -314,6 +314,6 @@ public class PWDGenUtil {
 //        System.out.println(pu.numBeyond(s));
 
         PWDGenUtil pu = new PWDGenUtil();
-        pu.genDic3(1, 9, "E:\\tmp\\bp.dic");//7位：85600Kb
+        pu.genDic3(13, 13, "E:\\tmp\\bp.dic");//7位：85600Kb
     }
 }
