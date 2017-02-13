@@ -73,8 +73,17 @@ public class StringTest {
 //		path = new String("abcdefABCDEF");
 //		System.out.println(path.indexOf(41) );
 
-		//测试除数为0的这种情况
-		stringTest.isZero(10,0);
+//		//测试除数为0的这种情况
+//		stringTest.isZero(10,0);
+
+		//测试数字和字符串的相等性问题
+		stringTest.isEqualWithEmpty();
+	}
+
+	public void isEqualWithEmpty(){
+		Integer x = 1;
+		String s1 = "1";
+		System.out.println("isEqual:"+s1.equals(""+x));
 	}
 
 	/**

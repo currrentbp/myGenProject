@@ -175,8 +175,8 @@ public class PWDGenUtil {
 
         while (true) {
             count++;
-            if(count /10000 !=0 && count%10000 ==0){
-                System.out.println("===>输出数据数量："+(count/10000)+" 万条");
+            if (count / 10000 != 0 && count % 10000 == 0) {
+                System.out.println("===>输出数据数量：" + (count / 10000) + " 万条");
             }
             //先不管进位的问题，
             try {
@@ -202,7 +202,7 @@ public class PWDGenUtil {
      */
     public boolean numBeyond(int[] nums) {
         boolean flag = false;
-        if(nums.length == 1){
+        if (nums.length == 1) {
             return true;
         }
         for (int i = 1; i < nums.length; i++) {
