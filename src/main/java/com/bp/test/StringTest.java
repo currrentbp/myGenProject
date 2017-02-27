@@ -76,10 +76,27 @@ public class StringTest {
 //		//测试除数为0的这种情况
 //		stringTest.isZero(10,0);
 
-		//测试数字和字符串的相等性问题
-		stringTest.isEqualWithEmpty();
+//		//测试数字和字符串的相等性问题
+//		stringTest.isEqualWithEmpty();
+
+		//获取分割的字符串
+		stringTest.getSplitString();
 	}
 
+
+	/**
+	 * 获取分割的字符串
+	 */
+	public void getSplitString(){
+		String s1 = "baopan_1";
+		System.out.println("before:"+s1.split("_")[0]+" after:"+s1.split("_")[1]);
+	}
+
+
+
+	/**
+	 * 测试常量的值是否相等
+	 */
 	public void isEqualWithEmpty(){
 		Integer x = 1;
 		String s1 = "1";

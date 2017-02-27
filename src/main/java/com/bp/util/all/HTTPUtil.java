@@ -6,6 +6,7 @@ import org.apache.http.HttpResponse;
 import org.apache.http.NameValuePair;
 import org.apache.http.client.ClientProtocolException;
 import org.apache.http.client.ResponseHandler;
+import org.apache.http.client.config.RequestConfig;
 import org.apache.http.client.entity.UrlEncodedFormEntity;
 import org.apache.http.client.methods.HttpGet;
 import org.apache.http.client.methods.HttpPost;
@@ -42,10 +43,11 @@ public class HTTPUtil {
         String result = null;
         try {
             String url2 = url + (null == paramLink ? "" : "?" + paramLink);
+            RequestConfig requestConfig =RequestConfig.custom().setSocketTimeout(5000).setConnectTimeout(5000).build();
             System.out.println("===>getRequest: url2:" + url2);
             HttpGet httpget = new HttpGet(url2);
             httpget.addHeader("Content-Type", "application/x-www-form-urlencoded;charset=utf-8");
-
+            httpget.setConfig(requestConfig);
             HttpResponse response = httpclient.execute(httpget);
 
             result = EntityUtils.toString(response.getEntity());
@@ -76,16 +78,14 @@ public class HTTPUtil {
         String result = null;
         try {
             HttpPost httpPost = new HttpPost(url);
+            RequestConfig requestConfig =RequestConfig.custom().setSocketTimeout(5000).setConnectTimeout(5000).build();
             httpPost.addHeader("Content-Type", "application/x-www-form-urlencoded;charset=utf-8");
-
-
             List<NameValuePair> nvps = new ArrayList<NameValuePair>();
             for (String key:params.keySet()){
                 nvps.add(new BasicNameValuePair(key,""+params.get(key)));
             }
             httpPost.setEntity(new UrlEncodedFormEntity(nvps));
-
-
+            httpPost.setConfig(requestConfig);
             HttpResponse response = httpclient.execute(httpPost);
 
             result = EntityUtils.toString(response.getEntity());
