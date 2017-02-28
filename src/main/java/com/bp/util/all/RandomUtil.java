@@ -95,7 +95,7 @@ public class RandomUtil {
 	/**
 	 * 获取UUID
 	 * 
-	 * @return
+	 * @return UUID
 	 */
 	public static String getUUID() {
 		return UUID.randomUUID().toString();
@@ -104,7 +104,7 @@ public class RandomUtil {
 	/**
 	 * 获取UUID，没有‘-’
 	 * 
-	 * @return
+	 * @return UUID
 	 */
 	public static String getUUID2(){
 		return getUUID().replace("-", "");
@@ -113,8 +113,8 @@ public class RandomUtil {
 	/**
 	 * 获取随机数，最大随机数包含maxNum
 	 * 
-	 * @param maxNum
-	 * @return
+	 * @param maxNum 最大随机数
+	 * @return 随机数
 	 */
 	public static int getRandomNumIncludeMaxnum(int maxNum) {
 		return getRandomNum(maxNum + 1);
@@ -123,8 +123,8 @@ public class RandomUtil {
 	/**
 	 * 获取随机数，但是随机数小于maxNum
 	 * 
-	 * @param maxNum
-	 * @return
+	 * @param maxNum 最大随机数
+	 * @return 随机数
 	 */
 	public static int getRandomNum(int maxNum) {
 		return (int) (Math.random() * maxNum);
@@ -133,8 +133,8 @@ public class RandomUtil {
 	/**
 	 * 获取比较大的数的随机数
 	 * 
-	 * @param largeNum
-	 * @return
+	 * @param largeNum 最大随机数
+	 * @return 随机数
 	 */
 	public static int getLargeRandomNum(int largeNum) {
 		Random random = new Random();
