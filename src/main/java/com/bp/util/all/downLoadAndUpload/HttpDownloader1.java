@@ -24,14 +24,15 @@ public class HttpDownloader1 {
     private int threadNum = 0;
     private int threadMaxNum = 5;
     private int cacheMax = 500 * 1024;//每个文件的大小500Kb
-    private static int[] progress;//0:未开始，1：下载完成，2：下载中，3：写入完成，4：写入中
+    private volatile static int[] progress;//0:未开始，1：下载完成，2：下载中，3：写入完成，4：写入中
     private String fileName = "tomcat";//文件名称
     //    private String requestUrl = "http://mirrors.cnnic.cn/apache/tomcat/tomcat-9/v9.0.0.M17/bin/apache-tomcat-9.0.0.M17.zip";//请求地址
     private String baseTMPFilePath = "E:\\tmp\\20170203\\";//临时文件的路径
 
     //http://localhost:8080/uploadController/download?id=1
     //http://mirrors.cnnic.cn/apache/tomcat/tomcat-9/v9.0.0.M17/bin/apache-tomcat-9.0.0.M17.zip
-    private String requestUrl = "http://mirrors.cnnic.cn/apache/tomcat/tomcat-9/v9.0.0.M17/bin/apache-tomcat-9.0.0.M17.zip";
+    //http://txt.bxwxtxt.com/packdown/fulltxt/126/126004.txt
+    private String requestUrl = "http://txt.bxwxtxt.com/packdown/fulltxt/126/126004.txt";
     private String oldFileName = "";
     private String tail = "";
     private String tmpTail = ".tmp";
@@ -231,8 +232,7 @@ public class HttpDownloader1 {
             while (true) {
                 System.out.println("===>progress status:" + JSON.toJSONString(progress));
                 //如果需要拼接的分片的状态不对，就睡眠2秒
-                if (ProgressStatus.NO_START.getKey() == progress[i] || progress[i] == ProgressStatus.DOWNLOAD_ING.getKey()
-                        || progress[i] == ProgressStatus.WRITE_ING.getKey()) {
+                if (progress[i] != ProgressStatus.DOWNLOAD_OK.getKey()) {
                     System.out.println("===>progress :" + i + " progress status:" + ProgressStatus.getValueByKey(progress[i]) +
                             " ,and will sleep 2 seconds!!");
                     try {
@@ -245,7 +245,10 @@ public class HttpDownloader1 {
                 //需要拼接的状态
                 if (progress[i] == ProgressStatus.DOWNLOAD_OK.getKey()) {
                     System.out.println("===>progress :" + i + " progress status:" + ProgressStatus.getValueByKey(progress[i]));
-                    changeProgress(i, ProgressStatus.WRITE_ING.getKey(), ProgressStatus.DOWNLOAD_OK.getKey());
+                    boolean changeResult1 = changeProgress(i, ProgressStatus.WRITE_ING.getKey(), ProgressStatus.DOWNLOAD_OK.getKey());
+                    if(!changeResult1){
+                        continue;
+                    }
 
                     InputStream inputStream = null;
                     OutputStream outputStream = null;
@@ -286,7 +289,10 @@ public class HttpDownloader1 {
                 }
 
                 //修改分片的状态，并删除已经追加成功的临时文件
-                changeProgress(i, ProgressStatus.WRITE_OK.getKey(), ProgressStatus.WRITE_ING.getKey());
+                boolean changeResult2 = changeProgress(i, ProgressStatus.WRITE_OK.getKey(), ProgressStatus.WRITE_ING.getKey());
+                if(!changeResult2){
+                    continue;
+                }
                 File rmFile = new File(this.baseTMPFilePath + this.fileName + "_" + i + ".tmp");
                 rmFile.delete();
                 //完成本次的输入
@@ -317,7 +323,6 @@ public class HttpDownloader1 {
         //将一个文件分片，划分线程数
         progress = initProgress(fileSize);
 
-        //this.threadNum
         for (int i = 0; i < this.threadNum; i++) {
             System.out.println("===>启动线程：threadNum:" + (i + 1) + " .....");
             DownLoadThread downLoadThread = new DownLoadThread();
@@ -344,7 +349,6 @@ public class HttpDownloader1 {
         public DownLoadThread(long start, long end, int whichProgress) {
             this.start = start;
             this.end = end;
-//            this.end = 37238L;
             this.whichProgress = whichProgress;
         }
 
@@ -379,18 +383,14 @@ public class HttpDownloader1 {
                 try {
                     HttpResponse response = httpclient.execute(httpget);
 
-
                     inputStream = new BufferedInputStream(response.getEntity().getContent());
                     fileOutputStream = new FileOutputStream(tmpFile);
-
-//                response.getEntity().writeTo(fileOutputStream);
 
                     byte[] cache = new byte[1024];
                     int size = 0;
                     while (-1 != (size = inputStream.read(cache))) {
                         fileOutputStream.write(cache, 0, size);
                     }
-
 
                     System.out.println("===>thread: id: " + Thread.currentThread().getId() +
                             " download 分片：" + whichProgress + " is over!!!");
@@ -399,7 +399,6 @@ public class HttpDownloader1 {
                     e.printStackTrace();
                 } finally {
                     try {
-//                    fileOutputStream.flush();
                         fileOutputStream.close();
                     } catch (IOException e) {
                         e.printStackTrace();

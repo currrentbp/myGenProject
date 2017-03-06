@@ -79,10 +79,17 @@ public class StringTest {
 //		//测试数字和字符串的相等性问题
 //		stringTest.isEqualWithEmpty();
 
-		//获取分割的字符串
-		stringTest.getSplitString();
+//		//获取分割的字符串
+//		stringTest.getSplitString();
+
+		//判断1是否等于null
+		stringTest.equalsNull();
 	}
 
+
+	public void equalsNull(){
+		System.out.println("1".equals(null));
+	}
 
 	/**
 	 * 获取分割的字符串

@@ -11,8 +11,26 @@ public class LongTest {
 	public static void main(String[] args) {
 
 		LongTest lt = new LongTest();
-		lt.addressIsEqual();
+
+//		//测试地址是否相同
+//		lt.addressIsEqual();
+
+		//测试两个长型的数字加后是否出现错误
+		lt.longBeyond();
+
 	}
+
+
+	/**
+	 * 测试两个长型的数字加后是否出现错误
+	 */
+	public void longBeyond(){
+		System.out.println("result:"+(1110000000000L + 8157436L < 0));
+
+		System.out.println("result2:"+(8157436L > (1110000000000L - 1313238L)));
+	}
+
+
 
 	/**
 	 * 将long转换到integer类型
