@@ -1,10 +1,6 @@
 package com.bp.util.all;
 
-import java.util.ArrayList;
-import java.util.HashMap;
-import java.util.List;
-import java.util.Map;
-import java.util.Set;
+import java.util.*;
 import java.util.regex.Matcher;
 import java.util.regex.Pattern;
 
@@ -32,28 +28,44 @@ public class CheckUtil {
 	/**
 	 * 判断一个对象是否为空，可以判断（list,map,set,string,object）
 	 * 
-	 * @param source
-	 * @return
+	 * @param source 数据源
+	 * @return 是否为空
 	 */
 	public static boolean isEmpty(Object source) {
-		if (source instanceof Set) {
-			return null == (Set) source || 0 == ((Set) source).size();
-		} else if (source instanceof Map) {
-			return null == (Map) source || 0 == ((Map) source).size();
-		} else if (source instanceof List) {
-			return null == (List) source || 0 == ((List) source).size();
-		} else if (source instanceof String) {
-			return null == (String) source || "".equals(((String) source).trim());
-		} else {
-			return null == source;
+		if (source == null)
+			return true;
+
+		if (source instanceof CharSequence)
+			return ((CharSequence) source).length() == 0;
+
+		if (source instanceof Collection)
+			return ((Collection) source).isEmpty();
+
+		if (source instanceof Map)
+			return ((Map) source).isEmpty();
+
+		if (source instanceof Object[]) {
+			Object[] object = (Object[]) source;
+			if (object.length == 0) {
+				return true;
+			}
+			boolean empty = true;
+			for (int i = 0; i < object.length; i++) {
+				if (!isEmpty(object[i])) {
+					empty = false;
+					break;
+				}
+			}
+			return empty;
 		}
+		return false;
 	}
 
 	/**
 	 * 判断是否是一个邮箱
 	 * 
-	 * @param email
-	 * @throws Exception
+	 * @param email 邮箱
+	 * @throws Exception 异常
 	 */
 	public static boolean isEmail(String email) throws Exception {
 		isEmpty("email", email);
@@ -69,8 +81,8 @@ public class CheckUtil {
 	/**
 	 * 判断是否是一个电话号码
 	 * 
-	 * @param phone
-	 * @throws Exception
+	 * @param phone 电话
+	 * @throws Exception 异常
 	 */
 	public static boolean isPhone(String phone) throws Exception {
 		isEmpty("phone", phone);
@@ -86,10 +98,10 @@ public class CheckUtil {
 	/**
 	 * 根据给定格式匹配一个字符串是否符合该正则表达式
 	 * 
-	 * @param pattern
-	 * @param resource
-	 * @return
-	 * @throws Exception
+	 * @param pattern 格式
+	 * @param resource 源
+	 * @return 是否匹配
+	 * @throws Exception 异常
 	 */
 	public static boolean patternString(String pattern, String resource) throws Exception {
 		isEmpty("resource", resource);
@@ -103,7 +115,7 @@ public class CheckUtil {
 	/**
 	 * 测试方法：patternString
 	 * 
-	 * @throws Exception
+	 * @throws Exception 异常
 	 */
 	public static void patternStringTest() throws Exception {
 		String fileName1 = "新建文本文档";
