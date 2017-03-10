@@ -20,6 +20,7 @@ public class PWDGenUtil {
     private long count = 0;
     public String nums = "0123456789";
     public String letters = "abcdefghijklmnopqrstuvwxyzABCDEFGHIJKLMNOPQRSTUVWXYZ";
+    public static String Num_Letters = "0123456789abcdefghijklmnopqrstuvwxyzABCDEFGHIJKLMNOPQRSTUVWXYZ";
 
 
     /**
@@ -142,7 +143,7 @@ public class PWDGenUtil {
      * @param filePath    生成文件的路径
      */
     public void genDic3(int startLength, int endLength, String filePath) {
-        if (startLength < 0 || endLength < startLength || CheckUtil.isEmpty(filePath)) {
+        if (startLength <= 0 || endLength < startLength || CheckUtil.isEmpty(filePath)) {
             return;
         }
 
@@ -162,6 +163,67 @@ public class PWDGenUtil {
             e.printStackTrace();
         }
     }
+
+
+    /**
+     * 生成密码本，数字和字母混合的密码本，
+     * 感觉数据量有点大
+     *
+     * @param startLength 开始长度，不能小于0
+     * @param endLength   最长的长度，不能小于开始长度
+     * @param filePath    生成文件的路径
+     */
+    public void genDic4(int startLength, int endLength, String filePath){
+        if (startLength <= 0 || endLength < startLength || CheckUtil.isEmpty(filePath)) {
+            return;
+        }
+
+        FileWriter fileWriter = StreamUtil.createFileWriter(filePath);
+        for (int i = startLength; i <= endLength; i++) {
+            createStaticLenNumAndLetters(i, fileWriter);
+            try {
+                fileWriter.flush();
+            } catch (IOException e) {
+                e.printStackTrace();
+            }
+        }
+
+        try {
+            fileWriter.close();
+        } catch (IOException e) {
+            e.printStackTrace();
+        }
+    }
+
+    /**
+     * 产生一个固定长度的数字和字符密码串
+     * @param length 长度
+     * @param fileWriter 写入文件流
+     */
+    private void createStaticLenNumAndLetters(int length, FileWriter fileWriter) {
+        String numAndLetters = null;
+        char[] lastCode = new char[length];
+        //初始化
+        for(int i=0;i<length;i++){
+            lastCode[i]='0';
+        }
+
+        while(true){
+            //先不管进位的问题，
+            try {
+                fileWriter.write(getNums2(lastCode));
+            } catch (IOException e) {
+                e.printStackTrace();
+            }
+            //考虑进位的问题
+            boolean isB = numBeyond2(lastCode);
+            if (isB) {
+                break;
+            }
+        }
+    }
+
+
 
     /**
      * 产生一个固定长度的数字密码串
@@ -192,6 +254,38 @@ public class PWDGenUtil {
 
         }
 
+    }
+
+
+    /**
+     * 类似进位问题，从倒数第二位开始，
+     *
+     * @param lastedCode 原始的数据
+     * @return 是否溢出
+     */
+    public boolean numBeyond2(char[] lastedCode) {
+        boolean flag = false;
+        if (lastedCode.length == 1) {
+            return true;
+        }
+        for (int i = 1; i < lastedCode.length; i++) {
+            char k = lastedCode[i];
+            boolean isB = isBeyond2(lastedCode[i], 1);
+            if (i == lastedCode.length - 1 && isB) {//如果是最高位，而且溢出了，表示不需要再生成密码了，因为已经溢出了
+                flag = true;
+                break;
+            }
+
+            if (isB) {
+                lastedCode[i] = 0;
+                continue;
+            } else {
+                lastedCode[i] = Num_Letters.charAt(Num_Letters.indexOf(k)+1);
+                flag = false;
+                break;
+            }
+        }
+        return flag;
     }
 
     /**
@@ -228,6 +322,31 @@ public class PWDGenUtil {
     /**
      * 每次在最后一位修改10次，获得10组不同的数字串
      *
+     * @param lastedCode 最近的一个密码
+     * @return 获取10组密码
+     */
+    private String getNums2(char[] lastedCode) {
+        StringBuilder result = new StringBuilder("");
+        String prefix = "";
+        for (int i = 1; i < lastedCode.length; i++) {
+            prefix  = lastedCode[i] + prefix;
+        }
+
+        for (int j = 0; j < Num_Letters.length(); j++) {
+            count++;
+            if (count < 100000000L && count / 10000 != 0 && count % 10000 == 0) {
+                System.out.println("===>输出数据数量：" + (count / 10000) + " 万条");
+            }else if(count >= 100000000L && count / 100000000 != 0 && count % 100000000 == 0){
+                System.out.println("===>输出数据数量：" + (count / 100000000) + " 亿条");
+            }
+            result.append(prefix + Num_Letters.charAt(j) + "\n");
+        }
+        return result.toString();
+    }
+
+    /**
+     * 每次在最后一位修改10次，获得10组不同的数字串
+     *
      * @param nums 最近的一个密码
      * @return 获取10组密码
      */
@@ -241,9 +360,6 @@ public class PWDGenUtil {
         for (int j = 0; j < 10; j++) {
             result.append(s + j + "\n");
         }
-
-//        System.out.println("===>getNums1:result:" + result);
-
         return result.toString();
     }
 
@@ -256,6 +372,18 @@ public class PWDGenUtil {
      */
     private boolean isBeyond(int resource, int append) {
         return resource + append >= 10;
+    }
+
+    /**
+     * 是否需要进位
+     *
+     * @param resource 原数据
+     * @param append   加数
+     * @return 是否进位
+     */
+    private boolean isBeyond2(char resource, int append) {
+        int index = Num_Letters.indexOf(resource);
+        return index + append >= Num_Letters.length();
     }
 
     /**
@@ -314,6 +442,6 @@ public class PWDGenUtil {
 //        System.out.println(pu.numBeyond(s));
 
         PWDGenUtil pu = new PWDGenUtil();
-        pu.genDic3(13, 13, "E:\\tmp\\bp.dic");//7位：85600Kb
+        pu.genDic4(1, 5, "E:\\tmp\\bp.dic");//7位：85600Kb
     }
 }
