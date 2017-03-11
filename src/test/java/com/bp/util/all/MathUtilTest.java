@@ -69,7 +69,17 @@ public class MathUtilTest {
 
     @Test
     public void multTwoLongNum(){
-        System.out.println("1.0*1.0="+MathUtil.multTwoLongNum("1.0","1.0"));
+//        System.out.println("1*1="+MathUtil.multTwoLongNum("1","1"));
+//        System.out.println("1.0*1.0="+MathUtil.multTwoLongNum("1.0","1.0"));
+//        System.out.println("1*1.0="+MathUtil.multTwoLongNum("1","1.0"));
+//        System.out.println("2*5="+MathUtil.multTwoLongNum("2","5"));
+//        System.out.println("2.0*5.0="+MathUtil.multTwoLongNum("2.0","5.0"));
+//        System.out.println("20*50="+MathUtil.multTwoLongNum("20","50"));
+//        System.out.println("100*50="+MathUtil.multTwoLongNum("100","50"));
+        System.out.println("100*50.5="+MathUtil.multTwoLongNum("100","50.5"));
+        System.out.println("100*50.555="+MathUtil.multTwoLongNum("100","50.555"));
+        System.out.println("100*50.555="+MathUtil.multTwoLongNum("200","50.005"));
+
     }
 
 }

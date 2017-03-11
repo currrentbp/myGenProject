@@ -182,9 +182,9 @@ public class MathUtil {
     private static List<String> multAll(String longNum, int pointIndex, List<String[]> shortNumList) {
         List<String> result = new ArrayList<String>();
 
-        //TODO NOT WORK
         for (String[] shortNum : shortNumList) {
             String num = multEach(longNum, pointIndex, shortNum[0], Integer.parseInt(shortNum[1]));
+            num = getNumNoTailZeroAndHeadZero(num);
             result.add(num);
         }
         return result;
@@ -214,10 +214,17 @@ public class MathUtil {
         if (point == 0) {
 
         } else if (point > 0) {
-
+            String temp = "";
+            for (int i = 0; i < point; i++) {
+                temp = temp + "0";
+            }
+            result = result + temp;
         } else {
-
+            String head = result.substring(0, result.length() + point);
+            String tail = result.substring(result.length() + point);
+            result = head + "." + tail;
         }
+        result = getNumNoTailZeroAndHeadZero(result);
         return result;
     }
 
@@ -249,7 +256,7 @@ public class MathUtil {
             return result;
         }
         result = num.length() - num.indexOf(".") - 1;
-        return result;
+        return result * -1;
     }
 
     /**
@@ -335,19 +342,20 @@ public class MathUtil {
     private static String getNumNoTailZeroAndHeadZero(String num) {
         String result = "0";
 
-        String head = num.substring(0, num.indexOf("."));
+        //没有小数点
+        boolean containsPoint = num.contains(".");
+        String head = containsPoint ? num.substring(0, num.indexOf(".")) : num;
         String sourceHead = head;
         for (int i = 0; i < sourceHead.length(); i++) {
-            if ("0".equals("" + head.charAt(i))) {
+            if ("0".equals("" + head.charAt(i)) && i != (sourceHead.length() - 2)) {
                 head = sourceHead.substring(i);
             } else {
                 break;
             }
         }
-        //没有小数点
-        boolean containsPoint = num.contains(".");
+
         if (!containsPoint) {
-            return result;
+            return result = head;
         }
 
         String tail = num.substring(num.indexOf(".") + 1);
