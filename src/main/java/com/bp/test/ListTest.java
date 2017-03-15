@@ -17,7 +17,33 @@ public class ListTest {
 
 
         //测试一个对象放入list中，在list中修改该对象的字段，看能否修改成功
-        listTest.object2ListAndChangeSome();
+//        listTest.object2ListAndChangeSome();
+
+        //测试list的foreach的功能
+//        listTest.listForMethod();
+        listTest.listForMethod2();
+    }
+
+
+    /**
+     * 测试list的foreach的功能
+     */
+    public void listForMethod(){
+        List<String> list = null;
+
+        for(String s: list){
+            System.out.println("s:"+s);
+        }
+    }
+    /**
+     * 测试list的foreach的功能
+     */
+    public void listForMethod2(){
+        List<String> list = new ArrayList<String>();
+
+        for(String s: list){
+            System.out.println("s:"+s);
+        }
     }
 
 

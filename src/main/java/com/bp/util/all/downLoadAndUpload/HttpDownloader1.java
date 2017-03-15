@@ -5,6 +5,7 @@ import com.alibaba.fastjson.JSON;
 import org.apache.http.Header;
 import org.apache.http.HttpResponse;
 import org.apache.http.client.methods.HttpGet;
+import org.apache.http.client.methods.HttpHead;
 import org.apache.http.impl.client.CloseableHttpClient;
 import org.apache.http.impl.client.HttpClients;
 import org.apache.http.util.EntityUtils;
@@ -49,12 +50,12 @@ public class HttpDownloader1 {
         HttpDownloader1 httpDownloader1 = new HttpDownloader1();
 //        httpDownloader1.initProgress(10);
 //        System.out.println("----:" + httpDownloader1.canDownloadWithThread());
-//        System.out.println("----:fileSize:" + httpDownloader1.getDownloadFileSize());
+        System.out.println("----:fileSize:" + httpDownloader1.getDownloadFileSize());
 //        httpDownloader1.useOneThreadDownloadFile();
-        long time1 = new Date().getTime();
-        httpDownloader1.useMoreThreadDownloadFile();
-        long time2 = new Date().getTime();
-        System.out.println("===>used time:" + (time2 - time1));
+//        long time1 = new Date().getTime();
+//        httpDownloader1.useMoreThreadDownloadFile();
+//        long time2 = new Date().getTime();
+//        System.out.println("===>used time:" + (time2 - time1));
 
 
     }
@@ -195,19 +196,28 @@ public class HttpDownloader1 {
     private Long getDownloadFileSize() {
         CloseableHttpClient httpclient = HttpClients.createDefault();
 
+        HttpHead httpHead = new HttpHead(requestUrl);
         HttpGet httpget = new HttpGet(requestUrl);
         httpget.addHeader("Range", "bytes=" + 0 + "-" + 99);
         HttpResponse response;
         Long contentLength = -1L;
         try {
-            response = httpclient.execute(httpget);
+            response = httpclient.execute(httpHead);//使用head的方式获取文件长度
+//            response = httpclient.execute(httpget);//使用get请求获取文件长度，这种方式有点笨。。
             int statusCode = response.getStatusLine().getStatusCode();
 
             System.out.println("===>statusCode:" + statusCode);
             System.out.println("===>headers:" + JSON.toJSONString(response.getAllHeaders()));
             Header[] headers = response.getHeaders("Content-Range");
-            if (headers.length > 0) {
-                contentLength = Long.valueOf(headers[0].getValue().split("/")[1]);
+            Header[] headers2 = response.getHeaders("Content-Length");
+            if(statusCode == 206) {//使用get请求方式获取文件长度
+                if (headers.length > 0) {
+                    contentLength = Long.valueOf(headers[0].getValue().split("/")[1]);
+                }
+            }else if(statusCode == 200){//使用head的请求方式获取文件长度
+                if (headers2.length > 0) {
+                    contentLength = Long.valueOf(headers2[0].getValue());
+                }
             }
 
             return contentLength;
