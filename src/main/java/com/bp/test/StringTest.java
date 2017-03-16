@@ -5,6 +5,7 @@ import java.util.HashMap;
 import java.util.List;
 
 import com.bp.util.all.TimeUtil;
+import org.junit.Test;
 
 
 public class StringTest {
@@ -83,10 +84,39 @@ public class StringTest {
 //		stringTest.getSplitString();
 
 		//判断1是否等于null
-		stringTest.equalsNull();
+//		stringTest.equalsNull();
+
+		//判读一个字符串中是否包含一个字符
+//		stringTest.stringContain();
+
+		//获取0到0的字符串
+		stringTest.getZero2Zero();
 	}
 
 
+	/**
+	 * 获取0到0的字符串:结果为空串
+	 */
+	public void getZero2Zero(){
+		String s1 = "1.2.3";
+		System.out.println("========="+s1.substring(0,1)+"=========");
+		System.out.println("".equals(s1.substring(0,0)));
+		System.out.println(s1.split("\\.")[2]);
+		System.out.println((int)s1.charAt(0));
+	}
+
+	/**
+	 * 判读一个字符串中是否包含一个字符
+	 */
+	public void stringContain(){
+		System.out.println("1.1".contains("."));
+		System.out.println("11".contains("."));
+	}
+
+	/**
+	 * 判断1是否等于null
+	 */
+	@Test
 	public void equalsNull(){
 		System.out.println("1".equals(null));
 	}
