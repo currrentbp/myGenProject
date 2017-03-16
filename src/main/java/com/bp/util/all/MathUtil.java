@@ -4,7 +4,9 @@ import com.alibaba.fastjson.JSON;
 import org.junit.Test;
 
 import java.util.ArrayList;
+import java.util.HashMap;
 import java.util.List;
+import java.util.Map;
 
 /**
  * 数学函数
@@ -134,12 +136,98 @@ public class MathUtil {
         return result;
     }
 
-    @Test
-    public void addTwoLongNum(){
-        //计算两个超长的数字相加的结果
-        System.out.println("9.9+1.1 = "+MathUtil.addTwoLongNum("9.9", "1.1"));
-        System.out.println("9999999999.9+1.11111 = "+MathUtil.addTwoLongNum("9999999999.9", "1.11111"));
-        System.out.println("1234567890+987654321 = "+MathUtil.addTwoLongNum("1234567890", "987654321"));
+    /**
+     * 将两个长的数字相乘
+     *
+     * @param num1
+     * @param num2
+     * @return
+     */
+    public static String multTwoLongNum(String num1, String num2) {
+        String result = "0";
+        if (CheckUtil.isEmpty(num1) && CheckUtil.isEmpty(num2)) {
+            return result;
+        }
+        String shortNum = num1.length() < num2.length() ? num1 : num2;
+        String longNum = num1.length() < num2.length() ? num2 : num1;
+
+        List<String> allMult = new ArrayList<String>();
+        //长的数字的小数点位置
+        int index = getPointLocation(longNum);
+        //整理后的长数字
+        String longNum2 = getRemovePointNum(longNum);
+
+        //1、先将一个数字分解成最简单的数，可以是小数，
+        //key是该短的数的值，value是该短值的小数点的位置，
+        Map<String, Integer> shortNumMap = splitTheNum(shortNum);
+        //2、将一个简单的数和复杂的数相乘
+        allMult = multAll(longNum2, index, shortNumMap);
+        //3、将这些乘的结果集相加
+        for (String num : allMult) {
+            result = addTwoLongNum(num, result);
+        }
+        return result;
+    }
+
+    /**
+     * 将数字相乘得出一些需要加的数字
+     *
+     * @param longNum     长的数字
+     * @param pointIndex  长值的小数点位置
+     * @param shortNumMap 短数的拆分集合
+     * @return 短数的分片乘积
+     */
+    private static List<String> multAll(String longNum, int pointIndex, Map<String, Integer> shortNumMap) {
+        List<String> result = new ArrayList<String>();
+
+        //TODO NOT WORK
+        return result;
+    }
+
+
+    /**
+     * 获取一个去处小数点的数，就是将该数扩大或者缩小10的整数倍
+     *
+     * @param num 数字
+     * @return 结果
+     */
+    private static String getRemovePointNum(String num) {
+        String result = "0";
+        //TODO NOT WORK
+        return result;
+    }
+
+    /**
+     * 获取小数点的位置
+     *
+     * @param num 数字
+     * @return 小数点的位置
+     */
+    private static int getPointLocation(String num) {
+        int result = 0;
+
+        //TODO NOT WORK
+
+        return result;
+    }
+
+    /**
+     * 将一个值分割：key是该短的数的值，value是该短值的小数点的位置，
+     *
+     * @param num 数字
+     * @return 分割后的值集合
+     */
+    private static Map<String, Integer> splitTheNum(String num) {
+        Map<String, Integer> shortNumMap = new HashMap<String, Integer>();
+        num = getNumNoTailZeroAndHeadZero(num);
+
+        //TODO not work
+        boolean containsPoint = num.contains(".");
+        String tail = num.substring(num.indexOf(".")+1);
+        String head = num.substring(0, num.indexOf("."));
+
+
+        return shortNumMap;
     }
 
     /**
@@ -171,6 +259,53 @@ public class MathUtil {
         String beforePointResult = getAddResult(getAddResult(num1BeforePoint, num2BeforePoint, true), first, true);
 
         result = beforePointResult + "." + afterPointResult.substring(1);
+        result = getNumNoTailZeroAndHeadZero(result);
+        return result;
+    }
+
+    /**
+     * 获取没有后面无用的0的数字
+     *
+     * @param num 数字
+     * @return 结果
+     */
+    private static String getNumNoTailZeroAndHeadZero(String num) {
+        String result = "0";
+
+
+
+        String head = num.substring(0, num.indexOf("."));
+        String sourceHead = head;
+        for (int i = 0; i < sourceHead.length(); i++) {
+            if ("0".equals("" + head.charAt(i))) {
+                head = sourceHead.substring(i);
+            } else {
+                break;
+            }
+        }
+        //没有小数点
+        boolean containsPoint = num.contains(".");
+        if(!containsPoint){
+            return result;
+        }
+
+        String tail = num.substring(num.indexOf(".")+1);
+        if (CheckUtil.isEmpty(tail)) {
+            return num;
+        }
+        String sourceTail = tail;
+        for (int i = sourceTail.length() - 1; i >= 0; i--) {
+            if ("0".equals("" + tail.charAt(i))) {
+                tail = sourceTail.substring(0, i);
+            } else {
+                break;
+            }
+        }
+
+
+        head = CheckUtil.isEmpty(head) ? "0" : head;
+
+        result = head + (CheckUtil.isEmpty(tail) ? "" : "." + tail);
         return result;
     }
 
@@ -186,6 +321,7 @@ public class MathUtil {
      */
     private static String getAddResult(String num1, String num2, boolean isBeforePoint) {
         StringBuilder result = new StringBuilder("");
+        //整理数字
         int size = num1.length() > num2.length() ? num1.length() : num2.length();
         int[] result1 = new int[size + 1];
         int[] n1 = new int[size + 1];
@@ -261,9 +397,9 @@ public class MathUtil {
         // System.out.println(MathUtil.multTwo(5L));
 
         //计算两个超长的数字相加的结果
-        System.out.println("9.9+1.1 = "+MathUtil.addTwoLongNum("9.9", "1.1"));
-        System.out.println("9999999999.9+1.11111 = "+MathUtil.addTwoLongNum("9999999999.9", "1.11111"));
-        System.out.println("1234567890+987654321 = "+MathUtil.addTwoLongNum("1234567890", "987654321"));
+        System.out.println("9.9+1.1 = " + MathUtil.addTwoLongNum("9.9", "1.1"));
+        System.out.println("9999999999.9+1.11111 = " + MathUtil.addTwoLongNum("9999999999.9", "1.11111"));
+        System.out.println("1234567890+987654321 = " + MathUtil.addTwoLongNum("1234567890", "987654321"));
 
     }
 }

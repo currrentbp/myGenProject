@@ -93,6 +93,27 @@ public class StringTest {
 		stringTest.getZero2Zero();
 	}
 
+	/**
+	 * 获取分割的字符串
+	 */
+	public void getSubString(String num){
+		String tail = num.substring(num.indexOf(".")+1);
+		String head = num.substring(0, num.indexOf("."));
+		System.out.println("=="+head+"=="+tail+"==");
+	}
+
+	/**
+	 * 判断一个字符串赋值后，修改其中一个变量后的情况,
+	 * 结果证明：string 是final的，无法修改
+	 */
+	public void twoStringChangeOneCharIsEqual(){
+		String s1 = "123";
+		String s2 = s1;
+		System.out.println("s1:"+s1+" == s2:"+s2+" :"+s1.equals(s2));
+		String s3 = s2.replace("2","4");
+		System.out.println("s1:"+s1+" == s2:"+s2+" :"+s1.equals(s2));
+	}
+
 
 	/**
 	 * 获取0到0的字符串:结果为空串
