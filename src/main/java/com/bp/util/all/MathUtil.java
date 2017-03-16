@@ -148,6 +148,8 @@ public class MathUtil {
         if (CheckUtil.isEmpty(num1) && CheckUtil.isEmpty(num2)) {
             return result;
         }
+        num1 = getNumNoTailZeroAndHeadZero(num1);
+        num2 = getNumNoTailZeroAndHeadZero(num2);
         String shortNum = num1.length() < num2.length() ? num1 : num2;
         String longNum = num1.length() < num2.length() ? num2 : num1;
 
@@ -159,7 +161,7 @@ public class MathUtil {
 
         //1、先将一个数字分解成最简单的数，可以是小数，
         //key是该短的数的值，value是该短值的小数点的位置，
-        Map<String, Integer> shortNumMap = splitTheNum(shortNum);
+        List<String[]> shortNumMap = splitTheNum(shortNum);
         //2、将一个简单的数和复杂的数相乘
         allMult = multAll(longNum2, index, shortNumMap);
         //3、将这些乘的结果集相加
@@ -172,15 +174,50 @@ public class MathUtil {
     /**
      * 将数字相乘得出一些需要加的数字
      *
-     * @param longNum     长的数字
-     * @param pointIndex  长值的小数点位置
-     * @param shortNumMap 短数的拆分集合
+     * @param longNum      长的数字
+     * @param pointIndex   长值的小数点位置
+     * @param shortNumList 短数的拆分集合
      * @return 短数的分片乘积
      */
-    private static List<String> multAll(String longNum, int pointIndex, Map<String, Integer> shortNumMap) {
+    private static List<String> multAll(String longNum, int pointIndex, List<String[]> shortNumList) {
         List<String> result = new ArrayList<String>();
 
         //TODO NOT WORK
+        for (String[] shortNum : shortNumList) {
+            String num = multEach(longNum, pointIndex, shortNum[0], Integer.parseInt(shortNum[1]));
+            result.add(num);
+        }
+        return result;
+    }
+
+    /**
+     * 计算结果
+     *
+     * @param longNum       长值
+     * @param pointIndex    长值的小数点
+     * @param shortNum      短值
+     * @param shortNumPoint 短值的小数点位置
+     * @return 结果
+     */
+    private static String multEach(String longNum, int pointIndex, String shortNum, int shortNumPoint) {
+        String result = "";
+        int point = pointIndex + shortNumPoint;
+        int carry = 0;
+        for (int i = longNum.length() - 1; i >= 0; i--) {
+            int mult1 = Integer.parseInt("" + longNum.charAt(i));
+            int stay = (mult1 * Integer.parseInt(shortNum) + carry) % 10;
+            carry = (mult1 * Integer.parseInt(shortNum) + carry) / 10;
+            result = stay + result;
+        }
+
+        result = carry + result;
+        if (point == 0) {
+
+        } else if (point > 0) {
+
+        } else {
+
+        }
         return result;
     }
 
@@ -192,8 +229,11 @@ public class MathUtil {
      * @return 结果
      */
     private static String getRemovePointNum(String num) {
-        String result = "0";
-        //TODO NOT WORK
+        String result = num;
+        if (!num.contains(".")) {
+            return result;
+        }
+        result = getNumNoTailZeroAndHeadZero(num.replace(".", ""));
         return result;
     }
 
@@ -205,9 +245,10 @@ public class MathUtil {
      */
     private static int getPointLocation(String num) {
         int result = 0;
-
-        //TODO NOT WORK
-
+        if (!num.contains(".")) {
+            return result;
+        }
+        result = num.length() - num.indexOf(".") - 1;
         return result;
     }
 
@@ -217,17 +258,39 @@ public class MathUtil {
      * @param num 数字
      * @return 分割后的值集合
      */
-    private static Map<String, Integer> splitTheNum(String num) {
-        Map<String, Integer> shortNumMap = new HashMap<String, Integer>();
+    private static List<String[]> splitTheNum(String num) {
+        List<String[]> shortNumList = new ArrayList<String[]>();
         num = getNumNoTailZeroAndHeadZero(num);
 
-        //TODO not work
         boolean containsPoint = num.contains(".");
-        String tail = num.substring(num.indexOf(".")+1);
-        String head = num.substring(0, num.indexOf("."));
+        if (!containsPoint) {//没有小数点
+            for (int i = 0; i < num.length(); i++) {
+                String c = "" + num.charAt(num.length() - 1 - i);
+                String[] element = new String[2];
+                element[0] = c;
+                element[1] = "" + i;
+                shortNumList.add(element);
+            }
+        } else {//存在小数点
+            String head = num.substring(0, num.indexOf("."));
+            String tail = num.substring(num.indexOf(".") + 1);
 
-
-        return shortNumMap;
+            for (int i = 0; i < head.length(); i++) {
+                String c = "" + num.charAt(num.length() - 1 - i);
+                String[] element = new String[2];
+                element[0] = c;
+                element[1] = "" + i;
+                shortNumList.add(element);
+            }
+            for (int i = 0; i < tail.length(); i++) {
+                String c = "" + num.charAt(i);
+                String[] element = new String[2];
+                element[0] = c;
+                element[1] = "" + ((i + 1) * -1);
+                shortNumList.add(element);
+            }
+        }
+        return shortNumList;
     }
 
     /**
@@ -272,8 +335,6 @@ public class MathUtil {
     private static String getNumNoTailZeroAndHeadZero(String num) {
         String result = "0";
 
-
-
         String head = num.substring(0, num.indexOf("."));
         String sourceHead = head;
         for (int i = 0; i < sourceHead.length(); i++) {
@@ -285,11 +346,11 @@ public class MathUtil {
         }
         //没有小数点
         boolean containsPoint = num.contains(".");
-        if(!containsPoint){
+        if (!containsPoint) {
             return result;
         }
 
-        String tail = num.substring(num.indexOf(".")+1);
+        String tail = num.substring(num.indexOf(".") + 1);
         if (CheckUtil.isEmpty(tail)) {
             return num;
         }
@@ -301,7 +362,6 @@ public class MathUtil {
                 break;
             }
         }
-
 
         head = CheckUtil.isEmpty(head) ? "0" : head;
 
