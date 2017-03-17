@@ -87,7 +87,9 @@ public class MathUtilTest {
 //        System.out.println("0*0=" + MathUtil.multTwoLongNum("0", "0"));
 //        System.out.println("0.0*0=" + MathUtil.multTwoLongNum("0.0", "0"));
 //        System.out.println("0.0*0.0=" + MathUtil.multTwoLongNum("0.0", "0.0"));
-        System.out.println("9.0*0.9=" + MathUtil.multTwoLongNum("9.0", "0.9"));
+//        System.out.println("9.0*0.9=" + MathUtil.multTwoLongNum("9.0", "0.9"));
+        //TODO not work
+        System.out.println("9.99999*9999999.9=" + MathUtil.multTwoLongNum("9.99999", "9999999.9"));
     }
 
 }

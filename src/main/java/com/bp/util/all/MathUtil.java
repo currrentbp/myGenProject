@@ -137,6 +137,17 @@ public class MathUtil {
     }
 
     /**
+     * 将两个长值的数字相互减法
+     * @param num1
+     * @param num2
+     * @return
+     */
+    public static String subtractionTwoLongNum(String num1,String num2){
+        String result = "0";
+        return result;
+    }
+
+    /**
      * 将两个长的数字相乘
      *
      * @param num1
@@ -189,6 +200,7 @@ public class MathUtil {
         }
         return result;
     }
+
 
     /**
      * 计算结果
