@@ -138,11 +138,12 @@ public class MathUtil {
 
     /**
      * 将两个长值的数字相互减法
+     *
      * @param num1
      * @param num2
      * @return
      */
-    public static String subtractionTwoLongNum(String num1,String num2){
+    public static String subtractionTwoLongNum(String num1, String num2) {
         String result = "0";
         return result;
     }
@@ -294,20 +295,23 @@ public class MathUtil {
             String head = num.substring(0, num.indexOf("."));
             String tail = num.substring(num.indexOf(".") + 1);
 
-            for (int i = 0; i < head.length(); i++) {
-                String c = "" + num.charAt(num.length() - 1 - i);
-                String[] element = new String[2];
-                element[0] = c;
-                element[1] = "" + i;
-                shortNumList.add(element);
+            if (!CheckUtil.isEmpty(head)) {
+                for (int i = head.length() - 1; i >= 0; i--) {
+                    String[] element = new String[2];
+                    element[0] = "" + head.charAt(i);
+                    element[1] = "" + (head.length() - i - 1);
+                    shortNumList.add(element);
+                }
             }
-            for (int i = 0; i < tail.length(); i++) {
-                String c = "" + num.charAt(i);
-                String[] element = new String[2];
-                element[0] = c;
-                element[1] = "" + ((i + 1) * -1);
-                shortNumList.add(element);
+            if (!CheckUtil.isEmpty(tail)) {
+                for (int i = 0; i < tail.length(); i++) {
+                    String[] element = new String[2];
+                    element[0] = "" + tail.charAt(i);
+                    element[1] = "" + ((i + 1) * -1);
+                    shortNumList.add(element);
+                }
             }
+
         }
         return shortNumList;
     }
