@@ -156,6 +156,12 @@ public class MathUtil {
      * @return
      */
     public static String multTwoLongNum(String num1, String num2) {
+        boolean f1 = isNegativeNum(num1);
+        boolean f2 = isNegativeNum(num2);
+        String pre = f1 ^ f2 ? "-" : "";
+        num1 = num1.contains("-") || num1.contains("+") ? num1.substring(1) : num1;
+        num2 = num2.contains("-") || num2.contains("+") ? num2.substring(1) : num2;
+
         String result = "0";
         if (CheckUtil.isEmpty(num1) && CheckUtil.isEmpty(num2)) {
             return result;
@@ -180,7 +186,17 @@ public class MathUtil {
         for (String num : allMult) {
             result = addTwoLongNum(num, result);
         }
-        return result;
+        return pre + result;
+    }
+
+    /**
+     * 是否是负数
+     *
+     * @param num 数字
+     * @return 是否是负数
+     */
+    private static boolean isNegativeNum(String num) {
+        return num.contains("-");
     }
 
     /**
@@ -317,6 +333,29 @@ public class MathUtil {
     }
 
     /**
+     * 两个长的数字相减
+     *
+     * @param num1 被减数
+     * @param num2 减数
+     * @return 结果
+     */
+    public static String subTwoLonNum(String num1, String num2) {
+        String result = "0";
+        //如果两个数字是一正一负，则相当于加法
+        boolean f1 = isNegativeNum(num1);
+        boolean f2 = isNegativeNum(num2);
+        if (f1 ^ f2) {//一正一负
+            String pre = num1.contains("-") ? "-" : "";
+            num1 = num1.contains("-") ? num1.substring(1) : num1;
+            num2 = num2.contains("-") ? num2.substring(1) : num2;
+            return pre + addTwoLongNum(num1, num2);
+        }
+
+
+        return result;
+    }
+
+    /**
      * 两个长的数字相加
      *
      * @param num1 被数
@@ -328,6 +367,18 @@ public class MathUtil {
         if (CheckUtil.isEmpty(num1) && CheckUtil.isEmpty(num2)) {
             return result;
         }
+        //判断是否走减法流程
+        boolean f1 = isNegativeNum(num1);
+        boolean f2 = isNegativeNum(num2);
+        String pre = "";
+        if (f1 ^ f2) {
+            return "";//TODO 减法
+        } else {
+            pre = num1.contains("-") ? "-" : "";
+            num1 = num1.contains("-") || num1.contains("+") ? num1.substring(1) : num1;
+            num2 = num2.contains("-") || num2.contains("+") ? num2.substring(1) : num2;
+        }
+
         if (!num1.contains(".")) {
             num1 = num1 + ".0";
         }
@@ -346,7 +397,7 @@ public class MathUtil {
 
         result = beforePointResult + "." + afterPointResult.substring(1);
         result = getNumNoTailZeroAndHeadZero(result);
-        return result;
+        return pre + result;
     }
 
     /**
