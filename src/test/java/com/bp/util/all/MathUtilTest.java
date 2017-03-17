@@ -58,17 +58,17 @@ public class MathUtilTest {
     }
 
     @Test
-    public void addTwoLongNum(){
+    public void addTwoLongNum() {
         //计算两个超长的数字相加的结果
-        System.out.println("0+0 = "+MathUtil.addTwoLongNum("0", "0"));
-        System.out.println("9.9+1.1 = "+MathUtil.addTwoLongNum("9.9", "1.1"));
-        System.out.println("9999999999.9+1.11111 = "+MathUtil.addTwoLongNum("9999999999.9", "1.11111"));
-        System.out.println("1234567890+987654321 = "+MathUtil.addTwoLongNum("1234567890", "987654321"));
-        System.out.println("1000000.000001+1.1 = "+MathUtil.addTwoLongNum("1000000.000001", "1.1"));
+        System.out.println("0+0 = " + MathUtil.addTwoLongNum("0", "0"));
+        System.out.println("9.9+1.1 = " + MathUtil.addTwoLongNum("9.9", "1.1"));
+        System.out.println("9999999999.9+1.11111 = " + MathUtil.addTwoLongNum("9999999999.9", "1.11111"));
+        System.out.println("1234567890+987654321 = " + MathUtil.addTwoLongNum("1234567890", "987654321"));
+        System.out.println("1000000.000001+1.1 = " + MathUtil.addTwoLongNum("1000000.000001", "1.1"));
     }
 
     @Test
-    public void multTwoLongNum(){
+    public void multTwoLongNum() {
 //        System.out.println("1*1="+MathUtil.multTwoLongNum("1","1"));
 //        System.out.println("1.0*1.0="+MathUtil.multTwoLongNum("1.0","1.0"));
 //        System.out.println("1*1.0="+MathUtil.multTwoLongNum("1","1.0"));
@@ -76,10 +76,18 @@ public class MathUtilTest {
 //        System.out.println("2.0*5.0="+MathUtil.multTwoLongNum("2.0","5.0"));
 //        System.out.println("20*50="+MathUtil.multTwoLongNum("20","50"));
 //        System.out.println("100*50="+MathUtil.multTwoLongNum("100","50"));
-        System.out.println("100*50.5="+MathUtil.multTwoLongNum("100","50.5"));
-        System.out.println("100*50.555="+MathUtil.multTwoLongNum("100","50.555"));
-        System.out.println("100*50.555="+MathUtil.multTwoLongNum("200","50.005"));
-
+//        System.out.println("100*50.5=" + MathUtil.multTwoLongNum("100", "50.5"));
+//        System.out.println("100*50.555=" + MathUtil.multTwoLongNum("100", "50.555"));
+//        System.out.println("200*50.555=" + MathUtil.multTwoLongNum("200", "50.005"));
+//        System.out.println("200*50.005=" + MathUtil.multTwoLongNum("200", "50.005"));
+//        System.out.println("2.0*50000000000.00000000000005=" + MathUtil.multTwoLongNum("2.0", "50000000000.00000000000005"));
+//        System.out.println("2.0*50000000000000000.000000000000000000000000005=" +
+//                MathUtil.multTwoLongNum("2.0", "50000000000000000.000000000000000000000000005"));
+//        System.out.println("1234567890*987654321=" + MathUtil.multTwoLongNum("1234567890", "987654321"));
+//        System.out.println("0*0=" + MathUtil.multTwoLongNum("0", "0"));
+//        System.out.println("0.0*0=" + MathUtil.multTwoLongNum("0.0", "0"));
+//        System.out.println("0.0*0.0=" + MathUtil.multTwoLongNum("0.0", "0.0"));
+        System.out.println("9.0*0.9=" + MathUtil.multTwoLongNum("9.0", "0.9"));
     }
 
 }
