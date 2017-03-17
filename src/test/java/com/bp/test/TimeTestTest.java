@@ -22,6 +22,7 @@ public class TimeTestTest {
     @Test
     public void getTimeByLong(){
         timeTest.getTimeByLong();
+        System.out.println("=====");
     }
 
 }
