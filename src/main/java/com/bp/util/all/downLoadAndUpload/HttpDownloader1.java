@@ -4,6 +4,7 @@ package com.bp.util.all.downLoadAndUpload;
 import com.alibaba.fastjson.JSON;
 import org.apache.http.Header;
 import org.apache.http.HttpResponse;
+import org.apache.http.client.config.RequestConfig;
 import org.apache.http.client.methods.HttpGet;
 import org.apache.http.client.methods.HttpHead;
 import org.apache.http.impl.client.CloseableHttpClient;
@@ -188,20 +189,33 @@ public class HttpDownloader1 {
         return false;
     }
 
+
+    /**
+     * 获取下载文件大小
+     * @param requestUrl 请求地址
+     * @return
+     */
+    public Long getDownloadFileSize(String requestUrl){
+        this.requestUrl = requestUrl;
+        return getDownloadFileSize();
+    }
+
     /**
      * 获取下载文件大小
      *
      * @return 文件大小
      */
-    private Long getDownloadFileSize() {
+    public Long getDownloadFileSize() {
         CloseableHttpClient httpclient = HttpClients.createDefault();
 
+        RequestConfig requestConfig = RequestConfig.custom().setSocketTimeout(5000).setConnectTimeout(5000).build();
         HttpHead httpHead = new HttpHead(requestUrl);
         HttpGet httpget = new HttpGet(requestUrl);
         httpget.addHeader("Range", "bytes=" + 0 + "-" + 99);
         HttpResponse response;
         Long contentLength = -1L;
         try {
+            httpHead.setConfig(requestConfig);
             response = httpclient.execute(httpHead);//使用head的方式获取文件长度
 //            response = httpclient.execute(httpget);//使用get请求获取文件长度，这种方式有点笨。。
             int statusCode = response.getStatusLine().getStatusCode();
