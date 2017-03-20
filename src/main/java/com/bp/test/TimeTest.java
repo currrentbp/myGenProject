@@ -1,5 +1,6 @@
 package com.bp.test;
 
+import java.text.SimpleDateFormat;
 import java.util.Date;
 
 /**
@@ -10,11 +11,12 @@ import java.util.Date;
  */
 public class TimeTest {
 	
-	public static void main(String[] args) {
-		TimeTest tt = new TimeTest();
-		
-		tt.printNowTimeLong();
-		tt.printSomeTimeLong();
+	public  void getTimeByLong(){
+		Long time = 1489994664124L;
+		Date date = new Date(time);
+		SimpleDateFormat simpleDateFormat = new SimpleDateFormat("yyyy-MM-dd HH:mm:ss");
+		String time1 = simpleDateFormat.format(date);
+		System.out.println(time1);
 	}
 	
 	/**

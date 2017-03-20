@@ -75,4 +75,10 @@ public class StringTestTest {
         stringTest.getSubString("1");
     }
 
+
+    @Test
+    public void stringSplit(){
+        stringTest.stringSplit();
+    }
+
 }

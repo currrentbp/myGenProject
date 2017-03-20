@@ -94,6 +94,19 @@ public class StringTest {
 	}
 
 	/**
+	 * 测试split方法
+	 */
+	public void stringSplit(){
+		String str = "a,b,c,,"; String[] ary = str.split(",");
+		//预期大于 3，结果是 3
+		System.out.println(ary.length);
+		String str2 = "a.b.c.."; String[] ary2 = str2.split(".");
+		System.out.println(ary2.length);
+		String str3 = "a.b.c.."; String[] ary3 = str3.split("\\.");
+		System.out.println(ary3.length);
+	}
+
+	/**
 	 * 获取分割的字符串
 	 */
 	public void getSubString(String num){
