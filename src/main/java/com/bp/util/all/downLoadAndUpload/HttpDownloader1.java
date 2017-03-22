@@ -192,10 +192,11 @@ public class HttpDownloader1 {
 
     /**
      * 获取下载文件大小
+     *
      * @param requestUrl 请求地址
      * @return
      */
-    public Long getDownloadFileSize(String requestUrl){
+    public Long getDownloadFileSize(String requestUrl) {
         this.requestUrl = requestUrl;
         return getDownloadFileSize();
     }
@@ -224,11 +225,11 @@ public class HttpDownloader1 {
             System.out.println("===>headers:" + JSON.toJSONString(response.getAllHeaders()));
             Header[] headers = response.getHeaders("Content-Range");
             Header[] headers2 = response.getHeaders("Content-Length");
-            if(statusCode == 206) {//使用get请求方式获取文件长度
+            if (statusCode == 206) {//使用get请求方式获取文件长度
                 if (headers.length > 0) {
                     contentLength = Long.valueOf(headers[0].getValue().split("/")[1]);
                 }
-            }else if(statusCode == 200){//使用head的请求方式获取文件长度
+            } else if (statusCode == 200) {//使用head的请求方式获取文件长度
                 if (headers2.length > 0) {
                     contentLength = Long.valueOf(headers2[0].getValue());
                 }
@@ -270,7 +271,7 @@ public class HttpDownloader1 {
                 if (progress[i] == ProgressStatus.DOWNLOAD_OK.getKey()) {
                     System.out.println("===>progress :" + i + " progress status:" + ProgressStatus.getValueByKey(progress[i]));
                     boolean changeResult1 = changeProgress(i, ProgressStatus.WRITE_ING.getKey(), ProgressStatus.DOWNLOAD_OK.getKey());
-                    if(!changeResult1){
+                    if (!changeResult1) {
                         continue;
                     }
 
@@ -314,7 +315,7 @@ public class HttpDownloader1 {
 
                 //修改分片的状态，并删除已经追加成功的临时文件
                 boolean changeResult2 = changeProgress(i, ProgressStatus.WRITE_OK.getKey(), ProgressStatus.WRITE_ING.getKey());
-                if(!changeResult2){
+                if (!changeResult2) {
                     continue;
                 }
                 File rmFile = new File(this.baseTMPFilePath + this.fileName + "_" + i + ".tmp");
@@ -335,6 +336,11 @@ public class HttpDownloader1 {
         System.out.println("===>start download .....");
         DownLoadThread downLoadThread = new DownLoadThread(0, getDownloadFileSize(), 0);
         downLoadThread.run();
+    }
+
+    public void useMoreThreadDownloadFile(String requestUrl) {
+        this.requestUrl = requestUrl;
+        useMoreThreadDownloadFile();
     }
 
     /**
@@ -394,7 +400,7 @@ public class HttpDownloader1 {
                 //下载每一个分片的内容
                 System.out.println("===>thread: id:" + Thread.currentThread().getId() +
                         "下载的分片：开始：" + start + "结束：" + end + " 分片：" + whichProgress);
-                BufferedInputStream inputStream ;
+                BufferedInputStream inputStream;
                 FileOutputStream fileOutputStream = null;
                 //.jpg
                 File tmpFile = new File(baseTMPFilePath + fileName + "_" + whichProgress + tmpTail);
@@ -451,7 +457,7 @@ public class HttpDownloader1 {
         private String value;
         private int key;
 
-        private ProgressStatus(int key, String value) {
+        ProgressStatus(int key, String value) {
             this.key = key;
             this.value = value;
         }

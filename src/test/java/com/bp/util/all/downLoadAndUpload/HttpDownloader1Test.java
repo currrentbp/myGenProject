@@ -24,12 +24,12 @@ public class HttpDownloader1Test {
 
     @Test
     public void useMoreThreadDownloadFile() throws Exception {
-
+        httpDownloader1.useMoreThreadDownloadFile("http://downloads.mongodb.org/linux/mongodb-linux-x86_64-3.0.6.tgz");
     }
 
     @Test
     public void getDownloadFileSize() throws Exception {
-        Long size = httpDownloader1.getDownloadFileSize("https://fastdl.mongodb.org/linux/mongodb-linux-x86_64-3.0.6.tgz");
+        Long size = httpDownloader1.getDownloadFileSize("http://downloads.mongodb.org/linux/mongodb-linux-x86_64-3.0.6.tgz");
         System.out.println("size:" + size);
     }
 
