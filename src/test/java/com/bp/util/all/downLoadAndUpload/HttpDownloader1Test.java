@@ -1,5 +1,6 @@
 package com.bp.util.all.downLoadAndUpload;
 
+import org.junit.Before;
 import org.junit.Test;
 
 import static org.junit.Assert.*;
@@ -11,6 +12,11 @@ public class HttpDownloader1Test {
 
 
     private HttpDownloader1 httpDownloader1 = new HttpDownloader1();
+
+    @Before
+    public void init(){
+
+    }
 
     @Test
     public void canDownloadWithThread() throws Exception {
