@@ -12,7 +12,7 @@ import java.util.Date;
 public class TimeTest {
 	
 	public  void getTimeByLong(){
-		Long time = 1489994664124L;
+		Long time = 1487845207000L;
 		Date date = new Date(time);
 		SimpleDateFormat simpleDateFormat = new SimpleDateFormat("yyyy-MM-dd HH:mm:ss");
 		String time1 = simpleDateFormat.format(date);
