@@ -1,5 +1,7 @@
 package com.bp.test;
 
+import com.alibaba.fastjson.JSON;
+
 import java.util.HashMap;
 import java.util.Iterator;
 import java.util.Map;
@@ -12,13 +14,41 @@ import java.util.Map;
  */
 public class MapTest {
 
-    public static void main(String[] args) {
+    public void putSomeKey() {
+        Map<String, String> map = new HashMap<String, String>();
+        System.out.println("size:" + map.size());
 
-//		MapTest.mapGetEachValue();
-        MapTest.mapGetEachValue2();
+        map.put("123", "321");
+        map.put("123", "3214");
+        System.out.println("size:" + map.size());
+
+        map.put("1234", "321");
+        map.put("1234", "321");
+        System.out.println("size:" + map.size());
+        System.out.println(JSON.toJSONString(map));
     }
 
-    public static void mapGetEachValue() {
+    public void getMapObjectStringFormat() {
+        Map<String, String> map = new HashMap<String, String>();
+        map.put("123", "321");
+        System.out.println(JSON.toJSONString(map));
+    }
+
+    /**
+     * 测试获取一个不存在的key值时，返回的值
+     */
+    public void getValueByNotExitKey() {
+        Map<String, String> map = new HashMap<String, String>();
+        map.put("123", "321");
+
+        System.out.println("key:3,value:" + map.get("3"));
+
+        Map<String, String> map2 = new HashMap<String, String>();
+
+        System.out.println("key:3,value:" + map2.get("3"));
+    }
+
+    public void mapGetEachValue() {
         Map<String, String> map = new HashMap<String, String>();
 
         for (int i = 0; i < 100000; i++) {
@@ -40,7 +70,7 @@ public class MapTest {
     /**
      *
      */
-    public static void mapGetEachValue2() {
+    public void mapGetEachValue2() {
         Map<String, String> map = new HashMap<String, String>();
 
         for (int i = 0; i < 100000; i++) {

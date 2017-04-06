@@ -110,7 +110,8 @@ public class StringTest {
 	 * 获取分割的字符串
 	 */
 	public void getSubString(String num){
-		System.out.println("123".substring(1));
+		String s1 = "_1";
+		System.out.println(s1.split("_")[0]);
 		String tail = num.substring(num.indexOf(".")+1);
 		String head = num.substring(0, num.indexOf("."));
 		System.out.println("=="+head+"=="+tail+"==");
