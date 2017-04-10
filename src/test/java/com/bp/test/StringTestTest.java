@@ -63,12 +63,12 @@ public class StringTestTest {
     }
 
     @Test
-    public void twoStringChangeOneCharIsEqual(){
+    public void twoStringChangeOneCharIsEqual() {
         stringTest.twoStringChangeOneCharIsEqual();
     }
 
     @Test
-    public void getSubString(){
+    public void getSubString() {
         stringTest.getSubString("1.2");
         stringTest.getSubString(".2");
         stringTest.getSubString("1.");
@@ -77,8 +77,15 @@ public class StringTestTest {
 
 
     @Test
-    public void stringSplit(){
+    public void stringSplit() {
         stringTest.stringSplit();
+    }
+
+    @Test
+    public void compareEfficiencyWithStringAndStringBufferAndStringFormat() {
+        for (int i = 0; i < 1000; i++) {
+            stringTest.compareEfficiencyWithStringAndStringBufferAndStringFormat();
+        }
     }
 
 }
