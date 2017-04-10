@@ -21,12 +21,24 @@ public class StringTest {
      */
     public void compareEfficiencyWithStringAndStringBufferAndStringFormat() {
         String success_code = "0";
-        byte splite = 0x01;
+        String splite = "bp";
         StringBuffer sb = new StringBuffer();
+        StringBuffer sb2 = new StringBuffer();
+
+        String resultMsg2 = "";
+        long time7 = System.nanoTime();
+        resultMsg2 = "ErrorCode1=" + success_code + splite + "ErrorMsg1=心跳包接收成功" + splite;
+        long time8 = System.nanoTime();
+        System.out.println("String add：" + (time8 - time7) + "ns");
+
+        long time9 = System.nanoTime();
+        sb2.append("ErrorCode2=").append(success_code).append(splite).append("ErrorMsg2=心跳包接收成功").append(splite);
+        long time10 = System.nanoTime();
+        System.out.println("StringBuilder add：" + (time10 - time9) + "ns");
 
         String resultMsg = "";
         long time1 = System.nanoTime();
-        String.format("ErrorCode=%s%cErrorMsg=心跳包接收成功%c", success_code, splite, splite);
+        String.format("ErrorCode=%s%sErrorMsg=心跳包接收成功%s", success_code, splite, splite);
         long time2 = System.nanoTime();
         System.out.println("StringFormat：" + (time2 - time1) + "ns");
 
