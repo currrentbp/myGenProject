@@ -89,7 +89,20 @@ public class MathUtilTest {
 //        System.out.println("0.0*0.0=" + MathUtil.multTwoLongNum("0.0", "0.0"));
 //        System.out.println("9.0*0.9=" + MathUtil.multTwoLongNum("9.0", "0.9"));
 //        System.out.println("9.99999*9999999.9=" + MathUtil.multTwoLongNum("9.99999", "9999999.9"));
-        System.out.println("-5*-2.0="+MathUtil.multTwoLongNum("-5","-2.0"));
+        System.out.println("-5*-2.0=" + MathUtil.multTwoLongNum("-5", "-2.0"));
+    }
+
+    public void subTwoLonNum() {
+
+        System.out.println("1-1 = " + MathUtil.subTwoLonNum("1", "1"));
+        System.out.println("2-1.0 = " + MathUtil.subTwoLonNum("2", "1.0"));
+        System.out.println("1.0-2 = " + MathUtil.subTwoLonNum("1.0", "2"));
+        System.out.println("1.0-2.0 = " + MathUtil.subTwoLonNum("1.0", "2.0"));
+        System.out.println("1.0-99.0 = " + MathUtil.subTwoLonNum("1.0", "99.0"));
+        System.out.println("1-(-1) = " + MathUtil.subTwoLonNum("1", "-1"));
+        System.out.println("-1-1 = " + MathUtil.subTwoLonNum("-1", "1"));
+        System.out.println("1-(-1) = " + MathUtil.subTwoLonNum("1.0", "-1"));
+        System.out.println("-1.0-1 = " + MathUtil.subTwoLonNum("-1.0", "1"));
     }
 
 }

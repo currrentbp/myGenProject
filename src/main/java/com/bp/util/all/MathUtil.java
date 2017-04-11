@@ -345,9 +345,9 @@ public class MathUtil {
         boolean f1 = isNegativeNum(num1);
         boolean f2 = isNegativeNum(num2);
         if (f1 ^ f2) {//一正一负
-            String pre = num1.contains("-") ? "-" : "";
-            num1 = num1.contains("-") ? num1.substring(1) : num1;
-            num2 = num2.contains("-") ? num2.substring(1) : num2;
+            String pre = num1.contains("-") ? "-" : "";//第一个数决定是加法还是减法
+            num1 = num1.contains("-") || num1.contains("+") ? num1.substring(1) : num1;
+            num2 = num2.contains("-") || num2.contains("+") ? num2.substring(1) : num2;
             return pre + addTwoLongNum(num1, num2);
         }
 

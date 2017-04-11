@@ -15,4 +15,9 @@ public class BooleanTestTest {
         booleanTest.simpleTypeHasDefaultValue();
     }
 
+    @Test
+    public void eachOperatorResult(){
+        booleanTest.eachOperatorResult();
+    }
+
 }
