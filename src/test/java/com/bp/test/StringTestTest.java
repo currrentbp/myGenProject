@@ -83,8 +83,8 @@ public class StringTestTest {
 
     @Test
     public void compareEfficiencyWithStringAndStringBufferAndStringFormat() {
-        for (int i = 0; i < 1000; i++) {
-            stringTest.compareEfficiencyWithStringAndStringBufferAndStringFormat();
+        for (int i = 0; i < 10000; i++) {
+            stringTest.compareEfficiencyWithStringAndStringBufferAndStringFormat(i);
         }
     }
 
