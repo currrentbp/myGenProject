@@ -19,8 +19,8 @@ public class MathUtil {
     /**
      * 将long类型的数据除以2
      *
-     * @param divideNum
-     * @return
+     * @param divideNum 数字
+     * @return 结果
      */
     public static long divideTwo(long divideNum) {
         return divideNum >> 1;
@@ -29,8 +29,8 @@ public class MathUtil {
     /**
      * 将int类型的数据除以2
      *
-     * @param divideNum
-     * @return
+     * @param divideNum 数字
+     * @return 结果
      */
     public static int divideTwo(int divideNum) {
         return divideNum >> 1;
@@ -39,8 +39,8 @@ public class MathUtil {
     /**
      * 将long类型的数据乘以2
      *
-     * @param multTwo
-     * @return
+     * @param multTwo 数字
+     * @return 结果
      */
     public static long multTwo(long multTwo) {
         return multTwo << 1;
@@ -49,8 +49,8 @@ public class MathUtil {
     /**
      * 将int类型的数据乘以2
      *
-     * @param multNum
-     * @return
+     * @param multNum 数字
+     * @return 结果
      */
     public static int multTwo(int multNum) {
         return multNum << 1;
@@ -59,9 +59,9 @@ public class MathUtil {
     /**
      * 计算两点之间距离（默认到原点距离）
      *
-     * @param x1
-     * @param y1
-     * @return
+     * @param x1 x1
+     * @param y1 y1
+     * @return 距离
      */
     public static float distanceFromTwoPlace(float x1, float y1) {
         return distanceFromTwoPlace(0, 0, x1, y1);
@@ -70,11 +70,11 @@ public class MathUtil {
     /**
      * 计算两点之间距离
      *
-     * @param x1
-     * @param y1
-     * @param x2
-     * @param y2
-     * @return
+     * @param x1 x1
+     * @param y1 y1
+     * @param x2 x2
+     * @param y2 y2
+     * @return 距离
      */
     public static float distanceFromTwoPlace(float x1, float y1, float x2, float y2) {
         return (float) Math.sqrt((x1 - x2) * (x1 - x2) + (y1 - y2) * (y1 - y2));
@@ -114,9 +114,9 @@ public class MathUtil {
     /**
      * 公约数(Common divisor)
      *
-     * @param num1
-     * @param num2
-     * @return
+     * @param num1 数字1
+     * @param num2 数字2
+     * @return 结果
      */
     public static int maxCommonDivisor(int num1, int num2) {
         int result = 1;
@@ -139,9 +139,9 @@ public class MathUtil {
     /**
      * 将两个长值的数字相互减法
      *
-     * @param num1
-     * @param num2
-     * @return
+     * @param num1 数字1
+     * @param num2 数字2
+     * @return 结果
      */
     public static String subtractionTwoLongNum(String num1, String num2) {
         String result = "0";
@@ -151,9 +151,9 @@ public class MathUtil {
     /**
      * 将两个长的数字相乘
      *
-     * @param num1
-     * @param num2
-     * @return
+     * @param num1 数字1
+     * @param num2 数字2
+     * @return 结果
      */
     public static String multTwoLongNum(String num1, String num2) {
         boolean f1 = isNegativeNum(num1);
@@ -351,8 +351,79 @@ public class MathUtil {
             return pre + addTwoLongNum(num1, num2);
         }
 
+        //两个数字的符号
+        String n1Pre = num1.contains("-") || num1.contains("+") ? num1.substring(0, 1) : "+";
+        String n2Pre = num2.contains("-") || num2.contains("+") ? num2.substring(0, 1) : "+";
+        num1 = num1.contains("-") || num1.contains("+") ? num1.substring(1) : num1;
+        num2 = num2.contains("-") || num2.contains("+") ? num2.substring(1) : num2;
+
+        //1、判断两个数的正值的大小:0:等于，1：大于，-1：小于
+        int flag = compareTwoLongNum(num1, num2);
+        //2、两个数相减
+        if (flag == 0) {
+            return result;
+        }
+        //决定符号//TODO 有问题
+        String pre = flag == 1 ? n1Pre : n2Pre;
+
 
         return result;
+    }
+
+
+    /**
+     * 比较两个数字的大小
+     *
+     * @param num1 第一个正数
+     * @param num2 第二个正数
+     * @return 0:等于，1：大于，-1：小于
+     */
+    private static int compareTwoLongNum(String num1, String num2) {
+        String num1_1 = getNumNoTailZeroAndHeadZero(num1);
+        String num2_1 = getNumNoTailZeroAndHeadZero(num2);
+
+        num1_1 = num1_1.contains(".") ? num1_1 : num1_1 + ".0";
+        num2_1 = num2_1.contains(".") ? num2_1 : num2_1 + ".0";
+
+        String num1Head = num1_1.substring(0, num1_1.indexOf("."));
+        String num2Head = num2_1.substring(0, num2_1.indexOf("."));
+        String num1Tail = num1_1.substring(num1_1.indexOf(".") + 1);
+        String num2Tail = num2_1.substring(num2_1.indexOf(".") + 1);
+
+        if (num1Head.length() > num2Head.length()) {//第一个数字的小数点前半段长度大于第二个
+            return 1;
+        } else if (num1Head.length() < num2Head.length()) {//第一个数字的小数点前半段长度小于第二个
+            return -1;
+        }
+
+        //比较前半段
+        for (int i = 0; i < num1Head.length(); i++) {
+            if (num1Head.charAt(i) < num2Head.charAt(i)) {
+                return -1;
+            }
+
+            if (num1Head.charAt(i) > num2Head.charAt(i)) {
+                return 1;
+            }
+        }
+        //比较后半段
+        for (int i = 0; i < (num1Tail.length() > num2Tail.length() ? num1Tail.length() : num2Tail.length()); i++) {
+            if (num1Tail.charAt(i) < num2Tail.charAt(i)) {
+                return -1;
+            }
+            if (num1Tail.charAt(i) > num2Tail.charAt(i)) {
+                return 1;
+            }
+        }
+
+        if (num1Tail.length() > num2Tail.length()) {
+            return 1;
+        } else if (num1Tail.length() < num2Tail.length()) {
+            return -1;
+        } else {
+            return 0;
+        }
+
     }
 
     /**
