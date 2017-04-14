@@ -9,8 +9,14 @@ import static org.junit.Assert.*;
  * @createTime 20170414
  */
 public class LongTestTest {
+
+
     private LongTest longTest = new LongTest();
 
+    @Test
+    public void nullToLong() throws Exception {
+        longTest.nullToLong();
+    }
 
     @Test
     public void intZeroEqualsLongZero() throws Exception {

@@ -1,5 +1,7 @@
 package com.bp.test;
 
+import java.util.Date;
+
 /**
  * 
  * @author current_bp
@@ -18,6 +20,11 @@ public class LongTest {
 		//测试两个长型的数字加后是否出现错误
 		lt.longBeyond();
 
+	}
+
+	public void nullToLong(){
+		Date date = null;
+		System.out.println(date.getTime());
 	}
 
 	public void intZeroEqualsLongZero(){
