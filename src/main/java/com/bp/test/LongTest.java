@@ -20,6 +20,12 @@ public class LongTest {
 
 	}
 
+	public void intZeroEqualsLongZero(){
+		Long z = 0L;
+		int z1 = 0;
+		System.out.println("0L == 0 :" +(z1 == z));
+
+	}
 
 	/**
 	 * 测试两个长型的数字加后是否出现错误

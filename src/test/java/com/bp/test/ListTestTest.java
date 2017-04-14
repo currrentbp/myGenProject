@@ -1,0 +1,33 @@
+package com.bp.test;
+
+import org.junit.Test;
+
+import static org.junit.Assert.*;
+
+/**
+ * Created by issuser on 2017/4/14.
+ */
+public class ListTestTest {
+    private ListTest listTest = new ListTest();
+
+    @Test
+    public void stringSplitToArray() throws Exception {
+        listTest.stringSplitToArray();
+    }
+
+    @Test
+    public void listForMethod() throws Exception {
+
+    }
+
+    @Test
+    public void listForMethod2() throws Exception {
+
+    }
+
+    @Test
+    public void object2ListAndChangeSome() throws Exception {
+
+    }
+
+}
