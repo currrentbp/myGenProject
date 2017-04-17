@@ -239,6 +239,7 @@ public class StringUtil {
         if (null == splitBy || "".equals(splitBy)) {
             throw new RuntimeException("splitBy is empty!");
         }
+        source = source.replace("[", "").replace("]", "").replace("\"", "");
 
         String[] s = source.split(splitBy);
         List<String> result = new ArrayList<String>();
