@@ -364,10 +364,26 @@ public class MathUtil {
             return result;
         }
         //决定符号//TODO 有问题
-        String pre = flag == 1 ? n1Pre : n2Pre;
+        String pre = getPreBy2LongNumMult(num1, num2, flag);
+
+
 
 
         return result;
+    }
+
+    /**
+     *
+     * @param num1 第一个数
+     * @param num2
+     * @param flag
+     * @return
+     */
+    private static String getPreBy2LongNumMult(String num1, String num2, int flag) {
+        String pre = "+";
+
+
+        return pre;
     }
 
 
