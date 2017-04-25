@@ -1,5 +1,7 @@
 package com.bp.test;
 
+import org.junit.Test;
+
 /**
  * 关于spring 的一些方法的测试
  * @author current_bp
@@ -22,5 +24,22 @@ public class Spring_method_test {
             ;
         }
         System.out.println("beanName:"+beanName+" name:"+name);
+    }
+
+
+    @Test
+    public void foreach(){
+        String name = "&123";
+        String beanName = "";
+        for(beanName = name; beanName.startsWith("&"); beanName = beanName.substring("&".length())) {
+            ;
+        }
+    }
+
+    @Test
+    public void stringUtilsHasText(){
+        String profileSpec =  "123";
+        //org.springframework.util
+//        StringUtils.hasText(profileSpec);
     }
 }
