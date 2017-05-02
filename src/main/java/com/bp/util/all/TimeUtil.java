@@ -201,6 +201,6 @@ public class TimeUtil {
 
 
 		//根据给定的时间，获取一个其毫秒数
-		System.out.println(TimeUtil.getSpecialTime2Long(2016,12,26,14,43,1));
+		System.out.println(TimeUtil.currentTimeToLong());
 	}
 }
