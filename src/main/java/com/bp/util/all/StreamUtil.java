@@ -582,5 +582,84 @@ public class StreamUtil {
         return result;
     }
 
+    /**
+     * 获取文件中所有的行的数据
+     * @param path 文件路径
+     * @return 所有数据
+     */
+    public static List<String> readFile(String path){
+        try {
+            createMyNewFile(path);
+        }catch (Exception e){
+            System.out.println("文件已存在！！");
+        }
+        return readFile(new File(path));
+    }
+
+    /**
+     * 获取文件中所有的行的数据
+     * @param sourceFile 文件
+     * @return 所有数据
+     */
+    public static List<String >readFile(File sourceFile){
+        List<String> result = new ArrayList<String>();
+
+        InputStream is = null;
+        InputStreamReader isr = null;
+        BufferedReader br = null;
+
+        try{
+            is = new FileInputStream(sourceFile);
+            isr = new InputStreamReader(is);
+            br = new BufferedReader(isr);
+            String temp = null;
+            while ((temp = br.readLine()) != null) {
+                result.add(temp);
+            }
+        }catch (Exception e){
+            System.out.println("===>error!!! msg:"+e.getMessage());
+        }finally {
+            closeResource(is,isr,br,null,null,null);
+        }
+
+
+        return result;
+    }
+
+
+    /**
+     * 关闭流
+     * @param is
+     * @param isr
+     * @param br
+     * @param os
+     * @param osw
+     * @param bw
+     */
+    private static void closeResource(InputStream is, InputStreamReader isr, BufferedReader br, OutputStream os, OutputStreamWriter osw,
+                                      BufferedWriter bw){
+        try {
+            if (null != bw) {
+                bw.close();
+            }
+            if(null != osw){
+                osw.close();
+            }
+            if(null != os){
+                os.close();
+            }
+            if(null != br){
+                br.close();
+            }
+            if(null != isr){
+                isr.close();
+            }
+            if(null != is){
+                is.close();
+            }
+        }catch (Exception e){
+            System.out.println("===>close resource error!! msg:"+e.getMessage());
+        }
+    }
 
 }

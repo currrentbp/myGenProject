@@ -71,22 +71,21 @@ public class ParseHtml {
             Node node = iterator.nextNode();
             //得到该节点的子节点列表
             NodeList childList = node.getChildren();
+            //得到值节点的值
+            String result = node.toPlainTextString();
+            //节点的属性值
+            String result1 = node.getText();
+            if (result1.indexOf(keyword) != -1) {
+                System.out.println("result1:" + result1);
+
+            }
+            //若包含关键字，则简单打印出来文本
+            if (result.indexOf(keyword) != -1)
+                System.out.println("result:" + result);
             //孩子节点为空，说明是值节点
-            if (null == childList) {
-                //得到值节点的值
-                String result = node.toPlainTextString();
-                //节点的属性值
-                String result1 = node.getText();
-                if (result1.indexOf(keyword) != -1)
-                    System.out.println("result1:" + result1);
-                //若包含关键字，则简单打印出来文本
-                if (result.indexOf(keyword) != -1)
-                    System.out.println("result:" + result);
-            } //end if
-            //孩子节点不为空，继续迭代该孩子节点
-            else {
+            if(null != childList){
                 processNodeList(childList, keyword);
-            }//end else
+            }
         }//end wile
     }
 }
