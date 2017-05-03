@@ -3,10 +3,7 @@ package com.bp.daletou;
 import com.bp.util.all.CheckUtil;
 import com.bp.util.all.StreamUtil;
 
-import java.util.ArrayList;
-import java.util.HashMap;
-import java.util.List;
-import java.util.Map;
+import java.util.*;
 
 /**
  * 大乐透
@@ -16,8 +13,12 @@ import java.util.Map;
  */
 public class Daletou {
     private Map<String, DaletouEntity> localDaletouHistory = new HashMap<String, DaletouEntity>();
+    private List<Integer> sortDaletouHistoryIds = new ArrayList<Integer>();
 
 
+    /**
+     * 初始化本地的历史数据
+     */
     private void initReadDaletouHistory() {
         List<String> daletouHistory = StreamUtil.readFile(
                 "E:\\ws\\idea_ws\\myGenProject\\20161223_7\\myGenProject\\src\\main\\resources\\daletou\\daletou_history.txt");
@@ -25,7 +26,10 @@ public class Daletou {
             return;
         }
 
-        for (String daletou : daletouHistory) {
+        List<Integer> list = new ArrayList<Integer>();
+        Integer[] temp = new Integer[daletouHistory.size()];
+        for (int i=0;i<localDaletouHistory.size();i++) {
+            String daletou = daletouHistory.get(i);
             try {//如果格式不正确导致错误，则忽略
                 String[] daletous = daletou.split(":");
                 String[] nums = daletous[1].split(";");
@@ -38,11 +42,16 @@ public class Daletou {
                 daletouEntity.setId(daletous[0]);
                 daletouEntity.setBlue(getIntArraysByStringArrays(blues1));
                 daletouEntity.setRed(getIntArraysByStringArrays(reds1));
+
+                localDaletouHistory.put(daletous[0],daletouEntity);
+                temp[i] = Integer.parseInt(daletous[0]);
             } catch (Exception e) {
                 continue;
             }
         }
 
+        Arrays.sort(temp);
+        sortDaletouHistoryIds = Arrays.asList(temp);
     }
 
 
