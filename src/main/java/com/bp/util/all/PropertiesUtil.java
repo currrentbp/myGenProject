@@ -12,36 +12,33 @@ import java.util.ResourceBundle;
  */
 public class PropertiesUtil {
 
-    private static Map<String ,ResourceBundle> configs ;
-    private ResourceBundle currentConfig ;
+    private static Map<String, ResourceBundle> configs;
+    private ResourceBundle currentConfig;
 
-    public static PropertiesUtil getInstance(String file){
-        if(null == configs){
-            synchronized (PropertiesUtil.class){
-                if(null == configs){
+    public static PropertiesUtil getInstance(String file) {
+        if (null == configs) {
+            synchronized (PropertiesUtil.class) {
+                if (null == configs) {
                     configs = new HashMap<String, ResourceBundle>();
                 }
             }
         }
-        if(null != configs.get(file)){
-            ResourceBundle conf = configs.get(file);
-            PropertiesUtil propertiesUtil = new PropertiesUtil();
-            propertiesUtil.setCurrentConfig(conf);
-            return propertiesUtil;
-        }else {
-            ResourceBundle conf = ResourceBundle.getBundle(file);
+        ResourceBundle conf;
+        PropertiesUtil propertiesUtil = new PropertiesUtil();
+        if (null != configs.get(file)) {
+            conf = configs.get(file);
+        } else {
+            conf = ResourceBundle.getBundle(file);
             configs.put(file, conf);
-            PropertiesUtil propertiesUtil = new PropertiesUtil();
-            propertiesUtil.setCurrentConfig(conf);
-            return propertiesUtil;
         }
+        propertiesUtil.setCurrentConfig(conf);
+        return propertiesUtil;
 
     }
 
-    public String getValueByKey(String key){
+    public String getValueByKey(String key) {
         return currentConfig.getString(key);
     }
-
 
 
     //==================== get set function ===============================================================//
