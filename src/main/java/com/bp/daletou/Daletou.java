@@ -16,6 +16,13 @@ public class Daletou {
     private List<Integer> sortDaletouHistoryIds = new ArrayList<Integer>();
 
 
+    //==================      init       ===============================================================//
+    /**
+     * 更新历史数据，将最新的数据放入该文件
+     */
+    private void initHistory(){
+        //TODO 更新历史数据
+    }
     /**
      * 初始化本地的历史数据
      */
@@ -52,6 +59,13 @@ public class Daletou {
 
         Arrays.sort(temp);
         sortDaletouHistoryIds = Arrays.asList(temp);
+    }
+
+    /**
+     * 初始化分析结果，将新添加的历史数据与前N个数据比较，看看结果类似度
+     */
+    private void initAnalysis(){
+
     }
 
 
