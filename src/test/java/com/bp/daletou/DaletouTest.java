@@ -1,5 +1,8 @@
 package com.bp.daletou;
 
+import com.bp.steam.GetPropertiesFileInfo;
+import org.junit.Test;
+
 import static org.junit.Assert.*;
 
 /**
@@ -9,5 +12,11 @@ import static org.junit.Assert.*;
  * @createTime 20170503
  */
 public class DaletouTest {
+
+    @Test
+    public void config(){
+        System.out.println(GetPropertiesFileInfo.getProperties("src//main//resources//daletou//config.properties")
+                .getProperty("analysis_num"));
+    }
 
 }
