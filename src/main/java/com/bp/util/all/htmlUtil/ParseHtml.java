@@ -77,7 +77,7 @@ public class ParseHtml {
             String result1 = node.getText();
             if (result1.indexOf(keyword) != -1) {
                 System.out.println("result1:" + result1);
-
+                System.out.println("node.getTostring:" + node.toString());
             }
             //若包含关键字，则简单打印出来文本
             if (result.indexOf(keyword) != -1)

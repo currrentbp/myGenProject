@@ -13,10 +13,18 @@ import java.util.*;
  */
 public class Daletou {
     private Map<String, DaletouEntity> localDaletouHistory = new HashMap<String, DaletouEntity>();
+    //排序好的历史IDs
     private List<Integer> sortDaletouHistoryIds = new ArrayList<Integer>();
+    //需要下载的历史IDs
+    private List<Integer> needLoadDaletouHistoryIds =  new ArrayList<Integer>();
 
 
     //==================      init       ===============================================================//
+    /*
+    1、下载最新的数据，并保存到daletou_history.txt文件中
+    2、对daletou_history.txt文件中的数据进行分析，将没有分析的数据写入
+    3、获取一个或者多个预测数据
+     */
     /**
      * 更新历史数据，将最新的数据放入该文件
      */
