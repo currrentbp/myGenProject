@@ -12,6 +12,18 @@ import static org.junit.Assert.*;
  * @createTime 20170503
  */
 public class DaletouTest {
+    @Test
+    public void initAnalysis() throws Exception {
+        Daletou daletou = new Daletou();
+        daletou.initReadDaletouHistory();
+        daletou.initAnalysis();
+    }
+
+    @Test
+    public void initReadDaletouHistory() throws Exception {
+        Daletou daletou = new Daletou();
+        daletou.initReadDaletouHistory();
+    }
 
     @Test
     public void config(){
