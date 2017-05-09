@@ -5,9 +5,12 @@ import com.bp.util.all.CheckUtil;
 import com.bp.util.all.PropertiesUtil;
 import com.bp.util.all.StreamUtil;
 
-import java.io.IOException;
+import java.io.*;
+import java.text.SimpleDateFormat;
 import java.util.*;
 import java.util.concurrent.ConcurrentLinkedQueue;
+import java.util.regex.Matcher;
+import java.util.regex.Pattern;
 
 /**
  * 大乐透
@@ -21,6 +24,10 @@ public class Daletou {
     private List<Integer> sortDaletouHistoryIds = new ArrayList<Integer>();
     //需要下载的历史IDs
     private List<Integer> needLoadDaletouHistoryIds = new ArrayList<Integer>();
+    //最近：红球和篮球的重复概率
+    private float[] redAndBluePro = new float[2];
+    //所有的分析结果
+    private Map<String, String> daletouAnalysis = new HashMap<String, String>();
 
 
     //==================      init       ===============================================================//
@@ -87,12 +94,13 @@ public class Daletou {
             if (i < analysisNum) {//如果前面的历史数据不够，就不要参加计算
                 concurrentLinkedQueue.add(sortDaletouHistoryIds.get(i));
             } else {//有足够的历史数据计算，则先计算，再删除顶数据，添加新数据
+                //每N个数据一分析
                 float[] analysisResults = analysisBeforeLike(getIntegerArrayByObjectArray(concurrentLinkedQueue.toArray()), sortDaletouHistoryIds.get(i));
                 System.out.println("id:" + sortDaletouHistoryIds.get(i) + " like:" + JSON.toJSONString(analysisResults));
 
                 //写入文件中
                 try {
-                    StreamUtil.writeSomethingToFile(""+sortDaletouHistoryIds.get(i)+":"+analysisResults[0]+","+analysisResults[1]+"\n",
+                    StreamUtil.writeSomethingToFile("" + sortDaletouHistoryIds.get(i) + ":" + analysisResults[0] + "," + analysisResults[1] + "\n",
                             "E:\\ws\\idea_ws\\myGenProject\\20161223_7\\myGenProject\\src\\main\\resources\\daletou\\daletou_analysis.txt",
                             true);
                 } catch (IOException e) {
@@ -104,6 +112,51 @@ public class Daletou {
                 concurrentLinkedQueue.add(sortDaletouHistoryIds.get(i));
             }
         }
+    }
+
+    /**
+     * 初始化：最近红球和篮球的重复的概率
+     */
+    public void initCurrentPredict() {
+        int analysisNum = Integer.parseInt(PropertiesUtil.getInstance("daletou/config").getValueByKey("analysis_num"));
+        getAllDaletouAnalysis();
+        initReadDaletouHistory();
+        //获取前N个分析结果
+        List<Integer> befor = new ArrayList<Integer>();
+        for (int i = 0; i < analysisNum; i++) {
+            befor.add(sortDaletouHistoryIds.get(i));
+        }
+
+        //写入redAndBluePro
+        for (int i = 0; i < befor.size(); i++) {
+            String[] nums = daletouAnalysis.get("" + befor.get(i)).split(",");
+            float red = Float.parseFloat(nums[0]);
+            float blue = Float.parseFloat(nums[1]);
+            redAndBluePro[0] = redAndBluePro[0] + red;
+            redAndBluePro[1] = redAndBluePro[1] + blue;
+        }
+        redAndBluePro[0] = redAndBluePro[0] / analysisNum;
+        redAndBluePro[1] = redAndBluePro[1] / analysisNum;
+    }
+
+
+    /**
+     * 预测大乐透
+     *
+     * @return
+     */
+    public List<DaletouEntity> predictDaletou() {
+        List<DaletouEntity> result = new ArrayList<DaletouEntity>();
+        int predictNum = Integer.parseInt(PropertiesUtil.getInstance("daletou/config").getValueByKey("predict_num"));
+        int analysisNum = Integer.parseInt(PropertiesUtil.getInstance("daletou/config").getValueByKey("analysis_num"));
+
+        List<DaletouEntity> beforeDaletouList = new ArrayList<DaletouEntity>();
+        for (int i = 0; i < analysisNum; i++) {
+            beforeDaletouList.add(localDaletouHistory.get(sortDaletouHistoryIds.get(i)));
+        }
+
+
+        return result;
     }
 
 
@@ -202,5 +255,45 @@ public class Daletou {
         result[1] = ((float) blueCount) / 5;
 
         return result;
+    }
+
+
+    /**
+     * 将daletou_analysis.txt中的分析结果写入内存
+     */
+    private void getAllDaletouAnalysis() {
+        ArrayList list = new ArrayList();
+
+        File sourceFile = new File(
+                "E:\\ws\\idea_ws\\myGenProject\\20161223_7\\myGenProject\\src\\main\\resources\\daletou\\daletou_analysis.txt");
+
+        InputStream is = null;
+        InputStreamReader isr = null;
+        BufferedReader br = null;
+
+        String temp = null;
+        try {
+            is = new FileInputStream(sourceFile);
+            isr = new InputStreamReader(is);
+            br = new BufferedReader(isr);
+
+            while ((temp = br.readLine()) != null) {
+                String[] result = temp.split(":");
+                daletouAnalysis.put(result[0], result[1]);
+            }
+
+        } catch (FileNotFoundException e) {
+            e.printStackTrace();
+        } catch (IOException e) {
+            e.printStackTrace();
+        } finally {
+            try {
+                br.close();
+                isr.close();
+                is.close();
+            } catch (Exception e) {
+            }
+        }
+
     }
 }
