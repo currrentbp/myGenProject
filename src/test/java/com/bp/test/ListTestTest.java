@@ -11,6 +11,11 @@ public class ListTestTest {
     private ListTest listTest = new ListTest();
 
     @Test
+    public void listRemoveOneGetSize() throws Exception {
+        listTest.listRemoveOneGetSize();
+    }
+
+    @Test
     public void stringSplitToArray() throws Exception {
         listTest.stringSplitToArray();
     }

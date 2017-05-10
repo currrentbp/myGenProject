@@ -25,9 +25,20 @@ public class ListTest {
         listTest.listForMethod2();
     }
 
+    public void listRemoveOneGetSize() {
+        List<String> list = new ArrayList<String>();
+        list.add("1");
+        list.add("2");
+        list.add("3");
+        list.add("4");
+        System.out.println("===>befor: size:" + list.size() + " list:" + JSON.toJSONString(list));
+        list.remove(2);
+        System.out.println("===>after: size:" + list.size() + " list:" + JSON.toJSONString(list));
+    }
+
 
     /**
-     *如果没有分隔符，则还是一个数组，只不过长度为1，
+     * 如果没有分隔符，则还是一个数组，只不过长度为1，
      * 如果后面是光秃秃的分隔符，则忽略这些分隔符
      */
     public void stringSplitToArray() {

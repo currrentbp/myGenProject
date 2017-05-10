@@ -3,6 +3,7 @@ package com.bp.daletou;
 import com.alibaba.fastjson.JSON;
 import com.bp.util.all.CheckUtil;
 import com.bp.util.all.PropertiesUtil;
+import com.bp.util.all.RandomUtil;
 import com.bp.util.all.StreamUtil;
 
 import java.io.*;
@@ -149,13 +150,20 @@ public class Daletou {
         List<DaletouEntity> result = new ArrayList<DaletouEntity>();
         int predictNum = Integer.parseInt(PropertiesUtil.getInstance("daletou/config").getValueByKey("predict_num"));
         int analysisNum = Integer.parseInt(PropertiesUtil.getInstance("daletou/config").getValueByKey("analysis_num"));
+        //初始化当前的重复概率
+        initCurrentPredict();
+
+        int redNum = (int) redAndBluePro[0] * 5;
+        int blueNum = (int) redAndBluePro[1] * 2;
 
         List<DaletouEntity> beforeDaletouList = new ArrayList<DaletouEntity>();
         for (int i = 0; i < analysisNum; i++) {
             beforeDaletouList.add(localDaletouHistory.get(sortDaletouHistoryIds.get(i)));
         }
 
-
+        for (int i = 0; i < predictNum; i++) {
+            result.add(getOnePredictDaletou(beforeDaletouList, redNum, blueNum));
+        }
         return result;
     }
 
@@ -262,8 +270,6 @@ public class Daletou {
      * 将daletou_analysis.txt中的分析结果写入内存
      */
     private void getAllDaletouAnalysis() {
-        ArrayList list = new ArrayList();
-
         File sourceFile = new File(
                 "E:\\ws\\idea_ws\\myGenProject\\20161223_7\\myGenProject\\src\\main\\resources\\daletou\\daletou_analysis.txt");
 
@@ -295,5 +301,65 @@ public class Daletou {
             }
         }
 
+    }
+
+
+    /**
+     * 获取一个分析后的大乐透
+     *
+     * @param beforeDaletouList 前N期大乐透数据
+     * @param redNum            红球重复数
+     * @param blueNum           篮球重复数
+     * @return 分析后的大乐透
+     */
+    private DaletouEntity getOnePredictDaletou(List<DaletouEntity> beforeDaletouList, int redNum, int blueNum) {
+        DaletouEntity daletouEntity = new DaletouEntity();
+
+        List<Integer> reds = new ArrayList<Integer>();
+        List<Integer> blues = new ArrayList<Integer>();
+        for (DaletouEntity daletouEntity1 : beforeDaletouList) {
+            for (int i = 0; i < 5; i++) {
+                if (!reds.contains(daletouEntity1.getRed()[i])) {
+                    reds.add(daletouEntity1.getRed()[i]);
+                }
+            }
+            for (int i = 0; i < 2; i++) {
+                if (!blues.contains(daletouEntity1.getBlue()[i])) {
+                    blues.add(daletouEntity1.getBlue()[i]);
+                }
+            }
+        }
+
+        //随机一组重复的红球和篮球出来
+        Integer [] historyReds = getRandomNums(reds,redNum);
+        Integer[] historyBlues = getRandomNums(blues,blueNum);
+
+        //随意一个大乐透出来
+
+        List<Integer> otherReds = new ArrayList<Integer>();
+        List<Integer> otherBlues = new ArrayList<Integer>();
+        for(int i=1;i<=35;i++){
+
+
+        }
+
+        return daletouEntity;
+    }
+
+    /**
+     * 从指定的一堆数中获取指定长度的数组
+     *
+     * @param sourceNums 原数组
+     * @param needSize   需要的长度
+     * @return 结果
+     */
+    private Integer[] getRandomNums(List<Integer> sourceNums, int needSize) {
+        Integer[] result = new Integer[needSize];
+        for (int i = 0; i < needSize; i++) {
+            int index = RandomUtil.getRandomNum(sourceNums.size());
+            result[i] = sourceNums.get(index);
+            sourceNums.remove(index);
+        }
+        return result;
     }
 }
