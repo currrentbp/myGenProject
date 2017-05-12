@@ -21,6 +21,7 @@ public class Spring_method_test {
 
     @Test
     public void tokenizeToStringArray(){
+        //类似分隔符
         String s = "1;,; 2;,; 3";
         String[] result = StringUtils.tokenizeToStringArray(s, ",; ");
         System.out.println("===>result:"+ JSON.toJSONString(result));
