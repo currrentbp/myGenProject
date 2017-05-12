@@ -156,11 +156,12 @@ public class Daletou {
         int redNum = (int) redAndBluePro[0] * 5;
         int blueNum = (int) redAndBluePro[1] * 2;
 
+        //获取前N期的数据
         List<DaletouEntity> beforeDaletouList = new ArrayList<DaletouEntity>();
         for (int i = 0; i < analysisNum; i++) {
             beforeDaletouList.add(localDaletouHistory.get(sortDaletouHistoryIds.get(i)));
         }
-
+        //预测N个数据
         for (int i = 0; i < predictNum; i++) {
             result.add(getOnePredictDaletou(beforeDaletouList, redNum, blueNum));
         }
@@ -315,6 +316,7 @@ public class Daletou {
     private DaletouEntity getOnePredictDaletou(List<DaletouEntity> beforeDaletouList, int redNum, int blueNum) {
         DaletouEntity daletouEntity = new DaletouEntity();
 
+        //历史数据
         List<Integer> reds = new ArrayList<Integer>();
         List<Integer> blues = new ArrayList<Integer>();
         for (DaletouEntity daletouEntity1 : beforeDaletouList) {
@@ -331,17 +333,34 @@ public class Daletou {
         }
 
         //随机一组重复的红球和篮球出来
-        Integer [] historyReds = getRandomNums(reds,redNum);
-        Integer[] historyBlues = getRandomNums(blues,blueNum);
+        Integer[] historyReds = getRandomNums(reds, redNum);
+        Integer[] historyBlues = getRandomNums(blues, blueNum);
+        List<Integer> historyReds1 = Arrays.asList(historyReds);
+        List<Integer> historyBlues1 = Arrays.asList(historyBlues);
 
         //随意一个大乐透出来
-
         List<Integer> otherReds = new ArrayList<Integer>();
         List<Integer> otherBlues = new ArrayList<Integer>();
-        for(int i=1;i<=35;i++){
-
-
+        for (int i = 1; i <= 35; i++) {
+            if(reds.contains(i)){
+                continue;//该数字已经在历史中存在
+            }
+            if (!historyReds1.contains(i)) {
+                otherReds.add(i);
+            }
         }
+        for (int i = 1; i <= 12; i++) {
+            if(blues.contains(i)){
+                continue;//该数字已经在历史中存在
+            }
+            if (!historyBlues1.contains(i)) {
+                otherBlues.add(i);
+            }
+        }
+
+        Integer[] remainReds = getRandomNums(otherReds, 5 - redNum);
+        Integer[] remainBlues = getRandomNums(otherBlues, 2 - blueNum);
+
 
         return daletouEntity;
     }

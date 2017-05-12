@@ -1,6 +1,8 @@
 package com.bp.test;
 
+import com.alibaba.fastjson.JSON;
 import org.junit.Test;
+import org.springframework.util.StringUtils;
 
 /**
  * 关于spring 的一些方法的测试
@@ -15,6 +17,15 @@ public class Spring_method_test {
         //测试
         smt.BeanFactoryUtils();
 
+    }
+
+    @Test
+    public void tokenizeToStringArray(){
+        String s = "1;,; 2;,; 3";
+        String[] result = StringUtils.tokenizeToStringArray(s, ",; ");
+        System.out.println("===>result:"+ JSON.toJSONString(result));
+        String[] result2 = StringUtils.tokenizeToStringArray(s, ";");
+        System.out.println("===>result:"+ JSON.toJSONString(result2));
     }
 
     public void BeanFactoryUtils(){
