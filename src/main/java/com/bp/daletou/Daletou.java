@@ -130,7 +130,11 @@ public class Daletou {
 
         //写入redAndBluePro
         for (int i = 0; i < befor.size(); i++) {
-            String[] nums = daletouAnalysis.get("" + befor.get(i)).split(",");
+            String k = daletouAnalysis.get("" + befor.get(i));
+            if(CheckUtil.isEmpty(k)){
+                continue;
+            }
+            String[] nums = k.split(",");
             float red = Float.parseFloat(nums[0]);
             float blue = Float.parseFloat(nums[1]);
             redAndBluePro[0] = redAndBluePro[0] + red;

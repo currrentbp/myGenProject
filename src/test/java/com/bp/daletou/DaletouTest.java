@@ -12,6 +12,7 @@ import static org.junit.Assert.*;
  * @createTime 20170503
  */
 public class DaletouTest {
+
     @Test
     public void initAnalysis() throws Exception {
         Daletou daletou = new Daletou();
@@ -30,5 +31,12 @@ public class DaletouTest {
         System.out.println(GetPropertiesFileInfo.getProperties("src//main//resources//daletou//config.properties")
                 .getProperty("analysis_num"));
     }
+
+    @Test
+    public void predictDaletou() throws Exception {
+        Daletou daletou = new Daletou();
+        daletou.predictDaletou();
+    }
+
 
 }
