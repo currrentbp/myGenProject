@@ -1,6 +1,7 @@
 package com.bp.daletou;
 
 import com.alibaba.fastjson.JSON;
+import org.junit.Test;
 import us.codecraft.webmagic.Page;
 import us.codecraft.webmagic.Site;
 import us.codecraft.webmagic.Spider;
@@ -18,15 +19,11 @@ public class DaletouRepoPageProcessor implements PageProcessor {
         Spider.create(new DaletouRepoPageProcessor()).addUrl("http://baidu.lecai.com/lottery/draw/list/1/?agentId=5599").thread(5).run();
     }
 
-    public static String getNoHtmlTags(String resourceStr) {
-//        result = resourceStr.replaceAll("<(/?\\S+)\\s*?[^<]*?(/?)>", "<$1$2>");
-        return resourceStr.replaceAll("<(/?\\S+)\\s*?[^<]*?(/?)>", "");
-    }
-
     public void process(Page page) {
-        List<String> historys = page.getHtml().css("td.balls").all();
+        List<String> historys = page.getHtml().css("table.historylist tbody tr").all();
         for (String history : historys) {
-            System.out.println("===>history:" + JSON.toJSONString(removeWithoutEM(removeAllDisVisualChar(history))));
+            System.out.println("===>source:" + JSON.toJSONString(history));
+            System.out.println("===>now:" + JSON.toJSONString(removeWithoutEM(removeAllDisVisualChar(history))));
         }
     }
 
@@ -39,7 +36,7 @@ public class DaletouRepoPageProcessor implements PageProcessor {
     }
 
     public String removeWithoutEM(String resourceStr) {
-        return resourceStr.replaceAll("[^</?\\(em\\)>]", "");
+        return resourceStr.replaceAll("<(?!em).*?>", "");
     }
 
 }
