@@ -2,6 +2,8 @@ package com.bp.util.all;
 
 import java.util.ArrayList;
 import java.util.List;
+import java.util.regex.Matcher;
+import java.util.regex.Pattern;
 
 /**
  * 关于字符串的类
@@ -290,6 +292,37 @@ public class StringUtil {
         return (char) num;
     }
 
+
+    /**
+     * 获取a标签列表
+     *
+     * @param resource 原数据
+     * @return 获取标签体
+     */
+    public static List<String> getALabel(String resource) {
+        return getLabel(resource, "a");
+    }
+
+    /**
+     * 获取标签列表
+     *
+     * @param resource 源数据
+     * @param label    标签名称
+     * @return 该标签的列表数据
+     */
+    public static List<String> getLabel(String resource, String label) {
+        List<String> results = new ArrayList<String>();
+        String reg = "(<" + label + ".*?>([\\s\\S]*?)</" + label + ">)";
+        Pattern pattern = Pattern.compile(reg);
+        Matcher matcher = pattern.matcher(resource);
+        while (matcher.find()) {
+            results.add(matcher.group());
+        }
+        return results;
+    }
+
+
+
     public static void main(String[] args) throws Exception {
 
         System.out.println(StringUtil.letter2Int("A"));
@@ -326,5 +359,7 @@ public class StringUtil {
         // System.out.println("+++++"+StringUtil.deleteLast(null)+"====");
         // new HashMap ();
     }
+
+
 
 }

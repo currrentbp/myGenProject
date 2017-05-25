@@ -1,6 +1,7 @@
 package com.bp.daletou;
 
 import com.alibaba.fastjson.JSON;
+import com.bp.util.all.StringUtil;
 import org.junit.Test;
 import us.codecraft.webmagic.Page;
 import us.codecraft.webmagic.Site;
@@ -8,6 +9,8 @@ import us.codecraft.webmagic.Spider;
 import us.codecraft.webmagic.processor.PageProcessor;
 
 import java.util.List;
+import java.util.regex.Matcher;
+import java.util.regex.Pattern;
 
 /**
  * Created by issuser on 2017/5/23.
@@ -20,10 +23,10 @@ public class DaletouRepoPageProcessor implements PageProcessor {
     }
 
     public void process(Page page) {
-        List<String> historys = page.getHtml().css("table.historylist tbody tr").all();
+        List<String> historys = page.getHtml().css("table.historylist > tbody > tr").all();
         for (String history : historys) {
-            System.out.println("===>source:" + JSON.toJSONString(history));
-            System.out.println("===>now:" + JSON.toJSONString(removeWithoutEM(removeAllDisVisualChar(history))));
+            String aLabel = StringUtil.getALabel(history).get(0);
+
         }
     }
 
@@ -31,12 +34,6 @@ public class DaletouRepoPageProcessor implements PageProcessor {
         return site;
     }
 
-    public String removeAllDisVisualChar(String resourceStr) {
-        return resourceStr.replaceAll("\\s", "");
-    }
 
-    public String removeWithoutEM(String resourceStr) {
-        return resourceStr.replaceAll("<(?!em).*?>", "");
-    }
 
 }
