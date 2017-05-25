@@ -16,6 +16,8 @@ import java.util.regex.Pattern;
  * Created by issuser on 2017/5/23.
  */
 public class DaletouRepoPageProcessor implements PageProcessor {
+
+
     private Site site = Site.me().setRetryTimes(3).setSleepTime(100);
 
     public static void main(String[] args) {
@@ -26,6 +28,9 @@ public class DaletouRepoPageProcessor implements PageProcessor {
         List<String> historys = page.getHtml().css("table.historylist > tbody > tr").all();
         for (String history : historys) {
             String aLabel = StringUtil.getALabel(history).get(0);
+            List<String> emList = StringUtil.getLabel(history, "em");
+            System.out.println("===>aLabel:" + aLabel);
+            System.out.println("===>emList:" + emList);
 
         }
     }

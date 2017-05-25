@@ -321,6 +321,27 @@ public class StringUtil {
         return results;
     }
 
+    /**
+     * 获取所有的该标签中的内容
+     *
+     * @param resource 源数据
+     * @param label    标签名称
+     * @return 标签内容列表
+     */
+    public static List<String> getLabelContent(String resource, String label) {
+        List<String> result = new ArrayList<String>();
+        List<String> labels = getLabel(resource, label);
+        for (String label1 : labels) {
+            String reg = "(<" + label + ">)(.*)(</" + label + ">)";
+            Pattern pattern = Pattern.compile(reg);
+            Matcher matcher = pattern.matcher(label1);
+            result.add(matcher.replaceAll("$2"));
+        }
+        return result;
+    }
+
+
+
 
 
     public static void main(String[] args) throws Exception {

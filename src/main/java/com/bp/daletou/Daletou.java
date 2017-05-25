@@ -30,10 +30,16 @@ public class Daletou {
     //所有的分析结果
     private Map<String, String> daletouAnalysis = new HashMap<String, String>();
 
+    /**
+     * 主方法
+     */
+    public static void main(String[] arg) {
+
+    }
 
     //==================      init       ===============================================================//
     /*
-    1、下载最新的数据，并保存到daletou_history.txt文件中
+    1、加载本地的历史数据(daletou_history.txt)，下载最新的数据，并保存到daletou_history.txt文件中
     2、对daletou_history.txt文件中的数据进行分析，将没有分析的数据写入
     3、获取一个或者多个预测数据
     4、将历史预测数据进行分析，
@@ -43,8 +49,10 @@ public class Daletou {
      * 更新历史数据，将最新的数据放入该文件
      */
     private void initHistory() {
-        //TODO 更新历史数据
+        initReadDaletouHistory();
+        initNewDaletou();
     }
+
 
     /**
      * 初始化本地的历史数据
@@ -82,6 +90,12 @@ public class Daletou {
 
         Arrays.sort(temp);
         sortDaletouHistoryIds = Arrays.asList(temp);
+    }
+
+    /**
+     * 下载新的大乐透数据
+     */
+    public void initNewDaletou() {
     }
 
     /**
