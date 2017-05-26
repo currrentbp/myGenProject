@@ -258,6 +258,32 @@ public class StringUtil {
         return result;
     }
 
+    public static String list2String(List source) {
+        StringBuilder result = new StringBuilder("");
+        if (CheckUtil.isEmpty(source)) {
+            return result.toString();
+        }
+
+        for (Object o : source) {
+            result.append(o.toString() + ",");
+        }
+
+        return result.lastIndexOf(",") == result.length() ? result.deleteCharAt(result.lastIndexOf(",")).toString() : result.toString();
+    }
+
+    public static String array2String(Object[] source) {
+        StringBuilder result = new StringBuilder("");
+        if (CheckUtil.isEmpty(source)) {
+            return result.toString();
+        }
+
+        for (Object o : source) {
+            result.append(o.toString() + ",");
+        }
+
+        return result.lastIndexOf(",") == result.length() ? result.deleteCharAt(result.lastIndexOf(",")).toString() : result.toString();
+    }
+
 
     /**
      * 将字母转换成数字
@@ -332,10 +358,10 @@ public class StringUtil {
         List<String> result = new ArrayList<String>();
         List<String> labels = getLabel(resource, label);
         for (String label1 : labels) {
-            String reg = "(<" + label + ">)(.*)(</" + label + ">)";
+            String reg = "(<" + label + "(.*)>)(.*)(</" + label + ">)";
             Pattern pattern = Pattern.compile(reg);
             Matcher matcher = pattern.matcher(label1);
-            result.add(matcher.replaceAll("$2"));
+            result.add(matcher.replaceAll("$3"));
         }
         return result;
     }
