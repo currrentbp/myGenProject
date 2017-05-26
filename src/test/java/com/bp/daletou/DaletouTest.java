@@ -16,14 +16,14 @@ public class DaletouTest {
     @Test
     public void initAnalysis() throws Exception {
         Daletou daletou = new Daletou();
-        daletou.initReadDaletouHistory();
-        daletou.initAnalysis();
+//        daletou.initReadDaletouHistory();
+//        daletou.initAnalysis();
     }
 
     @Test
     public void initReadDaletouHistory() throws Exception {
         Daletou daletou = new Daletou();
-        daletou.initReadDaletouHistory();
+//        daletou.initReadDaletouHistory();
     }
 
     @Test
@@ -35,7 +35,7 @@ public class DaletouTest {
     @Test
     public void predictDaletou() throws Exception {
         Daletou daletou = new Daletou();
-        daletou.predictDaletou();
+//        daletou.predictDaletou();
     }
 
 

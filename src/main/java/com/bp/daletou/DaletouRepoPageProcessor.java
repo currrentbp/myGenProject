@@ -66,6 +66,9 @@ public class DaletouRepoPageProcessor implements PageProcessor {
     public void process(Page page) {
         List<String> historys = page.getHtml().css("table.historylist > tbody > tr").all();
         List<Integer> temp = new ArrayList<Integer>();
+        Daletou daletou = new Daletou();
+        daletou.initReadDaletouHistory();
+        oldDaletous = daletou.getLocalDaletouHistory();
         for (String history : historys) {
             String aLabel = StringUtil.getALabel(history).get(0);
             String id = StringUtil.getLabelContent(aLabel, "a").get(0);

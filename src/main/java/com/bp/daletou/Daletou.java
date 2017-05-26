@@ -34,7 +34,10 @@ public class Daletou {
      * 主方法
      */
     public static void main(String[] arg) {
-
+        Daletou daletou = new Daletou();
+        daletou.initHistory();
+        List<DaletouEntity> lists = daletou.predictDaletou();
+        System.out.println("===>lists:" + JSON.toJSONString(lists));
     }
 
     //==================      init       ===============================================================//
@@ -48,9 +51,10 @@ public class Daletou {
     /**
      * 更新历史数据，将最新的数据放入该文件
      */
-    private void initHistory() {
+    public void initHistory() {
         initReadDaletouHistory();
         initNewDaletou();
+        initAnalysis();
     }
 
 
@@ -63,6 +67,9 @@ public class Daletou {
         if (CheckUtil.isEmpty(daletouHistory)) {
             return;
         }
+        //重新初始化
+        localDaletouHistory = new HashMap<String, DaletouEntity>();
+        sortDaletouHistoryIds = new ArrayList<Integer>();
 
         List<Integer> list = new ArrayList<Integer>();
         Integer[] temp = new Integer[daletouHistory.size()];
@@ -95,13 +102,18 @@ public class Daletou {
     /**
      * 下载新的大乐透数据
      */
-    public void initNewDaletou() {
+    private void initNewDaletou() {
+        DaletouRepoPageProcessor daletouRepoPageProcessor = new DaletouRepoPageProcessor();
+        //下载数据并将数据写入文件
+        daletouRepoPageProcessor.getNewDaletouSources(localDaletouHistory);
+        //重新初始化本地数据
+        initReadDaletouHistory();
     }
 
     /**
      * 初始化分析结果，将新添加的历史数据与前N个数据比较，看看结果类似度
      */
-    public void initAnalysis() {
+    private void initAnalysis() {
         int analysisNum = Integer.parseInt(PropertiesUtil.getInstance("daletou/config").getValueByKey("analysis_num"));
         //对比
         ConcurrentLinkedQueue<Integer> concurrentLinkedQueue = new ConcurrentLinkedQueue();
@@ -130,39 +142,9 @@ public class Daletou {
     }
 
     /**
-     * 初始化：最近红球和篮球的重复的概率
-     */
-    public void initCurrentPredict() {
-        int analysisNum = Integer.parseInt(PropertiesUtil.getInstance("daletou/config").getValueByKey("analysis_num"));
-        getAllDaletouAnalysis();
-        initReadDaletouHistory();
-        //获取前N个分析结果
-        List<Integer> befor = new ArrayList<Integer>();
-        for (int i = 0; i < analysisNum; i++) {
-            befor.add(sortDaletouHistoryIds.get(i));
-        }
-
-        //写入redAndBluePro
-        for (int i = 0; i < befor.size(); i++) {
-            String k = daletouAnalysis.get("" + befor.get(i));
-            if(CheckUtil.isEmpty(k)){
-                continue;
-            }
-            String[] nums = k.split(",");
-            float red = Float.parseFloat(nums[0]);
-            float blue = Float.parseFloat(nums[1]);
-            redAndBluePro[0] = redAndBluePro[0] + red;
-            redAndBluePro[1] = redAndBluePro[1] + blue;
-        }
-        redAndBluePro[0] = redAndBluePro[0] / analysisNum;
-        redAndBluePro[1] = redAndBluePro[1] / analysisNum;
-    }
-
-
-    /**
      * 预测大乐透
      *
-     * @return
+     * @return 预测结果
      */
     public List<DaletouEntity> predictDaletou() {
         List<DaletouEntity> result = new ArrayList<DaletouEntity>();
@@ -176,16 +158,49 @@ public class Daletou {
 
         //获取前N期的数据
         List<DaletouEntity> beforeDaletouList = new ArrayList<DaletouEntity>();
+        List<Integer> ids = new ArrayList<Integer>();
         for (int i = 0; i < analysisNum; i++) {
-            beforeDaletouList.add(localDaletouHistory.get(sortDaletouHistoryIds.get(i)));
+            beforeDaletouList.add(localDaletouHistory.get("" + sortDaletouHistoryIds.get(i)));
+            ids.add(sortDaletouHistoryIds.get(i));
         }
+        Integer maxId = Collections.max(ids);
         //预测N个数据
         for (int i = 0; i < predictNum; i++) {
-            result.add(getOnePredictDaletou(beforeDaletouList, redNum, blueNum));
+            result.add(getOnePredictDaletou(maxId, beforeDaletouList, redNum, blueNum));
         }
         return result;
     }
 
+    /**
+     * 初始化：最近红球和篮球的重复的概率
+     */
+    private void initCurrentPredict() {
+        int analysisNum = Integer.parseInt(PropertiesUtil.getInstance("daletou/config").getValueByKey("analysis_num"));
+        //获取所有的分析结果
+        getAllDaletouAnalysis();
+//        //初始化本地的历史数据
+//        initReadDaletouHistory();
+        //获取前N个分析结果
+        List<Integer> befor = new ArrayList<Integer>();
+        for (int i = 0; i < analysisNum; i++) {
+            befor.add(sortDaletouHistoryIds.get(i));
+        }
+
+        //写入redAndBluePro
+        for (int i = 0; i < befor.size(); i++) {
+            String k = daletouAnalysis.get("" + befor.get(i));
+            if (CheckUtil.isEmpty(k)) {
+                continue;
+            }
+            String[] nums = k.split(",");
+            float red = Float.parseFloat(nums[0]);
+            float blue = Float.parseFloat(nums[1]);
+            redAndBluePro[0] = redAndBluePro[0] + red;
+            redAndBluePro[1] = redAndBluePro[1] + blue;
+        }
+        redAndBluePro[0] = redAndBluePro[0] / analysisNum;
+        redAndBluePro[1] = redAndBluePro[1] / analysisNum;
+    }
 
     //======================私有方法====================================//
     private Integer[] getIntegerArrayByObjectArray(Object[] sources) {
@@ -326,12 +341,13 @@ public class Daletou {
     /**
      * 获取一个分析后的大乐透
      *
+     * @param maxId 当前的预期ID
      * @param beforeDaletouList 前N期大乐透数据
      * @param redNum            红球重复数
      * @param blueNum           篮球重复数
      * @return 分析后的大乐透
      */
-    private DaletouEntity getOnePredictDaletou(List<DaletouEntity> beforeDaletouList, int redNum, int blueNum) {
+    private DaletouEntity getOnePredictDaletou(Integer maxId, List<DaletouEntity> beforeDaletouList, int redNum, int blueNum) {
         DaletouEntity daletouEntity = new DaletouEntity();
 
         //历史数据
@@ -360,7 +376,7 @@ public class Daletou {
         List<Integer> otherReds = new ArrayList<Integer>();
         List<Integer> otherBlues = new ArrayList<Integer>();
         for (int i = 1; i <= 35; i++) {
-            if(reds.contains(i)){
+            if (reds.contains(i)) {
                 continue;//该数字已经在历史中存在
             }
             if (!historyReds1.contains(i)) {
@@ -368,7 +384,7 @@ public class Daletou {
             }
         }
         for (int i = 1; i <= 12; i++) {
-            if(blues.contains(i)){
+            if (blues.contains(i)) {
                 continue;//该数字已经在历史中存在
             }
             if (!historyBlues1.contains(i)) {
@@ -379,6 +395,27 @@ public class Daletou {
         Integer[] remainReds = getRandomNums(otherReds, 5 - redNum);
         Integer[] remainBlues = getRandomNums(otherBlues, 2 - blueNum);
 
+        List<Integer> newReds = new ArrayList<Integer>();
+        newReds.addAll(Arrays.asList(historyReds));
+        newReds.addAll(Arrays.asList(remainReds));
+        List<Integer> newBlues = new ArrayList<Integer>();
+        newBlues.addAll(Arrays.asList(historyBlues));
+        newBlues.addAll(Arrays.asList(remainBlues));
+
+
+        int[] newReds2 = new int[newReds.size()];
+        int[] newBlues2 = new int[newBlues.size()];
+
+        for (int i = 0; i < newReds.size(); i++) {
+            newReds2[i] = newReds.get(i);
+        }
+        for (int i = 0; i < newBlues.size(); i++) {
+            newBlues2[i] = newBlues.get(i);
+        }
+
+        daletouEntity.setId("" + (maxId + 1));
+        daletouEntity.setRed(newReds2);
+        daletouEntity.setBlue(newBlues2);
 
         return daletouEntity;
     }
@@ -398,5 +435,47 @@ public class Daletou {
             sourceNums.remove(index);
         }
         return result;
+    }
+
+    // ====================     get and set       ===============================================//
+
+    public Map<String, DaletouEntity> getLocalDaletouHistory() {
+        return localDaletouHistory;
+    }
+
+    public void setLocalDaletouHistory(Map<String, DaletouEntity> localDaletouHistory) {
+        this.localDaletouHistory = localDaletouHistory;
+    }
+
+    public List<Integer> getSortDaletouHistoryIds() {
+        return sortDaletouHistoryIds;
+    }
+
+    public void setSortDaletouHistoryIds(List<Integer> sortDaletouHistoryIds) {
+        this.sortDaletouHistoryIds = sortDaletouHistoryIds;
+    }
+
+    public List<Integer> getNeedLoadDaletouHistoryIds() {
+        return needLoadDaletouHistoryIds;
+    }
+
+    public void setNeedLoadDaletouHistoryIds(List<Integer> needLoadDaletouHistoryIds) {
+        this.needLoadDaletouHistoryIds = needLoadDaletouHistoryIds;
+    }
+
+    public float[] getRedAndBluePro() {
+        return redAndBluePro;
+    }
+
+    public void setRedAndBluePro(float[] redAndBluePro) {
+        this.redAndBluePro = redAndBluePro;
+    }
+
+    public Map<String, String> getDaletouAnalysis() {
+        return daletouAnalysis;
+    }
+
+    public void setDaletouAnalysis(Map<String, String> daletouAnalysis) {
+        this.daletouAnalysis = daletouAnalysis;
     }
 }

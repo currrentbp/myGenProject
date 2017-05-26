@@ -591,7 +591,7 @@ public class StreamUtil {
         try {
             createMyNewFile(path);
         }catch (Exception e){
-            System.out.println("文件已存在！！");
+//            System.out.println("文件已存在！！");
         }
         return readFile(new File(path));
     }
