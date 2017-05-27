@@ -12,4 +12,15 @@ public class Test1 {
     public void test11(){
         System.out.println("======");
     }
+
+    @Test
+    public void t1() {
+        int count = 0;
+        for (count++;
+             count++ < 10;
+             count++) {
+            System.out.println("count:" + count);
+        }
+        System.out.println(count);
+    }
 }
