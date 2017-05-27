@@ -54,4 +54,21 @@ public class DaletouEntity {
     public int hashCode() {
         return id != null ? id.hashCode() : 0;
     }
+
+    @Override
+    public String toString() {
+        final StringBuffer sb = new StringBuffer("");
+        sb.append(id + ":");
+
+        for (int i = 0; i < 5; i++) {
+            sb.append(red[i] + ",");
+        }
+        sb.deleteCharAt(sb.lastIndexOf(","));
+        sb.append(";");
+        for (int i = 0; i < 2; i++) {
+            sb.append(blue[i] + ",");
+        }
+        sb.deleteCharAt(sb.lastIndexOf(","));
+        return sb.toString();
+    }
 }

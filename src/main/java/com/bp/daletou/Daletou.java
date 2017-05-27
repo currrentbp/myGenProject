@@ -37,7 +37,7 @@ public class Daletou {
         Daletou daletou = new Daletou();
         daletou.initHistory();
         List<DaletouEntity> lists = daletou.predictDaletou();
-        System.out.println("===>lists:" + JSON.toJSONString(lists));
+        System.out.println("===>lists:" + lists);
     }
 
     //==================      init       ===============================================================//
@@ -167,6 +167,17 @@ public class Daletou {
         //预测N个数据
         for (int i = 0; i < predictNum; i++) {
             result.add(getOnePredictDaletou(maxId, beforeDaletouList, redNum, blueNum));
+        }
+
+        //写入预测文件中
+        for (int i = 0; i < result.size(); i++) {
+            try {
+                StreamUtil.writeSomethingToFile("" + result.get(i) + "\n",
+                        "E:\\ws\\idea_ws\\myGenProject\\20161223_7\\myGenProject\\src\\main\\resources\\daletou\\daletou_forecast.txt",
+                        true);
+            } catch (Exception e) {
+                System.out.println("===>write into forecast file is error!! msg:" + e.getMessage());
+            }
         }
         return result;
     }
