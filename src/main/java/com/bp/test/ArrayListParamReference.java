@@ -20,8 +20,8 @@ public class ArrayListParamReference {
 	public void init(){
 		
 		List l2 = null;
-//		l2 = new ArrayList();
-		useArrayList(l2);
+//		l2 = new ArrayList();//参数引用不可以修改参数的地址，但是可以修改参数对应的地址的值
+        useArrayList(l2);
 		System.out.println(l2);
 	}
 	

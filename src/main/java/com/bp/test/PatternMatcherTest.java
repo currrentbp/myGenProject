@@ -1,5 +1,6 @@
 package com.bp.test;
 
+import org.junit.Assert;
 import org.junit.Test;
 
 import java.util.regex.Matcher;
@@ -67,6 +68,27 @@ public class PatternMatcherTest {
         while (matcher.find()) {
             System.out.println("find:" + matcher.group());
         }
+    }
+
+    @Test
+    public void matchNum() {
+        //然后\1表示重复开始的(\w)中的内容.
+        Pattern pattern = Pattern.compile("(\\wb)a\\1");
+        Matcher matcher = pattern.matcher("wbawb");
+        assert matcher.matches();
+        System.out.println("===>result:" + matcher.group());
+
+        Pattern pattern2 = Pattern.compile("\\b(\\w)?k(\\w)\\w?.*");
+        Matcher matcher2 = pattern2.matcher("dkas ");
+        assert matcher2.matches();
+        System.out.println("===>result:" + matcher2.group());
+    }
+
+    @Test
+    public void matchW() {
+        Pattern pattern = Pattern.compile("\\bmy.*");
+        Matcher matcher = pattern.matcher("my a");
+        assert matcher.matches();
     }
 
 }

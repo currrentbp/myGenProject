@@ -189,8 +189,6 @@ public class Daletou {
         int analysisNum = Integer.parseInt(PropertiesUtil.getInstance("daletou/config").getValueByKey("analysis_num"));
         //获取所有的分析结果
         getAllDaletouAnalysis();
-//        //初始化本地的历史数据
-//        initReadDaletouHistory();
         //获取前N个分析结果
         List<Integer> befor = new ArrayList<Integer>();
         //获取最近N期的数据
@@ -214,7 +212,7 @@ public class Daletou {
         redAndBluePro[1] = redAndBluePro[1] / analysisNum;
     }
 
-    //======================私有方法====================================//
+    //======================   私有方法  ====================================//
     private Integer[] getIntegerArrayByObjectArray(Object[] sources) {
         if (null == sources || 0 == sources.length) {
             return null;
