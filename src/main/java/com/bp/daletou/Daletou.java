@@ -193,7 +193,8 @@ public class Daletou {
 //        initReadDaletouHistory();
         //获取前N个分析结果
         List<Integer> befor = new ArrayList<Integer>();
-        for (int i = 0; i < analysisNum; i++) {
+        //获取最近N期的数据
+        for (int i = sortDaletouHistoryIds.size() - 1; i >= sortDaletouHistoryIds.size() - analysisNum; i--) {
             befor.add(sortDaletouHistoryIds.get(i));
         }
 
