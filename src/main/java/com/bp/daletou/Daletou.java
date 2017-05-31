@@ -159,7 +159,7 @@ public class Daletou {
         //获取前N期的数据
         List<DaletouEntity> beforeDaletouList = new ArrayList<DaletouEntity>();
         List<Integer> ids = new ArrayList<Integer>();
-        for (int i = 0; i < analysisNum; i++) {
+        for (int i = sortDaletouHistoryIds.size() - 1; i >= sortDaletouHistoryIds.size() - analysisNum; i--) {
             beforeDaletouList.add(localDaletouHistory.get("" + sortDaletouHistoryIds.get(i)));
             ids.add(sortDaletouHistoryIds.get(i));
         }
@@ -352,7 +352,7 @@ public class Daletou {
     /**
      * 获取一个分析后的大乐透
      *
-     * @param maxId 当前的预期ID
+     * @param maxId             当前的预期ID
      * @param beforeDaletouList 前N期大乐透数据
      * @param redNum            红球重复数
      * @param blueNum           篮球重复数
