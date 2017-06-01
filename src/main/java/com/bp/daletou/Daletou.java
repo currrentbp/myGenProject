@@ -376,6 +376,7 @@ public class Daletou {
             }
         }
 
+        System.out.println("===>oldReds:" + JSON.toJSONString(reds) + " oldBlues:" + JSON.toJSONString(blues));
         //随机一组重复的红球和篮球出来
         Integer[] historyReds = getRandomNums(reds, redNum);
         Integer[] historyBlues = getRandomNums(blues, blueNum);

@@ -14,6 +14,44 @@ public class StringTest {
     public List<String> l1 = new ArrayList<String>();
     public List<String> l2 = new ArrayList<String>();
 
+    //===================          测试方法          ========================================================//
+    @Test
+    public void someFunctionEffection() {
+        StringTest stringTest = new StringTest();
+
+
+//		StringTest st = new StringTest();
+//		st.isWin();
+
+//		StringTest st = new StringTest();
+//		st.sudu();
+//		HashMap<String,String> map = new HashMap<String, String>();
+//		//测试0是啥。。
+//		String path="";
+//		path = new String("abcdefABCDEF");
+//		System.out.println(path.indexOf(41) );
+
+//		//测试除数为0的这种情况
+//		stringTest.isZero(10,0);
+
+//		//测试数字和字符串的相等性问题
+//		stringTest.isEqualWithEmpty();
+
+//		//获取分割的字符串
+//		stringTest.getSplitString();
+
+        //判断1是否等于null
+//		stringTest.equalsNull();
+
+        //判读一个字符串中是否包含一个字符
+//		stringTest.stringContain();
+
+        //获取0到0的字符串
+        stringTest.getZero2Zero();
+    }
+
+
+    //==========================        测试方法中的实现方法          ===============================================================//
 
     /**
      * 比较string stringbuffer stringformat等的效率
@@ -109,39 +147,7 @@ public class StringTest {
         }
     }
 
-    public static final void main(String[] args) {
-        StringTest stringTest = new StringTest();
 
-
-//		StringTest st = new StringTest();
-//		st.isWin();
-
-//		StringTest st = new StringTest();
-//		st.sudu();
-//		HashMap<String,String> map = new HashMap<String, String>();
-//		//测试0是啥。。
-//		String path="";
-//		path = new String("abcdefABCDEF");
-//		System.out.println(path.indexOf(41) );
-
-//		//测试除数为0的这种情况
-//		stringTest.isZero(10,0);
-
-//		//测试数字和字符串的相等性问题
-//		stringTest.isEqualWithEmpty();
-
-//		//获取分割的字符串
-//		stringTest.getSplitString();
-
-        //判断1是否等于null
-//		stringTest.equalsNull();
-
-        //判读一个字符串中是否包含一个字符
-//		stringTest.stringContain();
-
-        //获取0到0的字符串
-        stringTest.getZero2Zero();
-    }
 
     /**
      * 测试split方法
