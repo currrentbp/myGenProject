@@ -14,6 +14,8 @@ import java.util.Map;
  */
 public class MapTest {
 
+
+    //==========================        测试方法中的实现方法          ===============================================================//
     public void putSomeKey() {
         Map<String, String> map = new HashMap<String, String>();
         System.out.println("size:" + map.size());

@@ -8,13 +8,8 @@ package com.bp.test;
  */
 public class NullTest {
 
-	public static void main(String[] args) {
-		NullTest nt = new NullTest();
-//		nt.isNull();
-//		nt.nullPlusNull();
-//		nt.nullEqualNull();
-		nt.nullAddNotNull();
-	}
+
+	//==========================        测试方法中的实现方法          ===============================================================//
 	
 	/**
 	 * 测试null加一个非空的值后是什么

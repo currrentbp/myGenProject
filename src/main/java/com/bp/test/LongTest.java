@@ -10,18 +10,8 @@ import java.util.Date;
  */
 public class LongTest {
 
-	public static void main(String[] args) {
 
-		LongTest lt = new LongTest();
-
-//		//测试地址是否相同
-//		lt.addressIsEqual();
-
-		//测试两个长型的数字加后是否出现错误
-		lt.longBeyond();
-
-	}
-
+	//==========================        测试方法中的实现方法          ===============================================================//
 	public void nullToLong(){
 		Date date = null;
 		System.out.println(date.getTime());
