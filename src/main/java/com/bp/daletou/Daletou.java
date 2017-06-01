@@ -402,6 +402,7 @@ public class Daletou {
                 otherBlues.add(i);
             }
         }
+        System.out.println("===>otherReds:" + JSON.toJSONString(otherReds) + " otherBlues:" + JSON.toJSONString(otherBlues));
 
         Integer[] remainReds = getRandomNums(otherReds, 5 - redNum);
         Integer[] remainBlues = getRandomNums(otherBlues, 2 - blueNum);
