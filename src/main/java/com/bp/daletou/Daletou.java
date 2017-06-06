@@ -5,6 +5,8 @@ import com.bp.util.all.CheckUtil;
 import com.bp.util.all.PropertiesUtil;
 import com.bp.util.all.RandomUtil;
 import com.bp.util.all.StreamUtil;
+import org.slf4j.Logger;
+import org.slf4j.LoggerFactory;
 
 import java.io.*;
 import java.text.SimpleDateFormat;
@@ -20,6 +22,8 @@ import java.util.regex.Pattern;
  * @createTime 20170503
  */
 public class Daletou {
+    private final static Logger logger = LoggerFactory.getLogger(Daletou.class);
+
     private Map<String, DaletouEntity> localDaletouHistory = new HashMap<String, DaletouEntity>();
     //排序好的历史IDs:从小到大排序
     private List<Integer> sortDaletouHistoryIds = new ArrayList<Integer>();
@@ -37,7 +41,7 @@ public class Daletou {
         Daletou daletou = new Daletou();
         daletou.initHistory();
         List<DaletouEntity> lists = daletou.predictDaletou();
-        System.out.println("===>lists:" + lists);
+        logger.info("===>lists:" + lists);
     }
 
     //==================      init       ===============================================================//
@@ -123,7 +127,7 @@ public class Daletou {
             } else {//有足够的历史数据计算，则先计算，再删除顶数据，添加新数据
                 //每N个数据一分析
                 float[] analysisResults = analysisBeforeLike(getIntegerArrayByObjectArray(concurrentLinkedQueue.toArray()), sortDaletouHistoryIds.get(i));
-                System.out.println("id:" + sortDaletouHistoryIds.get(i) + " like:" + JSON.toJSONString(analysisResults));
+                logger.info("id:" + sortDaletouHistoryIds.get(i) + " like:" + JSON.toJSONString(analysisResults));
 
                 //写入文件中
                 try {
@@ -153,8 +157,8 @@ public class Daletou {
         //初始化当前的重复概率
         initCurrentPredict();
 
-        int redNum = (int) redAndBluePro[0] * 5;
-        int blueNum = (int) redAndBluePro[1] * 2;
+        int redNum = Math.round(redAndBluePro[0] * 5);
+        int blueNum = Math.round(redAndBluePro[1] * 2);
 
         //获取前N期的数据
         List<DaletouEntity> beforeDaletouList = new ArrayList<DaletouEntity>();
@@ -176,7 +180,7 @@ public class Daletou {
                         "E:\\ws\\idea_ws\\myGenProject\\20161223_7\\myGenProject\\src\\main\\resources\\daletou\\daletou_forecast.txt",
                         true);
             } catch (Exception e) {
-                System.out.println("===>write into forecast file is error!! msg:" + e.getMessage());
+                logger.info("===>write into forecast file is error!! msg:" + e.getMessage());
             }
         }
         return result;
@@ -241,7 +245,7 @@ public class Daletou {
                 int num = Integer.parseInt(nums[i]);
                 result[i] = num;
             } catch (Exception e) {
-                System.out.println("===>getIntArraysByStringArrays: error!! msg:" + e.getMessage());
+                logger.info("===>getIntArraysByStringArrays: error!! msg:" + e.getMessage());
             }
         }
 
@@ -376,7 +380,7 @@ public class Daletou {
             }
         }
 
-        System.out.println("===>oldReds:" + JSON.toJSONString(reds) + " oldBlues:" + JSON.toJSONString(blues));
+        logger.info("===>oldReds:" + JSON.toJSONString(reds) + " oldBlues:" + JSON.toJSONString(blues));
         //随机一组重复的红球和篮球出来
         Integer[] historyReds = getRandomNums(reds, redNum);
         Integer[] historyBlues = getRandomNums(blues, blueNum);
@@ -402,7 +406,7 @@ public class Daletou {
                 otherBlues.add(i);
             }
         }
-        System.out.println("===>otherReds:" + JSON.toJSONString(otherReds) + " otherBlues:" + JSON.toJSONString(otherBlues));
+        logger.info("===>otherReds:" + JSON.toJSONString(otherReds) + " otherBlues:" + JSON.toJSONString(otherBlues));
 
         Integer[] remainReds = getRandomNums(otherReds, 5 - redNum);
         Integer[] remainBlues = getRandomNums(otherBlues, 2 - blueNum);
@@ -423,6 +427,17 @@ public class Daletou {
         }
         for (int i = 0; i < newBlues.size(); i++) {
             newBlues2[i] = newBlues.get(i);
+        }
+
+
+        try {
+            StreamUtil.writeSomethingToFile("" + maxId + ":" +
+                            "oldReds:" + JSON.toJSONString(reds) + " oldBlues:" + JSON.toJSONString(blues) + "\n" +
+                            "otherReds:" + JSON.toJSONString(otherReds) + " otherBlues:" + JSON.toJSONString(otherBlues) + "\n",
+                    "E:\\ws\\idea_ws\\myGenProject\\20161223_7\\myGenProject\\src\\main\\resources\\daletou\\daletou_forecast_remain.txt",
+                    true);
+        } catch (Exception e) {
+            logger.error("===>wirte into daletou_forecast_remain.txt error!! ", e);
         }
 
         daletouEntity.setId("" + (maxId + 1));
