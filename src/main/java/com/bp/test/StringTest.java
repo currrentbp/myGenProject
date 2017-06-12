@@ -25,6 +25,12 @@ public class StringTest {
 
     }
 
+    @Test
+    public void stringFormatNullTest() {
+        String s = null;
+        System.out.println(String.format("ssss%fff", s));
+    }
+
 
     //==========================        测试方法中的实现方法          ===============================================================//
 

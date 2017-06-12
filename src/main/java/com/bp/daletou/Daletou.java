@@ -431,7 +431,7 @@ public class Daletou {
 
 
         try {
-            StreamUtil.writeSomethingToFile("" + maxId + ":" +
+            StreamUtil.writeSomethingToFile("" + (maxId + 1) + ":" +
                             "oldReds:" + JSON.toJSONString(reds) + " oldBlues:" + JSON.toJSONString(blues) + "\n" +
                             "otherReds:" + JSON.toJSONString(otherReds) + " otherBlues:" + JSON.toJSONString(otherBlues) + "\n",
                     "E:\\ws\\idea_ws\\myGenProject\\20161223_7\\myGenProject\\src\\main\\resources\\daletou\\daletou_forecast_remain.txt",

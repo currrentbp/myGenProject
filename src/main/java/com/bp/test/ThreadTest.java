@@ -15,6 +15,19 @@ import java.util.Date;
 public class ThreadTest {
     private final static Logger logger = LoggerFactory.getLogger(ThreadTest.class);
 
+    public static void main(String[] args) {
+        ThreadTest threadTest = new ThreadTest();
+        threadTest.sleepTest();
+    }
+
+    @Test
+    public void sleepTest() {
+        try {
+            Thread.sleep(10000000L);
+        } catch (InterruptedException e) {
+            e.printStackTrace();
+        }
+    }
 
     @Test
     //此方法主要目的：验证是否存在锁，但是好像不是太符合要
