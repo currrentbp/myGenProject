@@ -25,19 +25,22 @@ public class BigSortTest {
     10000000次：insert need time:2119
     100000000次：insert need time:15699
     1000000000次：insert need time:146378
-    1000000000次：insert need time:146378
+    1000000000次：insert need time:136563
+    10000000000次：insert need time:1425682
+    100000000000次：insert need time:超过277个小时。。。不算了。。for循环10000次1秒，1百亿次得277小时
      */
     public void putAndGet() {
 
         Long time1 = System.currentTimeMillis();
         BigSort bigSort = new BigSort();
-        for (int i = 0; i < 1000000000; i++) {
+        for (long i = 0; i < 100000000000L; i++) {
             bigSort.put(RandomUtil.getRandomNum(100));
         }
         Long time2 = System.currentTimeMillis();
         logger.info("insert need time:" + (time2 - time1));
 
         Long time3 = System.currentTimeMillis();
+        logger.info("max length:" + bigSort.getMaxValue());
         for (int i = 0; i <= bigSort.getMaxValue(); i++) {
             int count = bigSort.get(i);
             if (count != 0) {
