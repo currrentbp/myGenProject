@@ -1,6 +1,9 @@
 package com.bp.test;
 
 import com.alibaba.fastjson.JSON;
+import org.junit.Test;
+import org.slf4j.Logger;
+import org.slf4j.LoggerFactory;
 
 import java.util.ArrayList;
 import java.util.List;
@@ -12,9 +15,11 @@ import java.util.List;
  * @createTime 20170309
  */
 public class ListTest {
+    private static Logger logger = LoggerFactory.getLogger(ListTest.class);
 
-    public static void main(String[] args) {
-        ListTest listTest = new ListTest();
+
+    @Test
+    public void t1() {
 
 
         //测试一个对象放入list中，在list中修改该对象的字段，看能否修改成功
@@ -22,8 +27,25 @@ public class ListTest {
 
         //测试list的foreach的功能
 //        listTest.listForMethod();
-        listTest.listForMethod2();
+        listForMethod2();
     }
+
+    @Test
+    public void anyWhereAdd() {
+//        List<String> list = new ArrayList<String>();
+//        //由于初始化时没有设定数组大小，故会报错
+//        list.add(10,"10");//报错：java.lang.IndexOutOfBoundsException: Index: 10, Size: 0
+//        logger.info("10:"+list.get(10));
+
+
+        List<String> list2 = new ArrayList<String>(22);
+        //虽然设定了初始化数组的长度是22，但是，arraylist中的size没有改变，在add时，会判断size
+        list2.add(10, "10");//java.lang.IndexOutOfBoundsException: Index: 10, Size: 0
+        logger.info("10:" + list2.get(10));
+    }
+
+
+    //==================  测试主要方法  =======================================================================//
 
     public void listRemoveOneGetSize() {
         List<String> list = new ArrayList<String>();
