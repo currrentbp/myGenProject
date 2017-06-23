@@ -16,7 +16,7 @@ public class ByteTest {
 
     @Test
     public void byte1() {
-        byte[] bytes = new byte[1 << 2];//1<<31 会报错：NegativeArraySizeException
+        byte[] bytes = new byte[1 << 30];//1<<31 会报错：NegativeArraySizeException
         logger.info("size;" + bytes.length);
 
     }
