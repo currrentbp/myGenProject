@@ -1,6 +1,7 @@
 package com.bp.sort;
 
 import com.bp.util.all.CheckUtil;
+import org.junit.Assert;
 import org.junit.Test;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
@@ -23,7 +24,38 @@ public class BinarySearch {
     public void test1() {
         List<Integer> list = new ArrayList<Integer>();
         list.addAll(Arrays.asList(new Integer[]{1,2,3,4,5,6,7}));
-        getKeyIndex(list,5);
+        int k1 = getKeyIndex(list,5);
+        Assert.assertTrue(k1 == 4);
+
+        list.clear();
+        list.addAll(Arrays.asList(new Integer[]{1,2,3,4,5,6,7}));
+        int k2 = getKeyIndex(list,4);
+        Assert.assertTrue(k2 == 3);
+
+        list.clear();
+        list.addAll(Arrays.asList(new Integer[]{1,2,3,4,5,6,7}));
+        int k3 = getKeyIndex(list,3);
+        Assert.assertTrue(k3 == 2);
+
+        list.clear();
+        list.addAll(Arrays.asList(new Integer[]{1,2,3,4,5,6,7}));
+        int k4 = getKeyIndex(list,2);
+        Assert.assertTrue(k4 == 1);
+
+        list.clear();
+        list.addAll(Arrays.asList(new Integer[]{1,2,3,4,5,6,7}));
+        int k5 = getKeyIndex(list,1);
+        Assert.assertTrue(k5 == 0);
+
+        list.clear();
+        list.addAll(Arrays.asList(new Integer[]{1,2,3,4,5,6,7}));
+        int k6 = getKeyIndex(list,6);
+        Assert.assertTrue(k6 == 5);
+
+        list.clear();
+        list.addAll(Arrays.asList(new Integer[]{1,2,3,4,5,6,7}));
+        int k7 = getKeyIndex(list,7);
+        Assert.assertTrue(k7 == 6);
     }
 
 

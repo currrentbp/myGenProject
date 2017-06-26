@@ -1,9 +1,13 @@
 package com.bp.sort;
 
+import org.slf4j.Logger;
+import org.slf4j.LoggerFactory;
+
 import java.util.ArrayList;
 import java.util.List;
 
 public class MaoPaoSort {
+	private static Logger logger = LoggerFactory.getLogger(MaoPaoSort.class);
 
 	List<SortObject> sortObjects = new ArrayList<SortObject>();
 	
@@ -61,7 +65,7 @@ public class MaoPaoSort {
 	
 	public void print(){
 		for(int i=0;i<sortObjects.size();i++){
-			System.out.println(sortObjects.get(i));
+			logger.info("===>"+sortObjects.get(i));
 		}
 	}
 
