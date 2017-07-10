@@ -33,7 +33,7 @@ public class BigSortTest {
 
         Long time1 = System.currentTimeMillis();
         BigSort bigSort = new BigSort();
-        for (long i = 0; i < 100000000000L; i++) {
+        for (long i = 0; i < 100L; i++) {
             bigSort.put(RandomUtil.getRandomNum(100));
         }
         Long time2 = System.currentTimeMillis();
