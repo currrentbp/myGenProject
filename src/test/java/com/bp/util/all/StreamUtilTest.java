@@ -14,7 +14,6 @@ import static org.junit.Assert.*;
 public class StreamUtilTest {
     @Test
     public void deleteTheSameFile() {
-
     }
 
     @Test
