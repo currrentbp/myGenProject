@@ -4,7 +4,7 @@ import com.bp.util.all.CheckUtil;
 import org.apache.commons.codec.binary.Base64;
 
 /**
- * @author current_bps
+ * @author current_bp
  * @createTime 20170523
  */
 public class Bas64Util {
