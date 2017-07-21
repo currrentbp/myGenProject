@@ -237,8 +237,6 @@
             <version>${cglib_version}</version>
         </dependency>
 
-
-        
     </dependencies>
 
 
