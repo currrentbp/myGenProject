@@ -12,8 +12,8 @@ import java.util.List;
  */
 public class DaletouEntity {
     private String id;
-    private int[] red = new int[5];
-    private int[] blue = new int[2];
+    private Integer[] red = new Integer[5];
+    private Integer[] blue = new Integer[2];
 
     public String getId() {
         return id;
@@ -23,19 +23,19 @@ public class DaletouEntity {
         this.id = id;
     }
 
-    public int[] getRed() {
+    public Integer[] getRed() {
         return red;
     }
 
-    public void setRed(int[] red) {
+    public void setRed(Integer[] red) {
         this.red = red;
     }
 
-    public int[] getBlue() {
+    public Integer[] getBlue() {
         return blue;
     }
 
-    public void setBlue(int[] blue) {
+    public void setBlue(Integer[] blue) {
         this.blue = blue;
     }
 

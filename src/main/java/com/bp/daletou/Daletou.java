@@ -89,8 +89,8 @@ public class Daletou {
 
                 DaletouEntity daletouEntity = new DaletouEntity();
                 daletouEntity.setId(daletous[0]);
-                daletouEntity.setBlue(getIntArraysByStringArrays(blues1));
-                daletouEntity.setRed(getIntArraysByStringArrays(reds1));
+                daletouEntity.setBlue(getIntegerArraysByStringArrays(blues1));
+                daletouEntity.setRed(getIntegerArraysByStringArrays(reds1));
 
                 localDaletouHistory.put(daletous[0], daletouEntity);
                 temp[i] = Integer.parseInt(daletous[0]);
@@ -237,8 +237,8 @@ public class Daletou {
      * @param nums 原数据类型
      * @return 新数据类型
      */
-    private int[] getIntArraysByStringArrays(String[] nums) {
-        int[] result = new int[nums.length];
+    private Integer[] getIntegerArraysByStringArrays(String[] nums) {
+        Integer[] result = new Integer[nums.length];
 
         for (int i = 0; i < nums.length; i++) {
             try {
@@ -419,8 +419,8 @@ public class Daletou {
         newBlues.addAll(Arrays.asList(remainBlues));
 
 
-        int[] newReds2 = new int[newReds.size()];
-        int[] newBlues2 = new int[newBlues.size()];
+        Integer[] newReds2 = new Integer[newReds.size()];
+        Integer[] newBlues2 = new Integer[newBlues.size()];
 
         for (int i = 0; i < newReds.size(); i++) {
             newReds2[i] = newReds.get(i);

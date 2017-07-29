@@ -32,7 +32,7 @@ public class DaletouRepoPageProcessor implements PageProcessor {
 
     private Site site = Site.me().setRetryTimes(3).setSleepTime(100);
 
-    public static String array2String(int[] source) {
+    public static String array2String(Integer[] source) {
         StringBuilder result = new StringBuilder("");
         if (CheckUtil.isEmpty(source)) {
             return result.toString();
@@ -84,14 +84,14 @@ public class DaletouRepoPageProcessor implements PageProcessor {
                 DaletouEntity daletouEntity = new DaletouEntity();
                 daletouEntity.setId(id);
                 String[] result1 = rolls.subList(0, 5).toArray(new String[5]);
-                int[] result2 = new int[5];
+                Integer[] result2 = new Integer[5];
                 for (int i = 0; i < 5; i++) {
                     result2[i] = Integer.parseInt(result1[i]);
                 }
                 daletouEntity.setRed(result2);
 
                 String[] result1_1 = rolls.subList(5, 7).toArray(new String[2]);
-                int[] result2_1 = new int[2];
+                Integer[] result2_1 = new Integer[2];
                 for (int i = 0; i < 2; i++) {
                     result2_1[i] = Integer.parseInt(result1_1[i]);
                 }
