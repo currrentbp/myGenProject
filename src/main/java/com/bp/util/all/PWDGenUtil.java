@@ -6,6 +6,7 @@ import com.bp.staticValue.StaticValue;
 import java.io.FileWriter;
 import java.io.IOException;
 import java.util.ArrayList;
+import java.util.Arrays;
 import java.util.LinkedList;
 import java.util.List;
 
@@ -204,9 +205,7 @@ public class PWDGenUtil {
         String numAndLetters = null;
         char[] lastCode = new char[length];
         //初始化
-        for(int i=0;i<length;i++){
-            lastCode[i]='0';
-        }
+        Arrays.fill(lastCode,'0');
 
         while(true){
             //先不管进位的问题，
