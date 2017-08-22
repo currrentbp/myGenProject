@@ -6,15 +6,25 @@ import java.util.List;
 
 import com.bp.util.all.TimeUtil;
 import org.junit.Test;
+import org.slf4j.Logger;
+import org.slf4j.LoggerFactory;
 
 
 public class StringTest {
-
+    private final static Logger logger = LoggerFactory.getLogger(StringTest.class);
 
     public List<String> l1 = new ArrayList<String>();
     public List<String> l2 = new ArrayList<String>();
 
     //===================          测试方法          ========================================================//
+    @Test
+    //测试stringBuild有内容数时，超过时怎么样
+    //结果：构造一个不带任何字符的字符串生成器，其初始容量由 capacity 参数指定。
+    public void stringBuildHasCan(){
+        StringBuilder stringBuilder = new StringBuilder(3);
+        stringBuilder.append("12345");
+        logger.info("===>sb:"+stringBuilder.toString());
+    }
     @Test
     //测试string、stringbuffer、stringbformat的效率问题
     public void someFunctionEffection() {
