@@ -1,5 +1,6 @@
 package com.bp.test;
 
+import org.junit.Assert;
 import org.junit.Test;
 
 /**
@@ -20,6 +21,17 @@ public class IntTest {
         //===>x:1 y:0 z:1 k:1
     }
 
+
+    @Test
+    public void IntegerEquals(){
+        Integer i1 = 1;
+        Integer i2 = 1;
+        Integer i3 = new Integer(1);
+        Assert.assertTrue(i1 == i2);
+        Assert.assertTrue(i1 >= i3);
+        Assert.assertTrue(i1.intValue() == i3.intValue());
+//        Assert.assertTrue(i1 == i3);//判断的是两个地址，一个地址使用的是固定的（缓存中的），一个是实时新建出的
+    }
 
     //============          测试方法的私有方法            ==============================================//
 

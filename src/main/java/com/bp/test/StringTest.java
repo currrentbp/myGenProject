@@ -17,6 +17,16 @@ public class StringTest {
     public List<String> l2 = new ArrayList<String>();
 
     //===================          测试方法          ========================================================//
+    //测试格式化问题
+    @Test
+    public void stringFormat(){
+        int i = 1;
+        StringBuilder sb = new StringBuilder(11);
+        sb.append("JCZB")
+                .append(String.format("%02d", 1))
+                .append(String.format("%03d", 2));
+        logger.info("===>sb:"+sb.toString());
+    }
     @Test
     //测试stringBuild有内容数时，超过时怎么样
     //结果：构造一个不带任何字符的字符串生成器，其初始容量由 capacity 参数指定。
