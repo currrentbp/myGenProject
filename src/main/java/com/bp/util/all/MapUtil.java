@@ -18,16 +18,16 @@ public class MapUtil {
     /**
      * 从list转换成map结构
      * @param list 原始数据列表
-     * @param field map的key字段名称
+     * @param fieldNam map的key字段名称
      * @param <K> key类型
      * @param <V> value 类型
      * @return map结构
      */
-    public static <K, V> Map<K, V> getMapByList(List<V> list, String field) {
+    public static <K, V> Map<K, V> getMapByList(List<V> list, String fieldNam) {
         Map<K, V> result = new HashMap<K, V>();
         try {
             for (V v : list) {
-                Field field1 = v.getClass().getDeclaredField("id");
+                Field field1 = v.getClass().getDeclaredField(fieldNam);
                 field1.setAccessible(true);
                 result.put((K)field1.get(v),v);
             }

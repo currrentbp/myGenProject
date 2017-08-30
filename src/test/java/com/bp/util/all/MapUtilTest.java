@@ -11,7 +11,8 @@ import java.util.Map;
 import static org.junit.Assert.*;
 
 /**
- * Created by Administrator on 2017/8/30.
+ * @author current_bp
+ * @createTime 20170830
  */
 public class MapUtilTest {
     @Test
@@ -25,8 +26,8 @@ public class MapUtilTest {
         daletouEntities.add(daletouEntity);
         daletouEntities.add(daletouEntity1);
 
-        Map<Integer,DaletouEntity> map = MapUtil.getMapByList(daletouEntities,"id");
-        System.out.println("===>map:"+ JSON.toJSONString(map));
+        Map<Integer, DaletouEntity> map = MapUtil.getMapByList(daletouEntities, "id");
+        System.out.println("===>map:" + JSON.toJSONString(map));
     }
 
 }
