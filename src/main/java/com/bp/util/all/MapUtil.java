@@ -26,6 +26,9 @@ public class MapUtil {
      */
     public static <K, V> Map<K, V> getMapByList(List<V> list, String fieldName) {
         Map<K, V> result = new HashMap<K, V>();
+        if(CheckUtil.isEmpty(list)){
+            return result;
+        }
         try {
             for (V v : list) {
                 Field field1 = v.getClass().getDeclaredField(fieldName);

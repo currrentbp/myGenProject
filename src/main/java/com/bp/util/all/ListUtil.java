@@ -194,6 +194,9 @@ public class ListUtil {
      */
     public static <V, A> List<V> getFieldListByObjectList(List<A> list, String fieldName, Class<V> kType) {
         List<V> result = new ArrayList<V>();
+        if(CheckUtil.isEmpty(list)){
+            return result;
+        }
         try {
             for (A a : list) {
                 Field field1 = a.getClass().getDeclaredField(fieldName);
