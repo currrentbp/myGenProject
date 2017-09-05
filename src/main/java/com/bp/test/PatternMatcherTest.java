@@ -91,4 +91,12 @@ public class PatternMatcherTest {
         assert matcher.matches();
     }
 
+    @Test
+    public void getGroup(){
+        Pattern pattern = Pattern.compile("([0-9]+)");
+        Matcher matcher = pattern.matcher("订单号12334435464567");
+        System.out.println(matcher.find());
+        System.out.println(matcher.group(0));
+    }
+
 }
