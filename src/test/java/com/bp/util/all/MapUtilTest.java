@@ -18,6 +18,8 @@ import static org.junit.Assert.*;
  * @createTime 20170830
  */
 public class MapUtilTest {
+
+
     private final static Logger logger = LoggerFactory.getLogger(MapUtilTest.class);
 
     @Test
@@ -49,6 +51,25 @@ public class MapUtilTest {
         Map<Integer, Student> map = MapUtil.getMapByList(students, "id");
         logger.info("===>map:" + JSON.toJSONString(map));
 
+    }
+
+    @Test
+    public void getMapListByList() throws Exception {
+        List<Student> students = new ArrayList<Student>();
+        Student student = new Student();
+        student.setId(1);
+        student.setName("1");
+        students.add(student);
+        Student student2 = new Student();
+        student2.setId(2);
+        student2.setName("2");
+        students.add(student2);
+        Student student3 = new Student();
+        student3.setId(2);
+        student3.setName("3");
+        students.add(student3);
+        Map<Integer, List<Student>> map = MapUtil.getMapListByList(students, "id");
+        logger.info("===>map:" + JSON.toJSONString(map));
     }
 
 }
