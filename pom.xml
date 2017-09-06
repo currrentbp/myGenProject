@@ -240,7 +240,7 @@
     </dependencies>
 
 
-    <packaging>pom</packaging>
+    <packaging>jar</packaging>
 
     <distributionManagement>
         <site>
