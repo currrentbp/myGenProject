@@ -1,5 +1,9 @@
 package com.bp.util.all;
 
+import com.alibaba.fastjson.JSON;
+import org.slf4j.Logger;
+import org.slf4j.LoggerFactory;
+
 import java.lang.reflect.Constructor;
 import java.lang.reflect.Field;
 import java.util.ArrayList;
@@ -14,6 +18,7 @@ import java.util.Map;
  * @createTime 20160513
  */
 public class ListUtil {
+    private final static Logger logger = LoggerFactory.getLogger(ListUtil.class);
 
     /**
      * 将数组填充逗号
@@ -194,18 +199,47 @@ public class ListUtil {
      */
     public static <V, A> List<V> getFieldListByObjectList(List<A> list, String fieldName, Class<V> kType) {
         List<V> result = new ArrayList<V>();
-        if(CheckUtil.isEmpty(list)){
+        if (CheckUtil.isEmpty(list)) {
             return result;
         }
-        try {
-            for (A a : list) {
-                Field field1 = a.getClass().getDeclaredField(fieldName);
+
+        for (A a : list) {
+            try {
+                Field field1 = getFieldByNameFromAnywhere(a.getClass(), fieldName);
                 field1.setAccessible(true);
-                V v = kType.getConstructor(field1.getType()).newInstance(field1.get(a));
-                result.add(v);
+                V v = null;
+                if (null == field1.get(a)) {
+                    result.add(null);
+                } else {
+                    //如果类型一致
+                    if (field1.getType() == kType) {
+                        v = (V) field1.get(a);
+                    } else {//如果类型不一致，尽量转化
+                        v = kType.getConstructor(field1.getType()).newInstance(field1.get(a));
+                    }
+                    result.add(v);
+                }
+            } catch (Exception e) {
+                logger.error("===>message:" + e.getMessage(), e);
             }
+        }
+
+        return result;
+    }
+
+    /**
+     * 该方法私有：根据字段名称获取一个field
+     *
+     * @param aClass    该对象的class
+     * @param fieldName 字段名称
+     * @return field
+     */
+    private static Field getFieldByNameFromAnywhere(Class<?> aClass, String fieldName) {
+        Field result = null;
+        try {
+            result = aClass.getDeclaredField(fieldName);
         } catch (Exception e) {
-            System.out.println(e.getStackTrace());
+            result = getFieldByNameFromAnywhere(aClass.getSuperclass(), fieldName);
         }
         return result;
     }

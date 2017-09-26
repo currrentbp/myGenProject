@@ -1,6 +1,7 @@
 package com.bp.util.all;
 
 import com.alibaba.fastjson.JSON;
+import com.bp.common.entity.Chinese;
 import com.bp.daletou.Daletou;
 import com.bp.daletou.DaletouEntity;
 import org.junit.Test;
@@ -53,7 +54,7 @@ public class ListUtilTest {
 
     @Test
     public void getFieldListByObjectList() throws Exception {
-        List<DaletouEntity> daletouEntities  = new ArrayList<DaletouEntity>();
+        List<DaletouEntity> daletouEntities = new ArrayList<DaletouEntity>();
         DaletouEntity daletouEntity = new DaletouEntity();
         daletouEntity.setId("1");
         DaletouEntity daletouEntity2 = new DaletouEntity();
@@ -61,8 +62,22 @@ public class ListUtilTest {
         daletouEntities.add(daletouEntity);
         daletouEntities.add(daletouEntity2);
 
-        List<Integer> id = ListUtil.getFieldListByObjectList(daletouEntities, "id", Integer.class);
-        logger.info("===>s:"+ JSON.toJSONString(id));
-        logger.info("===>1==1:"+ (1 == id.get(0)));
+        List<String> id = ListUtil.getFieldListByObjectList(daletouEntities, "name", String.class);
+        logger.info("===>s:" + JSON.toJSONString(id));
+    }
+
+    @Test
+    public void getFieldListByObjectList2AboutSuperClass() throws Exception {
+        List<Chinese> chineses = new ArrayList<Chinese>();
+        for (int i = 0; i < 10; i++) {
+            Chinese chinese = new Chinese();
+            chinese.setId(i);
+            chinese.setName("name_" + i);
+            chinese.setColor("yellow");
+            chinese.setAge(i);
+            chineses.add(chinese);
+        }
+        List<Integer> id = ListUtil.getFieldListByObjectList(chineses, "age", Integer.class);
+        logger.info("===>s:" + JSON.toJSONString(id));
     }
 }
