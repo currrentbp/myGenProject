@@ -1,4 +1,4 @@
-package com.bp.thread;
+package com.bp.thread.test;
 
 /**
  * @author current_bp
@@ -10,7 +10,7 @@ public class ThreadStartMore {
     会抛异常：
     Exception in thread "main" java.lang.IllegalThreadStateException
 	at java.lang.Thread.start(Thread.java:705)
-	at com.bp.thread.ThreadStartMore.main(ThreadStartMore.java:19)
+	at com.bp.thread.test.ThreadStartMore.main(ThreadStartMore.java:19)
      */
     public static void  main(String[] args){
         Thread thread = new Thread(new Runnable() {
