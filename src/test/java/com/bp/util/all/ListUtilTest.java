@@ -20,7 +20,39 @@ public class ListUtilTest {
 
 
     @Test
-    public void getListByList() throws Exception {
+    public void fill() throws Exception {
+    }
+
+    @Test
+    public void fill1() throws Exception {
+    }
+
+    @Test
+    public void sumNumsFromList() throws Exception {
+    }
+
+    @Test
+    public void sumNumsFromArray() throws Exception {
+    }
+
+    @Test
+    public void pureListWithoutNull() throws Exception {
+    }
+
+    @Test
+    public void reverseList() throws Exception {
+    }
+
+    @Test
+    public void stringList2IntegerList() throws Exception {
+    }
+
+    @Test
+    public void stringList2LongList() throws Exception {
+    }
+
+    @Test
+    public void getFieldListByObjectList() throws Exception {
         List<DaletouEntity> daletouEntities  = new ArrayList<DaletouEntity>();
         DaletouEntity daletouEntity = new DaletouEntity();
         daletouEntity.setId("1");
@@ -33,6 +65,4 @@ public class ListUtilTest {
         logger.info("===>s:"+ JSON.toJSONString(id));
         logger.info("===>1==1:"+ (1 == id.get(0)));
     }
-
-
 }
