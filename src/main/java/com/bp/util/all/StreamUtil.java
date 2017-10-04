@@ -26,6 +26,8 @@ import java.util.regex.Matcher;
 import java.util.regex.Pattern;
 
 import com.bp.util.all.*;
+import org.slf4j.Logger;
+import org.slf4j.LoggerFactory;
 
 /**
  * 我的流处理类
@@ -34,6 +36,7 @@ import com.bp.util.all.*;
  * @createTime 20160613
  */
 public class StreamUtil {
+    private final static Logger logger = LoggerFactory.getLogger(StreamUtil.class);
 
     /**
      * 根据文件夹下的文件名判断是否同名，并删除类似文件 , 例如：“bp”雷同于“bp(1)”、“bp (2)”
@@ -48,7 +51,7 @@ public class StreamUtil {
         List<File> deleteFiles = new ArrayList<File>();
 
         for (String filename : allFilenames) {
-            System.out.println(filename);
+            logger.info(filename);
         }
 
         for (int index = 0; index < allFilenames.size(); index++) {// 指针
@@ -60,7 +63,7 @@ public class StreamUtil {
             String head = thisFileName.lastIndexOf(".") == -1 ? thisFileName
                     : thisFileName.substring(0, thisFileName.lastIndexOf("."));
 
-            System.out.println("name:" + thisFileName + " head:" + head + " tail:" + tail);
+            logger.info("name:" + thisFileName + " head:" + head + " tail:" + tail);
 
             String pattern = "^" + head + " {0,}\\([0-9]{0,}\\)" + (null == tail ? "" : "\\." + tail);
 
@@ -73,7 +76,7 @@ public class StreamUtil {
                 boolean flag = false;
                 try {
                     flag = CheckUtil.patternString(pattern, allFilenames.get(nextIndex));
-                    System.out.println("flag:" + flag + " pattern:" + pattern + " file:" + allFilenames.get(nextIndex));
+                    logger.info("flag:" + flag + " pattern:" + pattern + " file:" + allFilenames.get(nextIndex));
                 } catch (Exception e) {
                     e.printStackTrace();
                 }
@@ -84,10 +87,10 @@ public class StreamUtil {
             }
         }
 
-        System.out.println("============deleteFiles:");
+        logger.info("============deleteFiles:");
         // 打印需要删除的文件名称
         for (File file : deleteFiles) {
-            System.out.println(file.getName());
+            logger.info(file.getName());
             file.delete();
         }
 
@@ -150,7 +153,7 @@ public class StreamUtil {
         Map<String, Integer> allKeysAndCount = new HashMap<String, Integer>();
         List<String> keys = new ArrayList<String>();
 
-        System.out.println("seacher start ...");
+        logger.info("seacher start ...");
 
         int count;
         try {
@@ -169,16 +172,16 @@ public class StreamUtil {
             }
 
         } catch (Exception e) {
-            System.out.println("message:" + e.getMessage());
+            logger.info("message:" + e.getMessage());
         }
         if (0 != keys.size()) {
             for (int i = 0; i < keys.size(); i++) {
-                System.out.println("key:" + keys.get(i) + " count:" + allKeysAndCount.get(keys.get(i)));
+                logger.info("key:" + keys.get(i) + " count:" + allKeysAndCount.get(keys.get(i)));
             }
         } else {
-            System.out.println("there is no same key...");
+            logger.info("there is no same key...");
         }
-        System.out.println("seacher end.");
+        logger.info("seacher end.");
         return false;
     }
 
@@ -206,14 +209,14 @@ public class StreamUtil {
         try {
             StreamUtil.createMyNewFile(filePath);
         } catch (Exception e) {
-            System.out.println("===>the file is exits!");
+            logger.info("===>the file is exits!");
         }
 
         // 2、将内容写入文件
         FileWriter fileWriter = new FileWriter(new File(filePath), isAppend);
         fileWriter.write(something);
         fileWriter.close();
-        System.out.println("file wirte over!");
+        logger.info("file wirte over!");
 
     }
 
@@ -259,20 +262,20 @@ public class StreamUtil {
      */
     public static void findSomeKey(String descPath, String sourcePath, String keys, int num) {
         if (null == keys || "".equals(keys)) {
-            System.out.println("there is no keys ! please check the keys! ");
+            logger.info("there is no keys ! please check the keys! ");
             return;
         }
         String[] keyArray = keys.split("\\|");
         for (int i = 0; i < keyArray.length; i++) {
             SimpleDateFormat sdf = new SimpleDateFormat("yyyy-MM-dd HH:mm:ss");
             Date startTime = new Date();
-            System.out.println("this key is :" + keyArray[i]);
-            System.out.println("start time is :" + sdf.format(startTime));
+            logger.info("this key is :" + keyArray[i]);
+            logger.info("start time is :" + sdf.format(startTime));
 
             findKeyWordFromFile(sourcePath, descPath, keyArray[i], num);
 
             Date endTime = new Date();
-            System.out.println("end time is :" + sdf.format(endTime));
+            logger.info("end time is :" + sdf.format(endTime));
 
         }
     }
@@ -286,7 +289,7 @@ public class StreamUtil {
         File file = new File(path);
         // 如果文件不存在。
         if (!file.exists()) {
-            System.out.println("file is not exist!we will try create it!");
+            logger.info("file is not exist!we will try create it!");
             ArrayList list = new ArrayList();
             if (System.getProperty("file.separator").equals("\\")) {
                 for (int i = 0; i < path.split(
@@ -320,7 +323,7 @@ public class StreamUtil {
 
             try {
                 file.createNewFile();
-                System.out.println("create file is ok!");
+                logger.info("create file is ok!");
             } catch (IOException e) {
                 e.printStackTrace();
             }
@@ -369,11 +372,11 @@ public class StreamUtil {
         boolean flag = false;
         int count = num;
 
-        System.out.println("seacher start ...");
+        logger.info("seacher start ...");
 
         Date start = new Date();
         SimpleDateFormat s1 = new SimpleDateFormat("yyyy-MM-dd HH:mm:ss");
-        System.out.println("start time :" + s1.format(start));
+        logger.info("start time :" + s1.format(start));
 
         try {
             is = new FileInputStream(sourceFile);
@@ -441,8 +444,8 @@ public class StreamUtil {
         }
 
         Date end = new Date();
-        System.out.println("start time :" + s1.format(end));
-        System.out.println("seacher end !");
+        logger.info("start time :" + s1.format(end));
+        logger.info("seacher end !");
 
     }
 
@@ -468,11 +471,11 @@ public class StreamUtil {
             }
             os = new FileOutputStream(file);
             byte[] buffer = new byte[1024];
-            System.out.println("It's start .....");
+            logger.info("It's start .....");
             while (true) {
                 int len = is.read(buffer);
                 if (len == -1) {
-                    System.out.println("It's end!");
+                    logger.info("It's end!");
                     break;
                 }
                 os.write(buffer, 0, len);
@@ -489,7 +492,7 @@ public class StreamUtil {
             }
         }
         Long time2 = System.currentTimeMillis();
-        System.out.println("===>cost time:" + (time2 - time1));
+        logger.info("===>cost time:" + (time2 - time1));
 
     }
 
@@ -568,7 +571,7 @@ public class StreamUtil {
         try {
             createMyNewFile(path);
         }catch (Exception e){
-//            System.out.println("文件已存在！！");
+//            logger.info("文件已存在！！");
         }
         return readFile(new File(path));
     }
@@ -594,7 +597,7 @@ public class StreamUtil {
                 result.add(temp);
             }
         }catch (Exception e){
-            System.out.println("===>error!!! msg:"+e.getMessage());
+            logger.info("===>error!!! msg:"+e.getMessage());
         }finally {
             closeResource(is,isr,br,null,null,null);
         }
@@ -649,7 +652,7 @@ public class StreamUtil {
                 is.close();
             }
         }catch (Exception e){
-            System.out.println("===>close resource error!! msg:"+e.getMessage());
+            logger.info("===>close resource error!! msg:"+e.getMessage());
         }
     }
 
