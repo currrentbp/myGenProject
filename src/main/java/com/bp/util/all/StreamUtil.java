@@ -35,29 +35,6 @@ import com.bp.util.all.*;
  */
 public class StreamUtil {
 
-    public static void main(String[] args) throws IOException {
-        // //生成一个路径下打文件
-        // StreamUtil.createMyNewFile("E:\\test\\test1\\1.txt");
-
-        // // 将一段话写入一个文件中
-        // StreamUtil.writeSomethingToFile("sssssssssss\nsssf",
-        // "E:\\test\\test1\\1.txt");
-
-        // // 寻找一个文件中是否存在相同的值
-        // StreamUtil.findContainsThesame("E:\\bp1.txt");
-
-        // 删除一些重复的文件
-        // StreamUtil.deleteTheSameFile("E:\\tmp\\bp");
-
-        // 从网上下载一个文件
-        // StreamUtil.getResourceFromUrl("http://repo1.maven.org/maven2/archetype-catalog.xml",
-        // "E:\\tmp\\archetype-catalog.xml");
-
-        // 获取一个目录下的所有文件
-        System.out.println(StreamUtil.getAllFilesFromDirDeep("E:\\letv"));
-
-    }
-
     /**
      * 根据文件夹下的文件名判断是否同名，并删除类似文件 , 例如：“bp”雷同于“bp(1)”、“bp (2)”
      * 例如：“bp1.txt”雷同于“bp1(1).txt”
