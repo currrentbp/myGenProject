@@ -6,7 +6,9 @@ import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
 
 import java.util.ArrayList;
+import java.util.HashSet;
 import java.util.List;
+import java.util.Set;
 
 /**
  * 专门用于列表的测试
@@ -42,6 +44,18 @@ public class ListTest {
         //虽然设定了初始化数组的长度是22，但是，arraylist中的size没有改变，在add时，会判断size
         list2.add(10, "10");//java.lang.IndexOutOfBoundsException: Index: 10, Size: 0
         logger.info("10:" + list2.get(10));
+    }
+
+    @Test
+    public void list2Set(){
+        List<String> list = new ArrayList<String>();
+        list.add("baopan");
+        list.add("bp");
+        list.add("baopan");
+        list.add("bp1");
+        logger.info("===>list:"+JSON.toJSONString(list));
+        Set<String> set = new HashSet<String>(list);
+        logger.info("===>set:"+JSON.toJSONString(set));
     }
 
 
