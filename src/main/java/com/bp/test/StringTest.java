@@ -9,6 +9,9 @@ import org.junit.Test;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
 
+import javax.script.ScriptEngine;
+import javax.script.ScriptEngineManager;
+
 
 public class StringTest {
     private final static Logger logger = LoggerFactory.getLogger(StringTest.class);
@@ -17,6 +20,29 @@ public class StringTest {
     public List<String> l2 = new ArrayList<String>();
 
     //===================          测试方法          ========================================================//
+
+    /**
+     * 将一个字符串转换成计算公式，求出结果
+     */
+    @Test
+    public void string2MathsGetValue(){
+        try {
+            String str = "a >= 0 && a <= 5";//"(a >= 0 && a <= 5)";
+            ScriptEngineManager manager = new ScriptEngineManager();
+            ScriptEngine engine = manager.getEngineByName("js");
+            engine.put("a", -1);
+            Object result = engine.eval(str);
+            System.out.println("结果类型:" + result.getClass().getName() + ",计算结果:" + result);
+
+            String str2 = "Math.ceil(10.9)";//"43*(2 + 1.4)+2*32/(3-2.1)";
+            ScriptEngineManager manager2 = new ScriptEngineManager();
+            ScriptEngine engine2 = manager2.getEngineByName("js");
+            Object result2 = engine2.eval(str2);
+            System.out.println("结果类型:" + result2.getClass().getName() + ",计算结果:" + result2);
+        }catch (Exception e){
+
+        }
+    }
     //测试格式化问题
     @Test
     public void stringFormat(){
