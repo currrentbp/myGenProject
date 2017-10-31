@@ -8,7 +8,6 @@ import org.springframework.util.Assert;
 import static org.junit.Assert.*;
 
 public class PathUtilTest {
-
     private final static Logger logger = LoggerFactory.getLogger(PathUtilTest.class);
 
 
@@ -18,6 +17,13 @@ public class PathUtilTest {
         Assert.notNull(localResourcePath, "path is null");
         logger.info("path:"+localResourcePath);
 
+    }
+
+    @Test
+    public void getTailFromUrl() throws Exception {
+        String tail = PathUtil.getTailFromUrl("http://www.baidu.com/baopan.html");
+        logger.info(tail);
+        Assert.notNull(tail,"is null");
     }
 
 }

@@ -1,5 +1,6 @@
 package com.bp.util.all;
 
+import com.bp.staticValue.StaticProperties;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
 
@@ -23,6 +24,17 @@ public class PathUtil {
         String allPath = new PathUtil().getClass().getClassLoader().getResource("//").getPath();
         String pre = allPath.substring(0, allPath.indexOf("target"));
         return pre + "src/main/resources/";
+    }
+
+
+    /**
+     * 获取url的最后文件名
+     *
+     * @param url url
+     * @return 文件名
+     */
+    public static String getTailFromUrl(String url) {
+        return url.substring(url.lastIndexOf("/") + StaticProperties.ONE_INT);
     }
 
 
