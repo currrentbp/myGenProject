@@ -2,7 +2,7 @@
 <configuration>
     <property name="SYS_LOG_DIR" value="${log.path}"/>
     <property name="LOG_FILE" value="currentbp" />
-    <conversionRule conversionWord="ip" converterClass="com.bp.net.IpConvert" />
+    <conversionRule conversionWord="ip" converterClass="com.currentbp.net.IpConvert" />
     <appender name="console" class="ch.qos.logback.core.ConsoleAppender">
         <encoder>
             <pattern>%d{yyyy-MM-dd HH:mm:ss.SSS} [%ip] %5p ${PID:- } --- [%t] %-40.40logger{39} : %m%n</pattern>
@@ -52,7 +52,7 @@
     </appender>
 
     <!-- project default level -->
-    <logger name="com.bp" level="INFO" />
+    <logger name="com.currentbp" level="INFO" />
     <logger name="com" level="INFO" />
     <logger name="org" level="ERROR" />
     <!--log4jdbc -->
