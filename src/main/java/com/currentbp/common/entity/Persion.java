@@ -4,7 +4,7 @@ package com.currentbp.common.entity;
  * @author current_bp
  * @createTime 20170926
  */
-public class Persion {
+public class Persion extends Human {
     private Integer id;
     private String name;
 

@@ -73,8 +73,9 @@ public class ListUtilTest {
             chinese.setColor("yellow");
             chinese.setAge(i);
             chineses.add(chinese);
+            chinese.setType(i);
         }
-        List<Integer> id = ListUtil.getFieldListByObjectList(chineses, "age", Integer.class);
+        List<Integer> id = ListUtil.getFieldListByObjectList(chineses, "type", Integer.class);
         logger.info("===>s:" + JSON.toJSONString(id));
     }
 }
