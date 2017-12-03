@@ -1,4 +1,4 @@
-package com.currentbp.Interesting;
+package com.currentbp.Interesting.BeiJin;
 
 /**
  * 关于电话的游戏（专门用于给程序员的）

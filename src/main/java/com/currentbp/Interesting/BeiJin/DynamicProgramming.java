@@ -1,4 +1,4 @@
-package com.currentbp.Interesting;
+package com.currentbp.Interesting.BeiJin;
 
 /**
  * 动态规划

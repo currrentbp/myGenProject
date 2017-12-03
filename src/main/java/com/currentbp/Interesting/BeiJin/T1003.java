@@ -1,4 +1,4 @@
-package com.currentbp.Interesting;
+package com.currentbp.Interesting.BeiJin;
 
 import java.util.ArrayList;
 import java.util.List;

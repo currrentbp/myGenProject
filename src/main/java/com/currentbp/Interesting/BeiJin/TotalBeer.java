@@ -1,4 +1,4 @@
-package com.currentbp.Interesting;
+package com.currentbp.Interesting.BeiJin;
 
 /**
  * 1、一瓶酒2元，两个空瓶换一瓶酒，四个瓶盖换一瓶酒。问，10元钱能喝到多少瓶酒？
