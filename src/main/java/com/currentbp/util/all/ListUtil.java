@@ -4,6 +4,7 @@ import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
 
 import java.lang.reflect.Field;
+import java.lang.reflect.Method;
 import java.util.ArrayList;
 import java.util.List;
 
@@ -177,6 +178,35 @@ public class ListUtil {
             try {
                 result.add(Long.parseLong(s));
             } catch (Exception e) {
+            }
+        }
+
+        return result;
+    }
+
+
+    /**
+     * 通过方法名称获取某个字段对应的列表
+     *
+     * @param list       列表
+     * @param methodName 方法名词
+     * @param kType      返回类型
+     * @param <V>        返回类型
+     * @param <A>        key值类型
+     * @return
+     */
+    public static <V, A> List<V> getFieldListByMethodName(List<A> list, String methodName, Class<V> kType) {
+        List<V> result = new ArrayList<V>();
+        if (CheckUtil.isEmpty(list)) {
+            return result;
+        }
+        for (A a : list) {
+            try {
+                Method method = a.getClass().getMethod(methodName);
+                method.setAccessible(true);
+                result.add((V) method.invoke(a));
+            } catch (Exception e) {
+                logger.error("===>message:" + e.getMessage(), e);
             }
         }
 

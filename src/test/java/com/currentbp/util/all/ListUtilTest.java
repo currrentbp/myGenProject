@@ -78,6 +78,8 @@ public class ListUtilTest {
 
         List<String> id = ListUtil.getFieldListByObjectList(daletouEntities, "name", String.class);
         logger.info("===>s:" + JSON.toJSONString(id));
+        List<String> ids1 = ListUtil.getFieldListByMethodName(daletouEntities,"getName",String.class);
+        logger.info("===>ids1:"+JSON.toJSONString(ids1));
     }
 
     @Test
@@ -92,7 +94,9 @@ public class ListUtilTest {
             chineses.add(chinese);
             chinese.setType(i);
         }
-        List<Integer> id = ListUtil.getFieldListByObjectList(chineses, "type", Integer.class);
+        List<Integer> id = ListUtil.getFieldListByObjectList(chineses, "id", Integer.class);
         logger.info("===>s:" + JSON.toJSONString(id));
+        List<Integer> ids1 = ListUtil.getFieldListByMethodName(chineses,"getId",Integer.class);
+        logger.info("===>ids1:"+JSON.toJSONString(ids1));
     }
 }
