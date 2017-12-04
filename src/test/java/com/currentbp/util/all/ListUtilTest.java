@@ -66,37 +66,5 @@ public class ListUtilTest {
         System.out.println(s7.compareTo(s8));
     }
 
-    @Test
-    public void getFieldListByObjectList() throws Exception {
-        List<DaletouEntity> daletouEntities = new ArrayList<DaletouEntity>();
-        DaletouEntity daletouEntity = new DaletouEntity();
-        daletouEntity.setId("1");
-        DaletouEntity daletouEntity2 = new DaletouEntity();
-        daletouEntity2.setId("2");
-        daletouEntities.add(daletouEntity);
-        daletouEntities.add(daletouEntity2);
 
-        List<String> id = ListUtil.getFieldListByObjectList(daletouEntities, "name", String.class);
-        logger.info("===>s:" + JSON.toJSONString(id));
-        List<String> ids1 = ListUtil.getFieldListByMethodName(daletouEntities,"getName",String.class);
-        logger.info("===>ids1:"+JSON.toJSONString(ids1));
-    }
-
-    @Test
-    public void getFieldListByObjectList2AboutSuperClass() throws Exception {
-        List<Chinese> chineses = new ArrayList<Chinese>();
-        for (int i = 0; i < 10; i++) {
-            Chinese chinese = new Chinese();
-            chinese.setId(i);
-            chinese.setName("name_" + i);
-            chinese.setColor("yellow");
-            chinese.setAge(i);
-            chineses.add(chinese);
-            chinese.setType(i);
-        }
-        List<Integer> id = ListUtil.getFieldListByObjectList(chineses, "id", Integer.class);
-        logger.info("===>s:" + JSON.toJSONString(id));
-        List<Integer> ids1 = ListUtil.getFieldListByMethodName(chineses,"getId",Integer.class);
-        logger.info("===>ids1:"+JSON.toJSONString(ids1));
-    }
 }
