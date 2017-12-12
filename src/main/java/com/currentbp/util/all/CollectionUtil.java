@@ -43,10 +43,10 @@ public class CollectionUtil {
      * @return
      */
     public static <V, A> List<V> getFieldListByMethodName(List<A> list, String methodName, Class<V> kType) {
-        List<V> result = new ArrayList<V>();
         if (CheckUtil.isEmpty(list)) {
-            return result;
+            return new ArrayList<V>();
         }
+        List<V> result = new ArrayList<V>(list.size());
         for (A a : list) {
             try {
                 Method method = a.getClass().getMethod(methodName);
@@ -71,10 +71,10 @@ public class CollectionUtil {
      * @return 该字段的列表
      */
     public static <V, A> List<V> getFieldListByObjectList(List<A> list, String fieldName, Class<V> kType) {
-        List<V> result = new ArrayList<V>();
         if (CheckUtil.isEmpty(list)) {
-            return result;
+            return new ArrayList<V>();
         }
+        List<V> result = new ArrayList<V>(list.size());
 
         for (A a : list) {
             try {
