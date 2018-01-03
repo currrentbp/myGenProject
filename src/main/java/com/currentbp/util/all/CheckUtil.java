@@ -1,5 +1,7 @@
 package com.currentbp.util.all;
 
+import org.springframework.util.StringUtils;
+
 import java.util.*;
 import java.util.regex.Matcher;
 import java.util.regex.Pattern;
@@ -41,17 +43,21 @@ public class CheckUtil {
      * @return 是否为空
      */
     public static boolean isEmpty(Object source) {
-        if (source == null)
+        if (source == null) {
             return true;
+        }
 
-        if (source instanceof CharSequence)
+        if (source instanceof CharSequence) {
             return ((CharSequence) source).length() == 0;
+        }
 
-        if (source instanceof Collection)
+        if (source instanceof Collection) {
             return ((Collection) source).isEmpty();
+        }
 
-        if (source instanceof Map)
+        if (source instanceof Map) {
             return ((Map) source).isEmpty();
+        }
 
         if (source instanceof Object[]) {
             Object[] object = (Object[]) source;
