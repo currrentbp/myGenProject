@@ -37,6 +37,16 @@ public class StreamUtil {
     private final static Logger logger = LoggerFactory.getLogger(StreamUtil.class);
 
     /**
+     * 是否是一个文件
+     *
+     * @param path 路进
+     * @return 是否是文件
+     */
+    public static boolean isFile(String path) {
+        return new File(path).isFile();
+    }
+
+    /**
      * 根据文件夹下的文件名判断是否同名，并删除类似文件 , 例如：“currentbp”雷同于“currentbp(1)”、“currentbp (2)”
      * 例如：“bp1.txt”雷同于“bp1(1).txt”
      *
@@ -219,7 +229,6 @@ public class StreamUtil {
     }
 
 
-
     /**
      * 产生一个字符流的写入流
      *
@@ -227,8 +236,9 @@ public class StreamUtil {
      * @return 文件写入流
      */
     public static FileWriter createFileWriter(String filePath) {
-        return createFileWriter(filePath,true);
+        return createFileWriter(filePath, true);
     }
+
     /**
      * 产生一个字符流的写入流
      *
@@ -245,7 +255,6 @@ public class StreamUtil {
         }
         return fileWriter;
     }
-
 
 
     /**
@@ -562,13 +571,14 @@ public class StreamUtil {
 
     /**
      * 获取文件中所有的行的数据
+     *
      * @param path 文件路径
      * @return 所有数据
      */
-    public static List<String> readFile(String path){
+    public static List<String> readFile(String path) {
         try {
             createMyNewFile(path);
-        }catch (Exception e){
+        } catch (Exception e) {
 //            logger.info("文件已存在！！");
         }
         return readFile(new File(path));
@@ -576,17 +586,18 @@ public class StreamUtil {
 
     /**
      * 获取文件中所有的行的数据
+     *
      * @param sourceFile 文件
      * @return 所有数据
      */
-    public static List<String >readFile(File sourceFile){
+    public static List<String> readFile(File sourceFile) {
         List<String> result = new ArrayList<String>();
 
         InputStream is = null;
         InputStreamReader isr = null;
         BufferedReader br = null;
 
-        try{
+        try {
             is = new FileInputStream(sourceFile);
             isr = new InputStreamReader(is);
             br = new BufferedReader(isr);
@@ -594,10 +605,10 @@ public class StreamUtil {
             while ((temp = br.readLine()) != null) {
                 result.add(temp);
             }
-        }catch (Exception e){
-            logger.info("===>error!!! msg:"+e.getMessage());
-        }finally {
-            closeResource(is,isr,br,null,null,null);
+        } catch (Exception e) {
+            logger.info("===>error!!! msg:" + e.getMessage());
+        } finally {
+            closeResource(is, isr, br, null, null, null);
         }
 
 
@@ -605,22 +616,11 @@ public class StreamUtil {
     }
 
 
-
-
-
-
-
-
-
-
-
-
-
-
     //==========================私有文件=============================================//
 
     /**
      * 关闭流
+     *
      * @param is
      * @param isr
      * @param br
@@ -629,28 +629,28 @@ public class StreamUtil {
      * @param bw
      */
     private static void closeResource(InputStream is, InputStreamReader isr, BufferedReader br, OutputStream os, OutputStreamWriter osw,
-                                      BufferedWriter bw){
+                                      BufferedWriter bw) {
         try {
             if (null != bw) {
                 bw.close();
             }
-            if(null != osw){
+            if (null != osw) {
                 osw.close();
             }
-            if(null != os){
+            if (null != os) {
                 os.close();
             }
-            if(null != br){
+            if (null != br) {
                 br.close();
             }
-            if(null != isr){
+            if (null != isr) {
                 isr.close();
             }
-            if(null != is){
+            if (null != is) {
                 is.close();
             }
-        }catch (Exception e){
-            logger.info("===>close resource error!! msg:"+e.getMessage());
+        } catch (Exception e) {
+            logger.info("===>close resource error!! msg:" + e.getMessage());
         }
     }
 
