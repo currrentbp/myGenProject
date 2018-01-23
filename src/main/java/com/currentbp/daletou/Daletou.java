@@ -63,8 +63,7 @@ public class Daletou {
      * 初始化本地的历史数据
      */
     public void initReadDaletouHistory() {
-        List<String> daletouHistory = StreamUtil.readFile(
-                "E:\\ws\\idea_ws\\myGenProject\\20161223_7\\myGenProject\\src\\main\\resources\\daletou\\daletou_history.txt");
+        List<String> daletouHistory = StreamUtil.getListByFileSource("/daletou/daletou_history.txt");
         if (CheckUtil.isEmpty(daletouHistory)) {
             return;
         }
@@ -127,13 +126,9 @@ public class Daletou {
                 logger.info("id:" + sortDaletouHistoryIds.get(i) + " like:" + JSON.toJSONString(analysisResults));
 
                 //写入文件中
-                try {
-                    StreamUtil.writeSomethingToFile("" + sortDaletouHistoryIds.get(i) + ":" + analysisResults[0] + "," + analysisResults[1] + "\n",
-                            "E:\\ws\\idea_ws\\myGenProject\\20161223_7\\myGenProject\\src\\main\\resources\\daletou\\daletou_analysis.txt",
-                            true);
-                } catch (IOException e) {
-                    e.printStackTrace();
-                }
+                StreamUtil.writeSomethingToFile("" + sortDaletouHistoryIds.get(i) + ":" + analysisResults[0] + "," + analysisResults[1] + "\n",
+                        "E:\\ws\\idea_ws\\myGenProject\\20161223_7\\myGenProject\\src\\main\\resources\\daletou\\daletou_analysis.txt",
+                        true);
 
 
                 concurrentLinkedQueue.remove();

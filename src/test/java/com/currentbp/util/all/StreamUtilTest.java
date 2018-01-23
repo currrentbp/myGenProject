@@ -11,82 +11,24 @@ import org.junit.Test;
  */
 public class StreamUtilTest {
     @Test
-    public void deleteTheSameFile() {
+    public void writeSomethingToFile() throws Exception {
+        StreamUtil.writeSomethingToFile("baopan\n","baopan1.txt");
+        StreamUtil.writeSomethingToFile("baopan2","baopan1.txt",true);
     }
 
     @Test
-    public void getAllFileFromDir() {
-
+    public void createMyFile() throws Exception {
+        Assert.notNull(StreamUtil.createMyFile("baopan.txt",true),"");
+        Assert.notNull(StreamUtil.createMyFile("/home/currentbp/baopan.txt",false),"");
     }
 
     @Test
-    public void getAllFileFromDir1() {
-
+    public void test_isFile() {
+        Assert.isTrue(StreamUtil.isFile("/daletou/config.properties"), "bushi yige wenjian");
     }
-
     @Test
-    public void findContainsThesame() {
-
-    }
-
-    @Test
-    public void writeSomethingToFile() {
-
-    }
-
-    @Test
-    public void writeSomethingToFile1() {
-
-    }
-
-    @Test
-    public void createFileWriter() {
-
-    }
-
-    @Test
-    public void createFileWriter1() {
-
-    }
-
-    @Test
-    public void findSomeKey() {
-
-    }
-
-    @Test
-    public void createMyNewFile() {
-
-    }
-
-    @Test
-    public void findKeyWordFromFile() {
-
-    }
-
-    @Test
-    public void getResourceFromUrl() {
-
-    }
-
-    @Test
-    public void getFilenamesFromFiles() {
-
-    }
-
-    @Test
-    public void getAllFilesFromDirDeep() {
-
-    }
-
-    @Test
-    public void getAllFilesFromDirDeep1() {
-
-    }
-
-    @Test
-    public void readFile() {
-        System.out.println(JSON.toJSONString(StreamUtil.readFile("E:\\ws\\idea_ws\\myGenProject\\20161223_7\\myGenProject\\src\\main\\resources\\daletou\\daletou_history.txt")));
+    public void test_isFile2() {
+        Assert.isTrue(StreamUtil.isFile("/daletou/config.properties",false), "bushi yige wenjian");
     }
 
 

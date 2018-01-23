@@ -70,11 +70,8 @@ public class PWDGenUtil {
         for (String pwd : pwds) {
             sb.append(pwd + "\n");
         }
-        try {
-            StreamUtil.writeSomethingToFile(sb.toString(), path);
-        } catch (IOException e) {
-            e.printStackTrace();
-        }
+        StreamUtil.writeSomethingToFile(sb.toString(), path);
+
     }
 
 
@@ -117,12 +114,9 @@ public class PWDGenUtil {
             }
         }
 
-        try {
-            System.out.println("len:" + sb.length());
-            StreamUtil.writeSomethingToFile(sb.toString(), filePath);
-        } catch (IOException e) {
-            e.printStackTrace();
-        }
+
+        System.out.println("len:" + sb.length());
+        StreamUtil.writeSomethingToFile(sb.toString(), filePath);
     }
 
     /**
@@ -173,7 +167,7 @@ public class PWDGenUtil {
      * @param endLength   最长的长度，不能小于开始长度
      * @param filePath    生成文件的路径
      */
-    public void genDic4(int startLength, int endLength, String filePath){
+    public void genDic4(int startLength, int endLength, String filePath) {
         if (startLength <= 0 || endLength < startLength || CheckUtil.isEmpty(filePath)) {
             return;
         }
@@ -197,16 +191,17 @@ public class PWDGenUtil {
 
     /**
      * 产生一个固定长度的数字和字符密码串
-     * @param length 长度
+     *
+     * @param length     长度
      * @param fileWriter 写入文件流
      */
     private void createStaticLenNumAndLetters(int length, FileWriter fileWriter) {
         String numAndLetters = null;
         char[] lastCode = new char[length];
         //初始化
-        Arrays.fill(lastCode,'0');
+        Arrays.fill(lastCode, '0');
 
-        while(true){
+        while (true) {
             //先不管进位的问题，
             try {
                 fileWriter.write(getNums2(lastCode));
@@ -220,7 +215,6 @@ public class PWDGenUtil {
             }
         }
     }
-
 
 
     /**
@@ -278,7 +272,7 @@ public class PWDGenUtil {
                 lastedCode[i] = 0;
                 continue;
             } else {
-                lastedCode[i] = Num_Letters.charAt(Num_Letters.indexOf(k)+1);
+                lastedCode[i] = Num_Letters.charAt(Num_Letters.indexOf(k) + 1);
                 flag = false;
                 break;
             }
@@ -327,14 +321,14 @@ public class PWDGenUtil {
         StringBuilder result = new StringBuilder("");
         String prefix = "";
         for (int i = 1; i < lastedCode.length; i++) {
-            prefix  = lastedCode[i] + prefix;
+            prefix = lastedCode[i] + prefix;
         }
 
         for (int j = 0; j < Num_Letters.length(); j++) {
             count++;
             if (count < 100000000L && count / 10000 != 0 && count % 10000 == 0) {
                 System.out.println("===>输出数据数量：" + (count / 10000) + " 万条");
-            }else if(count >= 100000000L && count / 100000000 != 0 && count % 100000000 == 0){
+            } else if (count >= 100000000L && count / 100000000 != 0 && count % 100000000 == 0) {
                 System.out.println("===>输出数据数量：" + (count / 100000000) + " 亿条");
             }
             result.append(prefix + Num_Letters.charAt(j) + "\n");

@@ -24,6 +24,8 @@ import java.util.Map;
 import java.util.regex.Matcher;
 import java.util.regex.Pattern;
 
+import com.currentbp.entry.BusinessException;
+import org.junit.Test;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
 
@@ -33,75 +35,92 @@ import org.slf4j.LoggerFactory;
  * @author current_bp
  * @createTime 20160613
  */
-public class StreamUtil {
+public abstract class StreamUtil {
     private final static Logger logger = LoggerFactory.getLogger(StreamUtil.class);
 
     /**
-     * 是否是一个文件
+     * 相对与本项目下的路径
      *
      * @param path 路进
      * @return 是否是文件
      */
     public static boolean isFile(String path) {
-        return new File(path).isFile();
+        return isFile(path, true);
     }
 
     /**
-     * 根据文件夹下的文件名判断是否同名，并删除类似文件 , 例如：“currentbp”雷同于“currentbp(1)”、“currentbp (2)”
-     * 例如：“bp1.txt”雷同于“bp1(1).txt”
+     * 判断是否是一个文件
      *
-     * @param dirPath 目录
+     * @param path       文件路径
+     * @param isRelative 是否是相对路径
+     * @return 是否是文件
      */
-    public static void deleteTheSameFile(String dirPath) {
-        List<File> allFileInDir = getAllFileFromDir(dirPath);
-        List<String> allFilenames = getFilenamesFromFiles(allFileInDir);
+    public static boolean isFile(String path, boolean isRelative) {
+        //todo not good:原本想做到是否是相对路径，和绝对路径
 
-        List<File> deleteFiles = new ArrayList<File>();
+        InputStream is = Class.class.getResourceAsStream(path);
+        return null != is;
+    }
 
-        for (String filename : allFilenames) {
-            logger.info(filename);
+    /**
+     * 创建一个文件
+     *
+     * @param path 绝对路径
+     * @return 文件
+     */
+    public static File createMyFile(String path) {
+        return createMyFile(path, false);
+    }
+
+    /**
+     * 创建一个文件
+     *
+     * @param path       路径
+     * @param isRelative 是否是相对路径
+     * @return 文件
+     */
+    public static File createMyFile(String path, boolean isRelative) {
+        if (isRelative) {
+            path = System.getProperty("user.dir") + "/" + path;
         }
+        if (isFile(path)) {
+            return new File(path);
+        }
+        File file = new File(path);
+        try {
+            file.createNewFile();
+        } catch (Exception e) {
+            logger.error("createMyFile is error! path:" + path, e);
+            throw new BusinessException(e.getMessage());
+        }
+        return file;
+    }
 
-        for (int index = 0; index < allFilenames.size(); index++) {// 指针
-
-            String thisFileName = allFilenames.get(index).trim();
-            // 判断是否存在文件类型，即最后一个“.”后面的字符串
-            String tail = thisFileName.lastIndexOf(".") == -1 ? null
-                    : thisFileName.substring(thisFileName.lastIndexOf(".") + 1);
-            String head = thisFileName.lastIndexOf(".") == -1 ? thisFileName
-                    : thisFileName.substring(0, thisFileName.lastIndexOf("."));
-
-            logger.info("name:" + thisFileName + " head:" + head + " tail:" + tail);
-
-            String pattern = "^" + head + " {0,}\\([0-9]{0,}\\)" + (null == tail ? "" : "\\." + tail);
-
-            // 1.需要判断当前指针的文件名称和nextIndex指针所对应的文件的名称是否类似
-            // 2.如果类似，放到要删除的文件集合中
-            for (int nextIndex = 0; nextIndex < allFilenames.size(); nextIndex++) {
-                if (index == nextIndex) {
-                    continue;
+    /**
+     * 获取path下的文件内容
+     *
+     * @param path 文件路径
+     * @return 文件内容列表
+     */
+    public static List<String> getListByFileSource(String path) {
+        Assert.isTrue(isFile(path), "the file :" + path + " is not exist!");
+        InputStream is = Class.class.getResourceAsStream(path);
+        List<String> result = new ArrayList<String>();
+        InputStreamReader isr = new InputStreamReader(is);
+        BufferedReader br = new BufferedReader(isr);
+        String temp = null;
+        while (true) {
+            try {
+                if (null != (temp = br.readLine())) {
+                    result.add(temp);
+                } else {
+                    break;
                 }
-                boolean flag = false;
-                try {
-                    flag = CheckUtil.patternString(pattern, allFilenames.get(nextIndex));
-                    logger.info("flag:" + flag + " pattern:" + pattern + " file:" + allFilenames.get(nextIndex));
-                } catch (Exception e) {
-                    e.printStackTrace();
-                }
-
-                if (flag) {
-                    deleteFiles.add(allFileInDir.get(nextIndex));
-                }
+            } catch (Exception e) {
+                throw new BusinessException(e.getMessage());
             }
         }
-
-        logger.info("============deleteFiles:");
-        // 打印需要删除的文件名称
-        for (File file : deleteFiles) {
-            logger.info(file.getName());
-            file.delete();
-        }
-
+        return result;
     }
 
     /**
@@ -144,92 +163,6 @@ public class StreamUtil {
     }
 
     /**
-     * 寻找一个文件中是否存在相同的key
-     *
-     * @param filePath 文件路径
-     * @return 是否存在相同key
-     */
-    public static boolean findContainsThesame(String filePath) {
-
-        File sourceFile = new File(filePath);
-
-        InputStream is;
-        InputStreamReader isr;
-        BufferedReader br;
-
-        String temp;
-        Map<String, Integer> allKeysAndCount = new HashMap<String, Integer>();
-        List<String> keys = new ArrayList<String>();
-
-        logger.info("seacher start ...");
-
-        int count;
-        try {
-            is = new FileInputStream(sourceFile);
-            isr = new InputStreamReader(is);
-            br = new BufferedReader(isr);
-
-            while ((temp = br.readLine()) != null) {
-                if (null == allKeysAndCount.get(temp)) {
-                    allKeysAndCount.put(temp, 1);
-                } else {
-                    count = allKeysAndCount.get(temp);
-                    allKeysAndCount.put(temp, ++count);
-                    keys.add(temp);
-                }
-            }
-
-        } catch (Exception e) {
-            logger.info("message:" + e.getMessage());
-        }
-        if (0 != keys.size()) {
-            for (int i = 0; i < keys.size(); i++) {
-                logger.info("key:" + keys.get(i) + " count:" + allKeysAndCount.get(keys.get(i)));
-            }
-        } else {
-            logger.info("there is no same key...");
-        }
-        logger.info("seacher end.");
-        return false;
-    }
-
-    /**
-     * 将一些内容写入一个文件中
-     *
-     * @param something 添加内容
-     * @param filePath  文件路径
-     * @throws IOException 异常
-     */
-    public static void writeSomethingToFile(String something, String filePath) throws IOException {
-        writeSomethingToFile(something, filePath, true);
-    }
-
-    /**
-     * 将一些内容写入一个文件中
-     *
-     * @param something 添加内容
-     * @param filePath  文件路径
-     * @param isAppend  是否追加
-     * @throws IOException 异常
-     */
-    public static void writeSomethingToFile(String something, String filePath, boolean isAppend) throws IOException {
-        // 1、判断是否存在该文件，如果不存在，则生成
-        try {
-            StreamUtil.createMyNewFile(filePath);
-        } catch (Exception e) {
-            logger.info("===>the file is exits!");
-        }
-
-        // 2、将内容写入文件
-        FileWriter fileWriter = new FileWriter(new File(filePath), isAppend);
-        fileWriter.write(something);
-        fileWriter.close();
-        logger.info("file wirte over!");
-
-    }
-
-
-    /**
      * 产生一个字符流的写入流
      *
      * @param filePath 写入的文件路径
@@ -251,216 +184,16 @@ public class StreamUtil {
         try {
             fileWriter = new FileWriter(new File(filePath), isAppend);
         } catch (IOException e) {
-            e.printStackTrace();
+            throw new BusinessException(e.getMessage());
         }
         return fileWriter;
     }
 
-
     /**
-     * 根据keys中的多个关键字查询，例如：2|3|4，其中多个关键字之间是用"|"分割的。
-     * 从一个文件（sourcePath）中查询这个关键字的上下文（行数num）， 并将查询的结果放入一个文件（descPath）中。
-     * 这种查询是多次访问一个文件，虽然浪费时间，但是查询出的结果是有顺序有连贯性的。
-     *
-     * @param keys
-     * @param descPath
-     * @param sourcePath
-     * @param num
-     */
-    public static void findSomeKey(String descPath, String sourcePath, String keys, int num) {
-        if (null == keys || "".equals(keys)) {
-            logger.info("there is no keys ! please check the keys! ");
-            return;
-        }
-        String[] keyArray = keys.split("\\|");
-        for (int i = 0; i < keyArray.length; i++) {
-            SimpleDateFormat sdf = new SimpleDateFormat("yyyy-MM-dd HH:mm:ss");
-            Date startTime = new Date();
-            logger.info("this key is :" + keyArray[i]);
-            logger.info("start time is :" + sdf.format(startTime));
-
-            findKeyWordFromFile(sourcePath, descPath, keyArray[i], num);
-
-            Date endTime = new Date();
-            logger.info("end time is :" + sdf.format(endTime));
-
-        }
-    }
-
-    /**
-     * 生成新文件。
-     *
-     * @param path 包括文件路径。格式，如：F:\\123\\344\\ss.s
-     */
-    public static void createMyNewFile(String path) {
-        File file = new File(path);
-        // 如果文件不存在。
-        if (!file.exists()) {
-            logger.info("file is not exist!we will try create it!");
-            ArrayList list = new ArrayList();
-            if (System.getProperty("file.separator").equals("\\")) {
-                for (int i = 0; i < path.split(
-                        System.getProperty("file.separator") + System.getProperty("file.separator")).length; i++) {
-
-                    list.add(
-                            path.split(System.getProperty("file.separator") + System.getProperty("file.separator"))[i]);
-                }
-
-            } else {
-                for (int i = 0; i < path.split(System.getProperty("file.separator")).length; i++) {
-
-                    list.add(path.split(System.getProperty("file.separator"))[i]);
-                }
-            }
-
-            String path1 = "";
-            for (int i = 0; i < list.size(); i++) {
-
-                if (!list.get(i).toString().contains(".")) {
-                    path1 = path1 + list.get(i);
-                    path1 = path1 + System.getProperty("file.separator");
-
-                } else {
-                    break;
-                }
-            }
-            File file2 = new File(path1);
-
-            file2.mkdirs();
-
-            try {
-                file.createNewFile();
-                logger.info("create file is ok!");
-            } catch (IOException e) {
-                e.printStackTrace();
-            }
-
-        } else {// 如果文件存在
-            throw new RuntimeException("该文件已存在！！！！");
-        }
-    }
-
-    /**
-     * 只能对一个关键字（key）查询。 从一个文件（sourcePath）中查询这个关键字的上下文（行数num），
-     * 并将查询的结果放入一个文件（descPath）中。
-     *
-     * @param sourcePath 需要查询文件路径
-     * @param descPath   需要将查询的结果放入的文件
-     * @param key        查找关键字
-     * @param num        上下文行数
-     * @throws IOException
-     */
-    public static void findKeyWordFromFile(String sourcePath, String descPath, String key, int num) {
-
-        ArrayList list = new ArrayList();
-
-        File sourceFile = new File(sourcePath);
-        File desFile = new File(descPath);
-
-        if (!desFile.exists()) {
-            try {
-                desFile.createNewFile();
-            } catch (IOException e) {
-                e.printStackTrace();
-            }
-        }
-
-        InputStream is = null;
-        InputStreamReader isr = null;
-        BufferedReader br = null;
-
-        OutputStream os = null;
-        OutputStreamWriter osw = null;
-        BufferedWriter bw = null;
-
-        String temp;
-        Pattern pattern = Pattern.compile("(" + key + ")");
-        Matcher matcher;
-        boolean flag = false;
-        int count = num;
-
-        logger.info("seacher start ...");
-
-        Date start = new Date();
-        SimpleDateFormat s1 = new SimpleDateFormat("yyyy-MM-dd HH:mm:ss");
-        logger.info("start time :" + s1.format(start));
-
-        try {
-            is = new FileInputStream(sourceFile);
-            isr = new InputStreamReader(is);
-            br = new BufferedReader(isr);
-
-            os = new FileOutputStream(desFile);
-            osw = new OutputStreamWriter(os);
-            bw = new BufferedWriter(osw);
-
-            while ((temp = br.readLine()) != null) {
-                list.add(temp);
-                matcher = pattern.matcher(temp);
-                boolean f1 = false;
-                // 判断是否存在该关键字段。
-                if (f1 = matcher.find()) {
-                    flag = f1;
-
-                    // 如果找到该关键字，打印之前的几行。并清空。
-                    for (int i = 0; i < list.size(); i++) {
-                        bw.write(list.get(i) + System.getProperty("line.separator"));
-                    }
-                    for (int i = 0; i < list.size(); ) {
-                        list.remove(0);
-                    }
-                } else {
-                    // 如果记录结果的栈超过数量，去除。
-                    if (list.size() > num) {
-                        list.remove(0);
-                    }
-                    // 之前找到了相关的信息。
-                    if (flag) {
-                        if (count != 0) {
-                            bw.write(temp + System.getProperty("line.separator"));
-                            list.remove(0);
-                            count--;
-                            if (count == 0) {
-                                flag = false;
-                                count = num;
-                            }
-                        } else {
-                        }
-                    }
-                }
-
-            }
-
-            bw.flush();
-
-        } catch (FileNotFoundException e) {
-            e.printStackTrace();
-        } catch (IOException e) {
-            e.printStackTrace();
-        } finally {
-            try {
-                br.close();
-                isr.close();
-                is.close();
-
-                bw.close();
-                osw.close();
-                os.close();
-            } catch (Exception e) {
-            }
-        }
-
-        Date end = new Date();
-        logger.info("start time :" + s1.format(end));
-        logger.info("seacher end !");
-
-    }
-
-    /**
-     * @param Url      资源路径
+     * @param url      资源路径
      * @param fileName 文件路径，包括文件名全称。
      */
-    public static void getResourceFromUrl(String Url, String fileName) {
+    public static void getResourceFromUrl(String url, String fileName) {
         Long time1 = System.currentTimeMillis();
         File file = new File(fileName);
         InputStream is = null;
@@ -468,8 +201,8 @@ public class StreamUtil {
         OutputStream os = null;
 
         try {
-            URL url = new URL(Url);
-            huc = (HttpURLConnection) url.openConnection();
+            URL resource = new URL(url);
+            huc = (HttpURLConnection) resource.openConnection();
             // 通过指定的URL 获得字节流。
             is = huc.getInputStream();
 
@@ -487,16 +220,11 @@ public class StreamUtil {
                 }
                 os.write(buffer, 0, len);
             }
-        } catch (FileNotFoundException e) {
-            e.printStackTrace();
-        } catch (IOException e) {
-            e.printStackTrace();
+        } catch (Exception e) {
+            logger.error("getResourceFromUrl is error! url:" + url + " fileName:" + fileName, e);
+            throw new BusinessException(e.getMessage());
         } finally {
-            try {
-                is.close();
-                os.close();
-            } catch (Exception e) {
-            }
+            closeResource(is, null, null, os, null, null);
         }
         Long time2 = System.currentTimeMillis();
         logger.info("===>cost time:" + (time2 - time1));
@@ -510,16 +238,11 @@ public class StreamUtil {
      * @return
      */
     public static List<String> getFilenamesFromFiles(List<File> files) {
-        if (null == files || 0 == files.size()) {
+        //TODO not test
+        if (CheckUtil.isEmpty(files)) {
             return null;
         }
-
-        List<String> result = new ArrayList<String>();
-
-        for (File file : files) {
-            result.add(file.getName());
-        }
-
+        List<String> result = CollectionUtil.getFieldListByMethodName(files, "getName", String.class);
         return result;
     }
 
@@ -530,6 +253,7 @@ public class StreamUtil {
      * @return
      */
     public static List<File> getAllFilesFromDirDeep(String dirFile) {
+        //TODO not review
         return getAllFilesFromDirDeep(new File(dirFile));
     }
 
@@ -540,7 +264,8 @@ public class StreamUtil {
      * @return
      */
     public static List<File> getAllFilesFromDirDeep(File dirFile) {
-        if (null == dirFile) {
+        //TODO NOT review
+        if (CheckUtil.isEmpty(dirFile)) {
             return null;
         }
 
@@ -569,66 +294,70 @@ public class StreamUtil {
         return result;
     }
 
+
     /**
-     * 获取文件中所有的行的数据
+     * 写入文件（默认：追加到文件尾部）
      *
-     * @param path 文件路径
-     * @return 所有数据
+     * @param content 内容
+     * @param path    文件路径
      */
-    public static List<String> readFile(String path) {
-        try {
-            createMyNewFile(path);
-        } catch (Exception e) {
-//            logger.info("文件已存在！！");
-        }
-        return readFile(new File(path));
+    public static void writeSomethingToFile(String content, String path) {
+        writeSomethingToFile(content, path, true);
     }
 
     /**
-     * 获取文件中所有的行的数据
+     * 写入文件，支持非追加
      *
-     * @param sourceFile 文件
-     * @return 所有数据
+     * @param content  内容
+     * @param path     路径
+     * @param isAppend 是否追加文件尾行
      */
-    public static List<String> readFile(File sourceFile) {
-        List<String> result = new ArrayList<String>();
-
-        InputStream is = null;
-        InputStreamReader isr = null;
-        BufferedReader br = null;
-
-        try {
-            is = new FileInputStream(sourceFile);
-            isr = new InputStreamReader(is);
-            br = new BufferedReader(isr);
-            String temp = null;
-            while ((temp = br.readLine()) != null) {
-                result.add(temp);
-            }
-        } catch (Exception e) {
-            logger.info("===>error!!! msg:" + e.getMessage());
-        } finally {
-            closeResource(is, isr, br, null, null, null);
-        }
-
-
-        return result;
+    public static void writeSomethingToFile(String content, String path, boolean isAppend) {
+        writeSomethingToFile(content, path, isAppend, true);
     }
 
+    /**
+     * 写入文件，支持非追加，支持相对路径
+     *
+     * @param content    内容
+     * @param path       路径
+     * @param isAppend   是否追加到文件尾行
+     * @param isRelative 是否是相对路径
+     */
+    public static void writeSomethingToFile(String content, String path, boolean isAppend, boolean isRelative) {
+        File file = createMyFile(path,isRelative);
+
+        FileWriter fileWriter = null;
+        try {
+            fileWriter = new FileWriter(file, isAppend);
+            fileWriter.write(content);
+            fileWriter.close();
+        } catch (Exception e) {
+            logger.error("writeSomethingToFile is error!", e);
+            throw new BusinessException(e.getMessage());
+        }finally {
+            closeFileWriter(fileWriter);
+        }
+        logger.info("file wirte over!");
+    }
 
     //==========================私有文件=============================================//
 
     /**
      * 关闭流
      *
-     * @param is
-     * @param isr
-     * @param br
-     * @param os
-     * @param osw
-     * @param bw
+     * @param is  InputStream
+     * @param isr InputStreamReader
+     * @param br  BufferedReader
+     * @param os  OutputStream
+     * @param osw OutputStreamWriter
+     * @param bw  BufferedWriter
      */
-    private static void closeResource(InputStream is, InputStreamReader isr, BufferedReader br, OutputStream os, OutputStreamWriter osw,
+    private static void closeResource(InputStream is,
+                                      InputStreamReader isr,
+                                      BufferedReader br,
+                                      OutputStream os,
+                                      OutputStreamWriter osw,
                                       BufferedWriter bw) {
         try {
             if (null != bw) {
@@ -653,5 +382,20 @@ public class StreamUtil {
             logger.info("===>close resource error!! msg:" + e.getMessage());
         }
     }
+
+    /**
+     * 关闭流资源：fileWriter
+     * @param fileWriter fileWriter
+     */
+    private static void closeFileWriter(FileWriter fileWriter){
+        if(null != fileWriter){
+            try {
+                fileWriter.close();
+            }catch (Exception e2){
+                throw new BusinessException(e2.getMessage());
+            }
+        }
+    }
+
 
 }

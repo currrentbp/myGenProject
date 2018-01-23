@@ -25,7 +25,6 @@ import com.currentbp.util.all.StreamUtil;
  *
  */
 public class FindSomeThingFromFile {
-	public StreamUtil myStream = new StreamUtil();
 
 	public static void main(String[] args) throws IOException {
 		
@@ -37,8 +36,9 @@ public class FindSomeThingFromFile {
 		System.out.println("start time :"+s1.format(start));
 //		test.findOneKey("E:\\descFile.txt","E:\\report3.log", "TO_DAYS(now())-TO_DAYS(initTime)=1", 10);
 //		test.findSomeKey("", "", "1|2|3|4", 0);
-		
-		test.myStream.findKeyWordFromFile("E:\\report3.log", "E:\\descFile.txt", "TO_DAYS(now())-TO_DAYS(initTime)=1", 10);
+
+		//TODO not work
+//		test.myStream.findKeyWordFromFile("E:\\report3.log", "E:\\descFile.txt", "TO_DAYS(now())-TO_DAYS(initTime)=1", 10);
 		Date end = new Date();
 		System.out.println("start time :"+s1.format(end));
 		
