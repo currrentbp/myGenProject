@@ -154,12 +154,12 @@ public abstract class StreamUtil {
 
         List<File> result = new ArrayList<File>();
 
-        if (null == names || 0 == names.length) {// 该文件夹下没有文件或文件夹
+        if (CheckUtil.isEmpty(names)) {// 该文件夹下没有文件或文件夹
             return null;
         }
 
-        for (int i = 0; i < names.length; i++) {
-            result.add(new File(dirPath + fgf + names[i]));
+        for (String name : names) {
+            result.add(new File(dirPath + fgf + name));
         }
 
         return result;
@@ -252,8 +252,8 @@ public abstract class StreamUtil {
     /**
      * 获取文件夹下的所有的文件（深层次）
      *
-     * @param dirFile
-     * @return
+     * @param dirFile 目录文件
+     * @return 所有文件
      */
     public static List<File> getAllFilesFromDirDeep(String dirFile) {
         //TODO not review
@@ -263,8 +263,8 @@ public abstract class StreamUtil {
     /**
      * 获取文件夹下的所有的文件（深层次）
      *
-     * @param dirFile
-     * @return
+     * @param dirFile 目录文件
+     * @return 所有文件
      */
     public static List<File> getAllFilesFromDirDeep(File dirFile) {
         //TODO NOT review
