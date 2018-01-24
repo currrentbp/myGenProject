@@ -1,5 +1,9 @@
 package com.currentbp.util.all;
 
+import org.junit.Test;
+import org.slf4j.Logger;
+import org.slf4j.LoggerFactory;
+
 import java.util.ArrayList;
 import java.util.List;
 import java.util.regex.Matcher;
@@ -13,6 +17,7 @@ import java.util.regex.Pattern;
  */
 
 public class StringUtil {
+    private final static Logger logger = LoggerFactory.getLogger(StringUtil.class);
 
     /**
      * 删除字符串的最后一个字符
@@ -220,11 +225,21 @@ public class StringUtil {
      * 将字符串转为列表，根据逗号分割，删除空和null
      *
      * @param source 字符串
-     * @return
-     * @throws Exception
+     * @return 列表
      */
-    public static List<String> stringToList(String source) throws Exception {
-        return stringToList(source, true, ",");
+    public static List<String> stringToList(String source) {
+        return stringToList(source, ",");
+    }
+
+    /**
+     * 将字符串转为列表,去除为空的数据
+     *
+     * @param source  源数据
+     * @param splitBy 分割符
+     * @return 列表
+     */
+    public static List<String> stringToList(String source, String splitBy) {
+        return stringToList(source, true, splitBy);
     }
 
     /**
@@ -232,15 +247,12 @@ public class StringUtil {
      *
      * @param source     字符串
      * @param deleteNull 是否删除空和null
-     * @param splitBy    根据什么字符分割
-     * @return
-     * @throws Exception
+     * @param splitBy    分割符
+     * @return 列表
      */
-    public static List<String> stringToList(String source, boolean deleteNull, String splitBy) throws Exception {
-        CheckUtil.isEmpty("source", source);
-        if (null == splitBy || "".equals(splitBy)) {
-            throw new RuntimeException("splitBy is empty!");
-        }
+    public static List<String> stringToList(String source, boolean deleteNull, String splitBy) {
+        Assert.notNull(source, "源数据不能为空");
+        Assert.notNull(splitBy, "分割符不能为空");
         source = source.replace("[", "").replace("]", "").replace("\"", "");
 
         String[] s = source.split(splitBy);
@@ -258,30 +270,39 @@ public class StringUtil {
         return result;
     }
 
+
+    /**
+     * 列表转换城字符串，分割符“,”
+     *
+     * @param source list
+     * @return 字符串
+     */
     public static String list2String(List source) {
-        StringBuilder result = new StringBuilder("");
-        if (CheckUtil.isEmpty(source)) {
-            return result.toString();
-        }
-
-        for (Object o : source) {
-            result.append(o.toString() + ",");
-        }
-
-        return result.lastIndexOf(",") == result.length() ? result.deleteCharAt(result.lastIndexOf(",")).toString() : result.toString();
+        return list2String(source, ",");
     }
 
-    public static String array2String(Object[] source) {
+    /**
+     * 列表转换城字符串
+     *
+     * @param source list
+     * @param split  分割符
+     * @return 字符串
+     */
+    public static String list2String(List source, String split) {
         StringBuilder result = new StringBuilder("");
         if (CheckUtil.isEmpty(source)) {
             return result.toString();
         }
 
         for (Object o : source) {
-            result.append(o.toString() + ",");
+            result.append(o.toString() + split);
         }
 
-        return result.lastIndexOf(",") == result.length() ? result.deleteCharAt(result.lastIndexOf(",")).toString() : result.toString();
+        if (0 != result.length()) {
+            result.delete(result.lastIndexOf(split), result.length());
+        }
+
+        return result.toString();
     }
 
 
@@ -367,9 +388,6 @@ public class StringUtil {
     }
 
 
-
-
-
     public static void main(String[] args) throws Exception {
 
         System.out.println(StringUtil.letter2Int("A"));
@@ -406,7 +424,6 @@ public class StringUtil {
         // System.out.println("+++++"+StringUtil.deleteLast(null)+"====");
         // new HashMap ();
     }
-
 
 
 }
