@@ -56,10 +56,13 @@ public abstract class StreamUtil {
      * @return 是否是文件
      */
     public static boolean isFile(String path, boolean isRelative) {
-        //todo not good:原本想做到是否是相对路径，和绝对路径
-
-        InputStream is = Class.class.getResourceAsStream(path);
-        return null != is;
+        if (isRelative) {//相对与本项目的路径下
+            InputStream is = Class.class.getResourceAsStream(path);
+            return null != is;
+        } else {
+            File file = new File(path);
+            return file.isFile();
+        }
     }
 
     /**
@@ -237,10 +240,10 @@ public abstract class StreamUtil {
      * @param files
      * @return
      */
-    public static List<String> getFilenamesFromFiles(List<File> files) {
+    public static List<String> getFileNamesFromFiles(List<File> files) {
         //TODO not test
         if (CheckUtil.isEmpty(files)) {
-            return null;
+            return new ArrayList<String>();
         }
         List<String> result = CollectionUtil.getFieldListByMethodName(files, "getName", String.class);
         return result;
@@ -325,7 +328,7 @@ public abstract class StreamUtil {
      * @param isRelative 是否是相对路径
      */
     public static void writeSomethingToFile(String content, String path, boolean isAppend, boolean isRelative) {
-        File file = createMyFile(path,isRelative);
+        File file = createMyFile(path, isRelative);
 
         FileWriter fileWriter = null;
         try {
@@ -335,7 +338,7 @@ public abstract class StreamUtil {
         } catch (Exception e) {
             logger.error("writeSomethingToFile is error!", e);
             throw new BusinessException(e.getMessage());
-        }finally {
+        } finally {
             closeFileWriter(fileWriter);
         }
         logger.info("file wirte over!");
@@ -385,13 +388,14 @@ public abstract class StreamUtil {
 
     /**
      * 关闭流资源：fileWriter
+     *
      * @param fileWriter fileWriter
      */
-    private static void closeFileWriter(FileWriter fileWriter){
-        if(null != fileWriter){
+    private static void closeFileWriter(FileWriter fileWriter) {
+        if (null != fileWriter) {
             try {
                 fileWriter.close();
-            }catch (Exception e2){
+            } catch (Exception e2) {
                 throw new BusinessException(e2.getMessage());
             }
         }
