@@ -237,11 +237,10 @@ public abstract class StreamUtil {
     /**
      * 从文件列表中获取文件名称列表
      *
-     * @param files
-     * @return
+     * @param files 文件列表
+     * @return 文件名称列表
      */
     public static List<String> getFileNamesFromFiles(List<File> files) {
-        //TODO not test
         if (CheckUtil.isEmpty(files)) {
             return new ArrayList<String>();
         }
