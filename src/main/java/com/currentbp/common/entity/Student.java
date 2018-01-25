@@ -14,6 +14,8 @@ public class Student {
     private List<String> hobbies;
     private Course course;
 
+    public Student(){}
+
     public Course getCourse() {
         return course;
     }

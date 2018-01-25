@@ -1,5 +1,7 @@
 package com.currentbp.util.all;
 
+import com.alibaba.fastjson.JSON;
+import org.junit.Test;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
 
@@ -173,4 +175,33 @@ public class CollectionUtil {
         }
         return result;
     }
+
+
+    /**
+     * 将一个数组转换成列表格式
+     *
+     * @param source 元数据
+     * @param t      目标类型
+     * @param <T>    目标类型
+     * @return 列表格式
+     */
+    public static <T> List<T> asList(Object[] source, Class<T> t) {
+        if (null == source || 0 == source.length) {
+            return new ArrayList<T>();
+        }
+
+        List<T> result = new ArrayList<T>(source.length);
+        try {
+            for (Object s : source) {
+                T r = (T) t.newInstance();
+                CglibCopyBean.BasicCopyBean(s, r);
+                result.add(r);
+            }
+        } catch (Exception e) {
+            logger.error("===>asList is error! source:" + JSON.toJSONString(source), e);
+        }
+        return result;
+    }
+
+
 }
