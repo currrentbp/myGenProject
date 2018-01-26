@@ -95,6 +95,13 @@ public class CollectionUtilTest {
 
         List<Student> students = CollectionUtil.asList(source, Student.class);
         logger.info(JSON.toJSONString(students));
+
+        Integer[] i = new Integer[2];
+        i[0] = 1;
+        i[1] = 2;
+        List<Integer> integers = CollectionUtil.asList(i, Integer.class);
+        logger.info(JSON.toJSONString(integers));
+
     }
 
 }

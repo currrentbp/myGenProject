@@ -193,8 +193,13 @@ public class CollectionUtil {
         List<T> result = new ArrayList<T>(source.length);
         try {
             for (Object s : source) {
-                T r = (T) t.newInstance();
-                CglibCopyBean.BasicCopyBean(s, r);
+                T r;
+                try {
+                    r = (T) t.newInstance();
+                    CglibCopyBean.BasicCopyBean(s, r);
+                }catch (Exception e){
+                    r = (T) s;//尽量转化
+                }
                 result.add(r);
             }
         } catch (Exception e) {
