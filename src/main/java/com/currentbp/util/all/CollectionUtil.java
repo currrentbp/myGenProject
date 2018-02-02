@@ -19,6 +19,37 @@ public class CollectionUtil {
 
     private final static Logger logger = LoggerFactory.getLogger(CollectionUtil.class);
 
+    /**
+     * 向一个列表中的固定字段插入一个固定值
+     *
+     * @param list       列表
+     * @param methodName 该字段的set方法
+     * @param v          固定值
+     * @param <A>        列表对象类型
+     * @param <V>        固定值类型
+     */
+    public static <A, V> void setFieldByMethodName(List<A> list, String methodName, V v) {
+        if (CheckUtil.isEmpty(list)) {
+            return;
+        }
+        Method method = null;
+        try {
+            method = list.get(0).getClass().getMethod(methodName, v.getClass());
+            method.setAccessible(true);
+        } catch (NoSuchMethodException e) {
+            throw new RuntimeException(e);
+        }
+
+        for (A a : list) {
+            try {
+                method = a.getClass().getMethod(methodName, v.getClass());
+                method.setAccessible(true);
+                method.invoke(a, v);//TODO not work
+            } catch (Exception e) {
+                logger.error("===>message:" + e.getMessage(), e);
+            }
+        }
+    }
 
     /**
      * 从列表中获取某个字段的SET
@@ -48,10 +79,18 @@ public class CollectionUtil {
         if (CheckUtil.isEmpty(list)) {
             return new ArrayList<V>();
         }
+        Method method = null;
+        try {
+            method = list.get(0).getClass().getMethod(methodName);
+            method.setAccessible(true);
+        } catch (NoSuchMethodException e) {
+            throw new RuntimeException(e);
+        }
+
         List<V> result = new ArrayList<V>(list.size());
         for (A a : list) {
             try {
-                Method method = a.getClass().getMethod(methodName);
+                method = a.getClass().getMethod(methodName);
                 method.setAccessible(true);
                 result.add((V) method.invoke(a));
             } catch (Exception e) {
@@ -197,7 +236,7 @@ public class CollectionUtil {
                 try {
                     r = (T) t.newInstance();
                     CglibCopyBean.BasicCopyBean(s, r);
-                }catch (Exception e){
+                } catch (Exception e) {
                     r = (T) s;//尽量转化
                 }
                 result.add(r);

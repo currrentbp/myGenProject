@@ -82,16 +82,16 @@ public class CollectionUtilTest {
     }
 
     @Test
-    public void asList(){
+    public void asList() {
         Student[] source = new Student[2];
         Student student = new Student();
         student.setId(1);
         student.setName("1");
-        source[0]=(student);
+        source[0] = (student);
         Student student2 = new Student();
         student2.setId(2);
         student2.setName("2");
-        source[1]=(student2);
+        source[1] = (student2);
 
         List<Student> students = CollectionUtil.asList(source, Student.class);
         logger.info(JSON.toJSONString(students));
@@ -101,6 +101,20 @@ public class CollectionUtilTest {
         i[1] = 2;
         List<Integer> integers = CollectionUtil.asList(i, Integer.class);
         logger.info(JSON.toJSONString(integers));
+
+    }
+
+    @Test
+    public void setFieldByMethodName() {
+        List<Student> students = new ArrayList<Student>();
+        for (int i = 0; i < 10; i++) {
+            Student student = new Student();
+            student.setId(i + 1);
+            students.add(student);
+        }
+
+        CollectionUtil.setFieldByMethodName(students, "setName", "baopan");
+        logger.info("===>" + JSON.toJSONString(students));
 
     }
 
