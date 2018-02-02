@@ -44,7 +44,7 @@ public class CollectionUtil {
             try {
                 method = a.getClass().getMethod(methodName, v.getClass());
                 method.setAccessible(true);
-                method.invoke(a, v);//TODO not work
+                method.invoke(a, v);
             } catch (Exception e) {
                 logger.error("===>message:" + e.getMessage(), e);
             }

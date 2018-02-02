@@ -2,6 +2,7 @@ package com.currentbp.util.all;
 
 import com.alibaba.fastjson.JSON;
 import com.currentbp.common.entity.Chinese;
+import com.currentbp.common.entity.Course;
 import com.currentbp.common.entity.Student;
 import org.junit.Test;
 import org.slf4j.Logger;
@@ -114,6 +115,11 @@ public class CollectionUtilTest {
         }
 
         CollectionUtil.setFieldByMethodName(students, "setName", "baopan");
+        logger.info("===>" + JSON.toJSONString(students));
+
+        Course course = new Course();
+        course.setName("baopan11111");
+        CollectionUtil.setFieldByMethodName(students, "setCourse", course);
         logger.info("===>" + JSON.toJSONString(students));
 
     }

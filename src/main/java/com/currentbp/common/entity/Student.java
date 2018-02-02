@@ -62,4 +62,14 @@ public class Student {
     public int hashCode() {
         return id != null ? id.hashCode() : 0;
     }
+
+    @Override
+    public String toString() {
+        return "Student{" +
+                "id=" + id +
+                ", name='" + name + '\'' +
+                ", hobbies=" + hobbies +
+                ", course=" + course +
+                '}';
+    }
 }
