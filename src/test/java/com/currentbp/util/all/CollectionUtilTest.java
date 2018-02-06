@@ -14,7 +14,46 @@ import java.util.Map;
 
 
 public class CollectionUtilTest {
+
+
     private final static Logger logger = LoggerFactory.getLogger(CollectionUtilTest.class);
+
+
+    @Test
+    public void getMapListFromListByMethodName() throws Exception {
+        List<Chinese> chineses = new ArrayList<Chinese>();
+        for (int i = 0; i < 10; i++) {
+            Chinese chinese = new Chinese();
+            chinese.setId(i);
+            chinese.setName("name_" + i);
+            chinese.setColor("yellow");
+            chinese.setAge(i);
+            chineses.add(chinese);
+            chinese.setType(i);
+        }
+        Chinese chinese = new Chinese();
+        chinese.setName("name_" + 1);
+        chinese.setId(111111);
+        chineses.add(chinese);
+        Map<Object, List<Chinese>> mapListFromListByMethodName = CollectionUtil.getMapListFromListByMethodName(chineses, "getName");
+        logger.info(JSON.toJSONString(mapListFromListByMethodName));
+    }
+
+    @Test
+    public void getMapFromListByMethodName() throws Exception {
+        List<Chinese> chineses = new ArrayList<Chinese>();
+        for (int i = 0; i < 10; i++) {
+            Chinese chinese = new Chinese();
+            chinese.setId(i);
+            chinese.setName("name_" + i);
+            chinese.setColor("yellow");
+            chinese.setAge(i);
+            chineses.add(chinese);
+            chinese.setType(i);
+        }
+        Map<Object, Chinese> nameMap = CollectionUtil.getMapFromListByMethodName(chineses, "getName");
+        logger.info(JSON.toJSONString(nameMap));
+    }
 
     @Test
     public void getFieldListByMethodName() throws Exception {

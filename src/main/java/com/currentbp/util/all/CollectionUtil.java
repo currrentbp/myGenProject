@@ -158,6 +158,33 @@ public class CollectionUtil {
         return result;
     }
 
+    /**
+     * 通过方法名获取map
+     *
+     * @param list       列表
+     * @param methodName 方法名词
+     * @param <K>        key类型
+     * @param <V>        value类型
+     * @return map结果
+     */
+    public static <K, V> Map<K, V> getMapFromListByMethodName(List<V> list, String methodName) {
+        if (CheckUtil.isEmpty(list)) {
+            return new HashMap<K, V>();
+        }
+        Map<K, V> result = new HashMap<K, V>(list.size());
+
+        try {
+            for (V v : list) {
+                Method method = v.getClass().getMethod(methodName);
+                method.setAccessible(true);
+                K value = (K) method.invoke(v);
+                result.put(value, v);
+            }
+        } catch (Exception e) {
+            logger.error("getMapFromListByMethodName is error! msg:" + e.getMessage(), e);
+        }
+        return result;
+    }
 
     /**
      * 从list转换成map结构
@@ -180,7 +207,38 @@ public class CollectionUtil {
                 result.put((K) field1.get(v), v);
             }
         } catch (Exception e) {
-            System.out.println(e.getStackTrace());
+            logger.error("getMapByList is error! msg:" + e.getMessage(), e);
+        }
+        return result;
+    }
+
+    /**
+     * 通过方法名获取mapList结构数据
+     *
+     * @param list       源数据
+     * @param methodName 方法名
+     * @param <K>        key类型
+     * @param <V>        value 类型
+     * @return 结果
+     */
+    public static <K, V> Map<K, List<V>> getMapListFromListByMethodName(List<V> list, String methodName) {
+        if (CheckUtil.isEmpty(list)) {
+            return new HashMap<K, List<V>>();
+        }
+        Map<K, List<V>> result = new HashMap<K, List<V>>(list.size());
+
+        try {
+            for (V v : list) {
+                Method method = v.getClass().getMethod(methodName);
+                K value = (K) method.invoke(v);
+                if (!result.containsKey(value)) {
+                    result.put(value, new ArrayList<V>());
+                }
+
+                result.get(value).add(v);
+            }
+        } catch (Exception e) {
+            logger.error("getMapListFromListByMethodName is error! msg:" + e.getMessage(), e);
         }
         return result;
     }
@@ -210,7 +268,7 @@ public class CollectionUtil {
                 result.get(k).add(v);
             }
         } catch (Exception e) {
-            System.out.println(e.getStackTrace());
+            logger.error("getMapListByList is error! msg:" + e.getMessage(), e);
         }
         return result;
     }
