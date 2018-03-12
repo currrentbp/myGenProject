@@ -35,7 +35,7 @@ public class CollectionUtilTest {
         chinese.setName("name_" + 1);
         chinese.setId(111111);
         chineses.add(chinese);
-        Map<Object, List<Chinese>> mapListFromListByMethodName = CollectionUtil.getMapListFromListByMethodName(chineses, "getName");
+        Map<Object, List<Chinese>> mapListFromListByMethodName = CollectionCommonUtil.getMapListFromListByMethodName(chineses, "getName");
         logger.info(JSON.toJSONString(mapListFromListByMethodName));
     }
 
@@ -51,7 +51,7 @@ public class CollectionUtilTest {
             chineses.add(chinese);
             chinese.setType(i);
         }
-        Map<Object, Chinese> nameMap = CollectionUtil.getMapFromListByMethodName(chineses, "getName");
+        Map<Object, Chinese> nameMap = CollectionCommonUtil.getMapFromListByMethodName(chineses, "getName");
         logger.info(JSON.toJSONString(nameMap));
     }
 
@@ -75,9 +75,9 @@ public class CollectionUtilTest {
             chineses.add(chinese);
             chinese.setType(i);
         }
-        List<Integer> id = CollectionUtil.getFieldListByObjectList(chineses, "id", Integer.class);
+        List<Integer> id = CollectionCommonUtil.getFieldListByObjectList(chineses, "id", Integer.class);
         logger.info("===>s:" + JSON.toJSONString(id));
-        List<Integer> ids1 = CollectionUtil.getFieldListByMethodName(chineses, "getId", Integer.class);
+        List<Integer> ids1 = CollectionCommonUtil.getFieldListByMethodName(chineses, "getId", Integer.class);
         logger.info("===>ids1:" + JSON.toJSONString(ids1));
     }
 
@@ -97,7 +97,7 @@ public class CollectionUtilTest {
         student2.setId(2);
         student2.setName("2");
         students.add(student2);
-        Map<Integer, Student> map = CollectionUtil.getMapByList(students, "id");
+        Map<Integer, Student> map = CollectionCommonUtil.getMapByList(students, "id");
         logger.info("===>map:" + JSON.toJSONString(map));
 
     }
@@ -117,7 +117,7 @@ public class CollectionUtilTest {
         student3.setId(2);
         student3.setName("3");
         students.add(student3);
-        Map<Integer, List<Student>> map = CollectionUtil.getMapListByList(students, "id");
+        Map<Integer, List<Student>> map = CollectionCommonUtil.getMapListByList(students, "id");
         logger.info("===>map:" + JSON.toJSONString(map));
     }
 
@@ -133,13 +133,13 @@ public class CollectionUtilTest {
         student2.setName("2");
         source[1] = (student2);
 
-        List<Student> students = CollectionUtil.asList(source, Student.class);
+        List<Student> students = CollectionCommonUtil.asList(source, Student.class);
         logger.info(JSON.toJSONString(students));
 
         Integer[] i = new Integer[2];
         i[0] = 1;
         i[1] = 2;
-        List<Integer> integers = CollectionUtil.asList(i, Integer.class);
+        List<Integer> integers = CollectionCommonUtil.asList(i, Integer.class);
         logger.info(JSON.toJSONString(integers));
 
     }
@@ -153,12 +153,12 @@ public class CollectionUtilTest {
             students.add(student);
         }
 
-        CollectionUtil.setFieldByMethodName(students, "setName", "baopan");
+        CollectionCommonUtil.setFieldByMethodName(students, "setName", "baopan");
         logger.info("===>" + JSON.toJSONString(students));
 
         Course course = new Course();
         course.setName("baopan11111");
-        CollectionUtil.setFieldByMethodName(students, "setCourse", course);
+        CollectionCommonUtil.setFieldByMethodName(students, "setCourse", course);
         logger.info("===>" + JSON.toJSONString(students));
 
     }

@@ -1,7 +1,6 @@
 package com.currentbp.util.all;
 
 import com.alibaba.fastjson.JSON;
-import org.junit.Test;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
 
@@ -15,9 +14,9 @@ import java.util.*;
  * @author current_bp
  * @createTime 20171203
  */
-public class CollectionUtil {
+public class CollectionCommonUtil {
 
-    private final static Logger logger = LoggerFactory.getLogger(CollectionUtil.class);
+    private final static Logger logger = LoggerFactory.getLogger(CollectionCommonUtil.class);
 
     /**
      * 向一个列表中的固定字段插入一个固定值

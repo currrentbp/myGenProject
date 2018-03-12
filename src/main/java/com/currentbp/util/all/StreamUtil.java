@@ -3,8 +3,6 @@ package com.currentbp.util.all;
 import java.io.BufferedReader;
 import java.io.BufferedWriter;
 import java.io.File;
-import java.io.FileInputStream;
-import java.io.FileNotFoundException;
 import java.io.FileOutputStream;
 import java.io.FileWriter;
 import java.io.IOException;
@@ -14,18 +12,11 @@ import java.io.OutputStream;
 import java.io.OutputStreamWriter;
 import java.net.HttpURLConnection;
 import java.net.URL;
-import java.text.SimpleDateFormat;
 import java.util.ArrayList;
 import java.util.Arrays;
-import java.util.Date;
-import java.util.HashMap;
 import java.util.List;
-import java.util.Map;
-import java.util.regex.Matcher;
-import java.util.regex.Pattern;
 
 import com.currentbp.entry.BusinessException;
-import org.junit.Test;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
 
@@ -244,7 +235,7 @@ public abstract class StreamUtil {
         if (CheckUtil.isEmpty(files)) {
             return new ArrayList<String>();
         }
-        List<String> result = CollectionUtil.getFieldListByMethodName(files, "getName", String.class);
+        List<String> result = CollectionCommonUtil.getFieldListByMethodName(files, "getName", String.class);
         return result;
     }
 
