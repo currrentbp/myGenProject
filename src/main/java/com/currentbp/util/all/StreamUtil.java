@@ -163,20 +163,27 @@ public abstract class StreamUtil {
      * @return 文件写入流
      */
     public static FileWriter createFileWriter(String filePath) {
-        return createFileWriter(filePath, true);
+        return createFileWriter(filePath, false, true);
     }
 
     /**
-     * 产生一个字符流的写入流
+     * 获取文件写入流
      *
-     * @param filePath 写入的文件路径
-     * @param isAppend 是否追加
+     * @param filePath   文件路进
+     * @param isAbsolute 是否是绝对路径
+     * @param isAppend   是否追加到文件尾部
      * @return 文件写入流
      */
-    public static FileWriter createFileWriter(String filePath, boolean isAppend) {
+    public static FileWriter createFileWriter(String filePath, boolean isAbsolute, boolean isAppend) {
         FileWriter fileWriter = null;
+        String path = null;
         try {
-            fileWriter = new FileWriter(new File(filePath), isAppend);
+            if (isAbsolute) {
+                path = filePath;
+            } else {
+                path = Class.class.getResource(filePath).getPath();
+            }
+            fileWriter = new FileWriter(new File(path), isAppend);
         } catch (IOException e) {
             throw new BusinessException(e.getMessage());
         }

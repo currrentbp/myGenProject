@@ -3,6 +3,8 @@ package com.currentbp.util.all;
 import com.alibaba.fastjson.JSON;
 import org.junit.Test;
 
+import java.io.FileWriter;
+
 /**
  * 流测试类
  *
@@ -10,6 +12,8 @@ import org.junit.Test;
  * @createTime 20170503
  */
 public class StreamUtilTest {
+
+
     @Test
     public void writeSomethingToFile() throws Exception {
         StreamUtil.writeSomethingToFile("baopan\n","baopan1.txt");
@@ -30,6 +34,10 @@ public class StreamUtilTest {
     public void test_isFile2() {
         Assert.isTrue(StreamUtil.isFile("/daletou/config.properties",false), "bushi yige wenjian");
     }
-
+    @Test
+    public void createFileWriter() throws Exception {
+        FileWriter fileWriter = StreamUtil.createFileWriter("/daletou/daletou_history.txt");
+        Assert.notNull(fileWriter,"is null");
+    }
 
 }
