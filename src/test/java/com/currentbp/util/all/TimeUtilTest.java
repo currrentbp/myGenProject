@@ -1,6 +1,8 @@
 package com.currentbp.util.all;
 
 import org.junit.Test;
+import org.slf4j.Logger;
+import org.slf4j.LoggerFactory;
 
 import java.util.Date;
 
@@ -11,6 +13,8 @@ import java.util.Date;
  * @createTime 20170420
  */
 public class TimeUtilTest {
+    private final static Logger logger = LoggerFactory.getLogger(TimeUtilTest.class);
+
     private TimeUtil timeUtil = new TimeUtil();
 
     @Test
@@ -84,5 +88,24 @@ public class TimeUtilTest {
         Long time1 = 0L;
         System.out.println(new Date(time1));
     }
+
+    @Test
+    public void getCurrentYear() throws Exception {
+        Integer currentYear = TimeUtil.getCurrentYear();
+        logger.info("===>" + currentYear);
+    }
+
+    @Test
+    public void getCurrentMonth() throws Exception {
+        Integer currentMonth = TimeUtil.getCurrentMonth();
+        logger.info("===>" + currentMonth);
+    }
+
+    @Test
+    public void getCurrentDay() throws Exception {
+        Integer currentDay = TimeUtil.getCurrentDay();
+        logger.info("===>" + currentDay);
+    }
+
 
 }
