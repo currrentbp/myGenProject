@@ -159,7 +159,7 @@ public abstract class StreamUtil {
     /**
      * 产生一个字符流的写入流
      *
-     * @param filePath 写入的文件路径
+     * @param filePath 写入的文件路径：绝对路径
      * @return 文件写入流
      */
     public static FileWriter createFileWriter(String filePath) {

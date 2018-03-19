@@ -27,6 +27,15 @@ public class StreamUtilTest {
     }
 
     @Test
+    public void createMyFile2() throws Exception {
+        FileWriter fileWriter = StreamUtil.createFileWriter("/daletou/daletou_history.txt", true, false);
+        Assert.notNull(fileWriter,"sssssssssss");
+        fileWriter.write("baopan");
+        fileWriter.flush();
+        fileWriter.close();
+    }
+
+    @Test
     public void test_isFile() {
         Assert.isTrue(StreamUtil.isFile("/daletou/config.properties"), "bushi yige wenjian");
     }
