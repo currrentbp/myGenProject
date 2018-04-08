@@ -212,6 +212,14 @@
             <version>${cglib_version}</version>
         </dependency>
 
+        <!-- asm关于字节码的包 start -->
+        <dependency>
+            <groupId>org.eclipse.ecf</groupId>
+            <artifactId>org.objectweb.asm</artifactId>
+            <version>5.0.1.v201404251740</version>
+        </dependency>
+        <!-- asm关于字节码的包 end -->
+
     </dependencies>
 
 
