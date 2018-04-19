@@ -1,7 +1,7 @@
 package com.currentbp.id;
 
 /**
- * 雪花算法生成ID
+ * 雪花算法生成ID,此算法有场景缺陷：如果订单量不大时，后面的几位全部一致
  *
  * @author current_bp
  * @createTime 20180419
@@ -83,5 +83,12 @@ public class SnowFlake {
 
     private long getNewstmp() {
         return System.currentTimeMillis();
+    }
+
+    public static void main(String[] args) {
+        SnowFlake snowFlake = new SnowFlake(2, 3);
+        for (int i = 0; i < (1 << 12); i++) {
+            System.out.println(snowFlake.nextId());
+        }
     }
 }
