@@ -166,7 +166,7 @@ public class CollectionCommonUtil {
      * @param <V>        value类型
      * @return map结果
      */
-    public static <K, V> Map<K, V> getMapFromListByMethodName(List<V> list, String methodName) {
+    public static <K, V> Map<K, V> getMapFromListByMethodName(List<V> list, String methodName,Class<K> keyType) {
         if (CheckUtil.isEmpty(list)) {
             return new HashMap<K, V>();
         }

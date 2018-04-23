@@ -51,7 +51,7 @@ public class CollectionUtilTest {
             chineses.add(chinese);
             chinese.setType(i);
         }
-        Map<Object, Chinese> nameMap = CollectionCommonUtil.getMapFromListByMethodName(chineses, "getName");
+        Map<String, Chinese> nameMap = CollectionCommonUtil.getMapFromListByMethodName(chineses, "getName",String.class);
         logger.info(JSON.toJSONString(nameMap));
     }
 
