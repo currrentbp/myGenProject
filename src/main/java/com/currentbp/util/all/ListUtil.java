@@ -161,6 +161,15 @@ public class ListUtil {
         return result;
     }
 
+    public static int[] list2intArray(List<Integer> source) {
+        Assert.notEmpty(source, "数据源不能为空");
+        int[] result = new int[source.size()];
+        for (int i = 0; i < source.size(); i++) {
+            result[i] = source.get(i);
+        }
+        return result;
+    }
+
     /**
      * 将string类型的list转为long类型的list
      *

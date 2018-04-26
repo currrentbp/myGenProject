@@ -15,8 +15,20 @@ import java.util.List;
  * @createTime 20170830
  */
 public class ListUtilTest {
+
+
     private final static Logger logger = LoggerFactory.getLogger(ListUtilTest.class);
 
+
+    @Test
+    public void list2intArray() throws Exception {
+        List<Integer> list = new ArrayList<Integer>();
+        list.add(1);
+        list.add(2);
+        list.add(5);
+        int[] ints = ListUtil.list2intArray(list);
+        logger.info("===>"+JSON.toJSONString(ints));
+    }
 
     @Test
     public void fill() throws Exception {
