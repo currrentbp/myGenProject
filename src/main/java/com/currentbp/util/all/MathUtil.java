@@ -83,14 +83,13 @@ public class MathUtil {
      * @return 组合
      */
     private static String printCombination(int[] source, int[] tags) {
-        StringBuilder sb = new StringBuilder("");
+        List<Integer> result = new ArrayList<Integer>();
         for (int i = 0; i < tags.length; i++) {
             if (1 == tags[i]) {
-                sb.append(source[i]);
+                result.add(source[i]);
             }
         }
-        logger.info("===>" + sb.toString());
-        return sb.toString();
+        return StringUtil.list2String(result, ",");
     }
 
     /**
