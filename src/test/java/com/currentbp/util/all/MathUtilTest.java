@@ -1,12 +1,23 @@
 package com.currentbp.util.all;
 
+import com.alibaba.fastjson.JSON;
 import org.junit.Test;
+import org.slf4j.Logger;
+import org.slf4j.LoggerFactory;
+
+import java.util.List;
 
 /**
  * Created by issuser on 2017/3/16.
  */
 public class MathUtilTest {
-    private MathUtil mathUtil = new MathUtil();
+    private final static Logger logger = LoggerFactory.getLogger(MathUtilTest.class);
+    @Test
+    public void combination() throws Exception {
+        int[] source = {1,2,3,4,5};
+        List<String> combination = MathUtil.combination(source, 3);
+        logger.info(JSON.toJSONString(combination));
+    }
 
 
     @Test

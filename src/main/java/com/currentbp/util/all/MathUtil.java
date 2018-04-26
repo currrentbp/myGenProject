@@ -1,5 +1,9 @@
 package com.currentbp.util.all;
 
+import com.alibaba.fastjson.JSON;
+import org.slf4j.Logger;
+import org.slf4j.LoggerFactory;
+
 import java.util.ArrayList;
 import java.util.List;
 
@@ -10,6 +14,104 @@ import java.util.List;
  * @createTime 20160519
  */
 public class MathUtil {
+    private final static Logger logger = LoggerFactory.getLogger(MathUtil.class);
+
+    /**
+     * 组合:Cmn
+     *
+     * @return 所有可能的组合结果
+     */
+    public static List<String> combination(int[] source, int m) {
+        Assert.isTrue(null != source && m > 0 && source.length >= m, "公式有错误，0<m<=n");
+        final int sl = source.length;
+        int[] tags = new int[sl];
+        //初始化排位
+        for (int i = 0; i < m; i++) {
+            tags[sl - i - 1] = 1;
+        }
+        logger.info("===>" + JSON.toJSONString(tags));
+        int index = sl - m;
+        logger.info("===>index:" + index);
+        List<String> result = new ArrayList<String>();
+        result.add(printCombination(source, tags));
+        while (true) {
+            int left = canMove2Left(tags, index);
+            if (-1 != left) {//能左移
+                //1：先左移,2:再打印
+                tags[left] = 1;
+                tags[index] = 0;//左移
+                index = left;//标志位左移
+                result.add(printCombination(source, tags));
+            } else {//标志位不能左移时，考虑是否存在下一个标志位，如果存在下一个，则将标志位移动，否则直接跳出
+                int right = hasNextRight(tags, index);
+                if (-1 != right) {//标志位能找到下一个
+                    index = right;
+                } else {
+                    break;
+                }
+            }
+        }
+
+        return result;
+    }
+
+    /**
+     * 是否存在下一个可以标记的位置
+     *
+     * @param tags  标记
+     * @param index 起始位置
+     * @return 下一个可以标记的位置
+     */
+    private static int hasNextRight(int[] tags, int index) {
+        int result = -1;
+        if (tags.length - index >= 1) {
+            for (int i = index + 1; i < tags.length; i++) {
+                if (tags[index] == tags[i]) {
+                    result = i;
+                    break;
+                }
+            }
+        }
+        return result;
+    }
+
+    /**
+     * 打印单个符合要求的组合
+     *
+     * @param source 源
+     * @param tags   标记位
+     * @return 组合
+     */
+    private static String printCombination(int[] source, int[] tags) {
+        StringBuilder sb = new StringBuilder("");
+        for (int i = 0; i < tags.length; i++) {
+            if (1 == tags[i]) {
+                sb.append(source[i]);
+            }
+        }
+        logger.info("===>" + sb.toString());
+        return sb.toString();
+    }
+
+    /**
+     * 能左移
+     *
+     * @param tags  0,1的组合
+     * @param index 起始位置
+     * @return 移动到左边的第一个位置
+     */
+    private static int canMove2Left(int[] tags, int index) {
+        int result = -1;
+        if (index >= 1) {
+            for (int i = index - 1; i >= 0; i--) {
+                if ((tags[i] ^ tags[index]) == 1) {//异或为1表示可以移动
+                    return i;
+                }
+            }
+        }
+
+        return result;
+    }
 
     /**
      * 将long类型的数据除以2
@@ -362,13 +464,10 @@ public class MathUtil {
         String pre = getPreBy2LongNumMult(num1, num2, flag);
 
 
-
-
         return result;
     }
 
     /**
-     *
      * @param num1 第一个数
      * @param num2
      * @param flag
@@ -595,28 +694,4 @@ public class MathUtil {
         return result.toString();
     }
 
-
-    public static void main(String[] args) {
-
-        // //求出一个数的所有约数
-        MathUtil mu = new MathUtil();
-        // System.out.println(mu.allSubmultiple(124));
-
-        // //求最大公约数
-        // System.out.println(MathUtil.maxCommonDivisor(8, 4));
-
-        // //与原点之间的距离，或者两点之间的距离
-        // System.out.println(MathUtil.distanceFromTwoPlace(1, 1));
-
-        // System.out.println(MathUtil.divideTwo(5));
-        // System.out.println(MathUtil.multTwo(5));
-        // System.out.println(MathUtil.divideTwo(5L));
-        // System.out.println(MathUtil.multTwo(5L));
-
-        //计算两个超长的数字相加的结果
-        System.out.println("9.9+1.1 = " + MathUtil.addTwoLongNum("9.9", "1.1"));
-        System.out.println("9999999999.9+1.11111 = " + MathUtil.addTwoLongNum("9999999999.9", "1.11111"));
-        System.out.println("1234567890+987654321 = " + MathUtil.addTwoLongNum("1234567890", "987654321"));
-
-    }
 }
