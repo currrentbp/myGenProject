@@ -29,9 +29,7 @@ public class MathUtil {
         for (int i = 0; i < m; i++) {
             tags[sl - i - 1] = 1;
         }
-        logger.info("===>" + JSON.toJSONString(tags));
         int index = sl - m;
-        logger.info("===>index:" + index);
         List<String> result = new ArrayList<String>();
         result.add(printCombination(source, tags));
         while (true) {
@@ -108,7 +106,6 @@ public class MathUtil {
                 }
             }
         }
-
         return result;
     }
 
