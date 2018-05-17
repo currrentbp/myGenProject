@@ -5,10 +5,7 @@ import org.junit.Test;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
 
-import java.util.ArrayList;
-import java.util.HashSet;
-import java.util.List;
-import java.util.Set;
+import java.util.*;
 
 /**
  * 专门用于列表的测试
@@ -18,6 +15,51 @@ import java.util.Set;
  */
 public class ListTest {
     private static Logger logger = LoggerFactory.getLogger(ListTest.class);
+
+    @Test
+    public void testGetSize() {
+        List<Integer> source = new ArrayList<>(100000000);
+        for (int i = 0; i < 50000000; i++) {
+            source.add(i + 1);
+        }
+//        for (int j = 0; j < 20; j++) {
+//
+//            long start1 = System.currentTimeMillis();
+//            for (int i = 0; i < source.size(); i++) {
+//                Integer k = source.get(i);
+//            }
+//            long end1 = System.currentTimeMillis();
+//
+//            long start2 = System.currentTimeMillis();
+//            int size = source.size();
+//            for (int i = 0; i < size; i++) {
+//                Integer k = source.get(i);
+//            }
+//            long end2 = System.currentTimeMillis();
+//
+//            System.out.println("time:" + (j + 1) + " used time1:" + (end1 - start1) + " time2:" + (end2 - start2));
+//        }
+
+        for (int j = 0; j < 20; j++) {
+
+            long start1 = System.currentTimeMillis();
+            int temp = 0;
+            for (int i = 0; i < source.size(); i++) {
+                temp = source.get(i);
+            }
+            long end1 = System.currentTimeMillis();
+
+            long start2 = System.currentTimeMillis();
+            int size = source.size();
+            for (int i = 0; i < size; i++) {
+                temp = source.get(i);
+            }
+            long end2 = System.currentTimeMillis();
+
+            System.out.println("time:" + (j + 1) + " used time1:" + (end1 - start1) + " time2:" + (end2 - start2));
+        }
+
+    }
 
 
     @Test
@@ -47,15 +89,15 @@ public class ListTest {
     }
 
     @Test
-    public void list2Set(){
+    public void list2Set() {
         List<String> list = new ArrayList<String>();
         list.add("baopan");
         list.add("currentbp");
         list.add("baopan");
         list.add("bp1");
-        logger.info("===>list:"+JSON.toJSONString(list));
+        logger.info("===>list:" + JSON.toJSONString(list));
         Set<String> set = new HashSet<String>(list);
-        logger.info("===>set:"+JSON.toJSONString(set));
+        logger.info("===>set:" + JSON.toJSONString(set));
     }
 
 
