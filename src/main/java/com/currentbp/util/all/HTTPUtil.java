@@ -26,7 +26,8 @@ public class HTTPUtil {
 
     /**
      * http get请求
-     * @param url 请求url
+     *
+     * @param url    请求url
      * @param params 参数
      * @return 返回结果
      */
@@ -37,7 +38,7 @@ public class HTTPUtil {
         String result = null;
         try {
             String url2 = url + (null == paramLink ? "" : "?" + paramLink);
-            RequestConfig requestConfig =RequestConfig.custom().setSocketTimeout(5000).setConnectTimeout(5000).build();
+            RequestConfig requestConfig = RequestConfig.custom().setSocketTimeout(5000).setConnectTimeout(5000).build();
             System.out.println("===>getRequest: url2:" + url2);
             HttpGet httpget = new HttpGet(url2);
             httpget.addHeader("Content-Type", "application/x-www-form-urlencoded;charset=utf-8");
@@ -59,24 +60,39 @@ public class HTTPUtil {
         return result;
     }
 
-
     /**
      * http post 请求
-     * @param url 请求URL
+     *
+     * @param url    请求URL
      * @param params 参数
      * @return 请求结果
      */
     public static String postRequest(String url, Map<String, Object> params) {
-        System.out.println("===>postRequest: url:" + url + " params:" + JSON.toJSONString(params));
+        return postRequest(url, params, "application/json;", "utf-8", 5000, 5000);
+    }
+
+    /**
+     * http post 请求
+     *
+     * @param url            请求URL
+     * @param params         参数
+     * @param contentType    内容类型
+     * @param charset        字符集
+     * @param socketTimeOut  超时时间
+     * @param connectTimeout 连接超时时间
+     * @return
+     */
+    public static String postRequest(String url, Map<String, Object> params, String contentType, String charset, int socketTimeOut, int connectTimeout) {
         CloseableHttpClient httpclient = HttpClients.createDefault();
         String result = null;
         try {
             HttpPost httpPost = new HttpPost(url);
-            RequestConfig requestConfig =RequestConfig.custom().setSocketTimeout(5000).setConnectTimeout(5000).build();
-            httpPost.addHeader("Content-Type", "application/x-www-form-urlencoded;charset=utf-8");
+            RequestConfig requestConfig = RequestConfig.custom().setSocketTimeout(socketTimeOut).setConnectTimeout(connectTimeout).build();
+            httpPost.addHeader("Content-Type", contentType);
+            httpPost.addHeader("charset", charset);
             List<NameValuePair> nvps = new ArrayList<NameValuePair>();
-            for (String key:params.keySet()){
-                nvps.add(new BasicNameValuePair(key,""+params.get(key)));
+            for (String key : params.keySet()) {
+                nvps.add(new BasicNameValuePair(key, "" + params.get(key)));
             }
             httpPost.setEntity(new UrlEncodedFormEntity(nvps));
             httpPost.setConfig(requestConfig);
@@ -114,13 +130,6 @@ public class HTTPUtil {
     }
 
     public static void main(String[] args) {
-        HTTPUtil httpUtil = new HTTPUtil();
-        Map<String, Object> params = new HashMap<String,Object>();
-        params.put("id", "cd7d5e6922b64b748d4fd564b650a78b");
-        System.out.println(httpUtil.getRequest("http://localhost:8080/asset/getAsset",params));
 
-        params.put("name","+++++++++++++++");
-        params.put("city",Integer.parseInt("88"));
-        System.out.println(httpUtil.postRequest("http://localhost:8080/asset/update",params));
     }
 }
