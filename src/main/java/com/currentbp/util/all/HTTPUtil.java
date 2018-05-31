@@ -1,8 +1,10 @@
 package com.currentbp.util.all;
 
 import com.alibaba.fastjson.JSON;
+import com.currentbp.entry.HttpResultData;
 import org.apache.http.HttpResponse;
 import org.apache.http.NameValuePair;
+import org.apache.http.StatusLine;
 import org.apache.http.client.config.RequestConfig;
 import org.apache.http.client.entity.UrlEncodedFormEntity;
 import org.apache.http.client.methods.HttpGet;
@@ -67,7 +69,7 @@ public class HTTPUtil {
      * @param params 参数
      * @return 请求结果
      */
-    public static String postRequest(String url, Map<String, Object> params) {
+    public static HttpResultData postRequest(String url, Map<String, Object> params) {
         return postRequest(url, params, "application/json;", "utf-8", 5000, 5000);
     }
 
@@ -82,9 +84,9 @@ public class HTTPUtil {
      * @param connectTimeout 连接超时时间
      * @return
      */
-    public static String postRequest(String url, Map<String, Object> params, String contentType, String charset, int socketTimeOut, int connectTimeout) {
+    public static HttpResultData postRequest(String url, Map<String, Object> params, String contentType, String charset, int socketTimeOut, int connectTimeout) {
         CloseableHttpClient httpclient = HttpClients.createDefault();
-        String result = null;
+        HttpResultData result = new HttpResultData(HttpResultData.ERROR,HttpResultData.IS_OTHER_ERROR,"");
         try {
             HttpPost httpPost = new HttpPost(url);
             RequestConfig requestConfig = RequestConfig.custom().setSocketTimeout(socketTimeOut).setConnectTimeout(connectTimeout).build();
@@ -92,21 +94,25 @@ public class HTTPUtil {
             httpPost.addHeader("charset", charset);
             List<NameValuePair> nvps = new ArrayList<NameValuePair>();
             for (String key : params.keySet()) {
-                nvps.add(new BasicNameValuePair(key, "" + params.get(key)));
+                nvps.add(new BasicNameValuePair(key, params.get(key).toString()));
             }
             httpPost.setEntity(new UrlEncodedFormEntity(nvps));
             httpPost.setConfig(requestConfig);
             HttpResponse response = httpclient.execute(httpPost);
-
-            result = EntityUtils.toString(response.getEntity());
+            StatusLine statusLine = response.getStatusLine();
+            int statusCode = statusLine.getStatusCode();
+            result.setCode(statusCode)
+                    .setBody(EntityUtils.toString(response.getEntity()));
 
         } catch (IOException e) {
             e.printStackTrace();
+            result.setBody(e.getMessage());
         } finally {
             try {
                 httpclient.close();
             } catch (IOException e) {
                 e.printStackTrace();
+                result.setBody(e.getMessage());
             }
         }
 
