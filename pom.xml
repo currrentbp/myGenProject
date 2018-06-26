@@ -225,7 +225,7 @@
     </distributionManagement>
 
     <build>
-        <finalName>caiPiao_web</finalName>
+        <finalName>myGenProject</finalName>
         <plugins>
             <plugin>
                 <artifactId>maven-compiler-plugin</artifactId>

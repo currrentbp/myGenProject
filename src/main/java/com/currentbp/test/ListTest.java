@@ -1,6 +1,7 @@
 package com.currentbp.test;
 
 import com.alibaba.fastjson.JSON;
+import org.assertj.core.util.Lists;
 import org.junit.Test;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
@@ -15,6 +16,14 @@ import java.util.*;
  */
 public class ListTest {
     private static Logger logger = LoggerFactory.getLogger(ListTest.class);
+
+    @Test
+    public void listRemove(){
+        List<Integer> integers = Lists.newArrayList(1,2,3,0);
+        integers.remove(Integer.valueOf(0));
+        integers.remove(0);
+        System.out.println(integers.toString());
+    }
 
     @Test
     public void testGetSize() {
