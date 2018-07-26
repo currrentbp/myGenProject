@@ -5,7 +5,10 @@ package com.currentbp.test;
  * @createTime 20170407
  */
 public class BooleanTest {
-
+    public static void main(String[] args) {
+        int a = 10;
+        assert a >9 :"baopan";
+    }
     boolean flag1;
 
 
