@@ -1,7 +1,11 @@
 package com.currentbp.test;
 
+import org.junit.Test;
+
+import java.text.DateFormat;
 import java.text.SimpleDateFormat;
 import java.util.Date;
+import java.util.Locale;
 
 /**
  * 
@@ -10,6 +14,16 @@ import java.util.Date;
  *
  */
 public class TimeTest {
+
+	@Test
+	public void formatTime(){
+		Date date = new Date();
+		SimpleDateFormat formater = new SimpleDateFormat("yyyy年MM月dd日");
+		String result = "缺货，预计"+formater.format(new Date(date.getTime()+ 154 * 24 * 60 * 60 * 1000L))+"到货";
+		String target = new SimpleDateFormat("yyyy年").format(date);
+		String replace = result.replace(target, "");
+		System.out.println(replace);
+	}
 	
 	public  void getTimeByLong(){
 		Long time = 1487845207000L;
