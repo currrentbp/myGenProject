@@ -1,7 +1,6 @@
 package com.currentbp.test;
 
-import java.util.ArrayList;
-import java.util.List;
+import java.util.*;
 
 import org.junit.Test;
 import org.slf4j.Logger;

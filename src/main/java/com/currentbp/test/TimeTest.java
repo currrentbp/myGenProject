@@ -4,6 +4,7 @@ import org.junit.Test;
 
 import java.text.DateFormat;
 import java.text.SimpleDateFormat;
+import java.util.Calendar;
 import java.util.Date;
 import java.util.Locale;
 
@@ -15,6 +16,17 @@ import java.util.Locale;
  */
 public class TimeTest {
 
+
+	@Test
+	public void formateTime2(){
+		Date dd = new Date();
+		Calendar c = Calendar.getInstance();
+		c.setTime(dd);
+		c.add(4,10);
+		Date time = c.getTime();
+		SimpleDateFormat formater = new SimpleDateFormat("yyyy年MM月dd日");
+		System.out.println(formater.format(time));
+	}
 	@Test
 	public void formatTime(){
 		Date date = new Date();

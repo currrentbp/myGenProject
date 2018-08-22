@@ -199,6 +199,42 @@ public class HTTPUtil {
         return result.substring(0, result.length() - 1);
     }
 
+    public static HttpResultData postRequest2(String url, Map<String, Object> params) {
+        CloseableHttpClient httpclient = HttpClients.createDefault();
+        HttpResultData result = new HttpResultData(HttpResultData.ERROR,HttpResultData.IS_OTHER_ERROR,"");
+        try {
+            HttpPost httpPost = new HttpPost(url);
+            RequestConfig requestConfig = RequestConfig.custom().setSocketTimeout(5000).setConnectTimeout(5000).build();
+            httpPost.addHeader("Content-Type", "application/json;");
+            httpPost.addHeader("charset", "utf-8");
+            List<NameValuePair> nvps = new ArrayList<NameValuePair>();
+            for (String key : params.keySet()) {
+                nvps.add(new BasicNameValuePair(key, params.get(key).toString()));
+            }
+            httpPost.setEntity(new UrlEncodedFormEntity(nvps));
+            httpPost.setConfig(requestConfig);
+
+            HttpResponse response = httpclient.execute(httpPost);
+            StatusLine statusLine = response.getStatusLine();
+            int statusCode = statusLine.getStatusCode();
+            result.setCode(statusCode)
+                    .setBody(EntityUtils.toString(response.getEntity()));
+
+        } catch (IOException e) {
+            e.printStackTrace();
+            result.setBody(e.getMessage());
+        } finally {
+            try {
+                httpclient.close();
+            } catch (IOException e) {
+                e.printStackTrace();
+                result.setBody(e.getMessage());
+            }
+        }
+
+        return result;
+    }
+
     public static void main(String[] args) {
 
     }
