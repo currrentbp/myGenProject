@@ -15,9 +15,7 @@ public class FastSort {
         FastSort fastSort = new FastSort();
 
         fastSort.sort(a, start, end);
-        for (int i = 0; i < a.length; i++) {
-            System.out.println(a[i]);
-        }
+        SortUtils.printArray(a);
 
     }
 
