@@ -18,6 +18,12 @@ public class StringTest {
 
     //===================          测试方法          ========================================================//
 
+
+    @Test
+    public void stringSplit(){
+        String s1= "DZFW_D";
+        logger.info(s1.split("_")[0]);
+    }
     /**
      * 将一个字符串转换成计算公式，求出结果
      */
