@@ -7,6 +7,18 @@ import org.junit.Test;
  */
 public class StringUtilTest {
     @Test
+    public void getHumpFormat(){
+        System.out.println(StringUtil.getHumpFormat("bp"));
+        System.out.println(StringUtil.getHumpFormat(null));
+        System.out.println(StringUtil.getHumpFormat("b"));
+        System.out.println(StringUtil.getHumpFormat("bp_1"));
+        System.out.println(StringUtil.getHumpFormat("bp_C"));
+        System.out.println(StringUtil.getHumpFormat("bp_f"));
+        System.out.println(StringUtil.getHumpFormat("bp_i_k_qq"));
+        System.out.println(StringUtil.getHumpFormat("Bp_i_k_qq"));
+    }
+
+    @Test
     public void deleteLast() throws Exception {
 
     }

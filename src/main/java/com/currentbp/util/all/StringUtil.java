@@ -387,43 +387,21 @@ public class StringUtil {
         return result;
     }
 
-
-    public static void main(String[] args) throws Exception {
-
-        System.out.println(StringUtil.letter2Int("A"));
-        System.out.println(StringUtil.int2Letter(65 + 11));
-
-//		//将字符串转换为列表
-//		System.out.println(StringUtil.stringToList("2,2,2,2,"));
-//		System.out.println(StringUtil.stringToList("2,2,2,2,: ss",false,":"));
-
-        // System.out.println(StringUtil.insertSomethingToWhere("222", "1",
-        // -1));
-        // System.out.println(StringUtil.insertSomethingToWhere("222", "1", 0));
-        // System.out.println(StringUtil.insertSomethingToWhere("222", "1", 1));
-        // System.out.println(StringUtil.insertSomethingToWhere("222", "1", 2));
-        // System.out.println(StringUtil.insertSomethingToWhere("222", "1", 3));
-        // System.out.println(StringUtil.insertSomethingToWhere("222", "1", 4));
-        // System.out.println(StringUtil.insertSomethingToWhere("222", "11111",
-        // 2));
-
-        // String ss = StringUtil.getSplitString("int(11)",
-        // "int")[1].toString();
-        // System.out.println(StringUtil.getStringWithOutSome(ss, new
-        // String[]{"\\(","\\)"}));
-
-        // System.out.println(StringUtil.getCaptureName("a111111a"));
-        // System.out.println(StringUtil.getCaptureName(""));
-
-        // System.out.println(StringUtil.fillBySome(20, "1"));
-
-        // System.out.println(StringUtil.getStringWithOutSome("123456--123123",
-        // "++", "-"));
-        // System.out.println(StringUtil.getStringWithOutSome("123456--123123",
-        // "-"));
-        // System.out.println("+++++"+StringUtil.deleteLast(null)+"====");
-        // new HashMap ();
+    /**
+     * 获取驼峰格式的字符串
+     * @param source 源：abc_der_fz
+     * @return 结果：abcDerFz
+     */
+    public static String getHumpFormat(String source){
+        if(CheckUtil.isEmpty(source)){
+            return source;
+        }
+        String[] split = source.split("_");
+        StringBuilder result = new StringBuilder(split[0].substring(0,1).toLowerCase()+split[0].substring(1));
+        for (int i=1;i<split.length;i++) {
+            result.append(split[i].substring(0,1).toUpperCase()+split[i].substring(1));
+        }
+        return result.toString();
     }
-
 
 }
