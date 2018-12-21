@@ -34,7 +34,10 @@ public class ClassParamterName {
     public static String[] getParameterName(Class clazz, String method) {
         try {
             ClassPool pool = ClassPool.getDefault();
-            CtClass cc = pool.get(clazz.getName());
+            ClassClassPath ccpath = new ClassClassPath(clazz);
+            pool.insertClassPath(ccpath);
+            String className = clazz.getName();
+            CtClass cc = pool.get(className);
             CtMethod cm = cc.getDeclaredMethod(method);
             MethodInfo methodInfo = cm.getMethodInfo();
             CodeAttribute codeAttribute = methodInfo.getCodeAttribute();
