@@ -1,5 +1,6 @@
 package com.currentbp.javassist;
 
+import com.currentbp.sort.BigSort;
 import com.currentbp.util.all.ListUtil;
 import javassist.*;
 import javassist.bytecode.CodeAttribute;
@@ -17,14 +18,20 @@ public class ClassParamterName {
 
     @Test
     public void getClassParamterName() {
-        Method[] methods = ParamterNameTestClass.class.getDeclaredMethods();
-        for (Method method : methods) {
-            String[] names = getParameterName(ParamterNameTestClass.class, method.getName());
-            ListUtil.printList(names);
+//        Method[] methods = ParamterNameTestClass.class.getDeclaredMethods();
+//        for (Method method : methods) {
+//            String[] names = getParameterName(ParamterNameTestClass.class, method.getName());
+//            ListUtil.printList(names);
+//        }
+
+        Method[] methods2 = BigSort.class.getDeclaredMethods();
+        for (Method method : methods2) {
+            String[] names = getParameterName(BigSort.class, method.getName());
+//            ListUtil.printList(names);
         }
     }
 
-    public static String[] getParameterName(Class clazz,String method){
+    public static String[] getParameterName(Class clazz, String method) {
         try {
             ClassPool pool = ClassPool.getDefault();
             CtClass cc = pool.get(clazz.getName());
@@ -38,6 +45,8 @@ public class ClassParamterName {
                 for (int i = 0; i < paramNames.length; i++) {
                     paramNames[i] = attr.variableName(i + pos);
                 }
+                System.out.println("method:" + method + " params:" );
+                ListUtil.printList(paramNames);
                 return paramNames;
             }
         } catch (NotFoundException e) {
