@@ -3,6 +3,7 @@ package com.currentbp.Interesting.likou;
 import com.currentbp.util.all.Assert;
 import org.junit.Test;
 
+import java.util.Arrays;
 import java.util.HashSet;
 import java.util.Set;
 
@@ -77,7 +78,7 @@ public class T00003 {
             int currentLength = 1;
             Set<Integer> set = new HashSet<>(s.length());
             char init = s.charAt(i);
-            set.add((int)init);
+            set.add((int) init);
             int index = i;
             for (int j = i + 1; j < s.length(); j++) {
                 char next = s.charAt(j);
@@ -96,23 +97,65 @@ public class T00003 {
                 result = currentLength;
             }
         }
-        System.out.println("result: " + s.substring(start, end));
+        System.out.println("result: " + s.substring(start, end + 1));
         return result;
+    }
+
+    /*
+    官网的一个解答
+     */
+    public int lengthOfLongestSubstring3(String s) {
+        int max = 0;
+        int left = 0;
+        int right = 0;
+        for (; right < s.length(); ++right) {
+            char rightC = s.charAt(right);
+            for (int index = left; index < right; ++index) {
+                if (s.charAt(index) == rightC) {
+                    max = (right - left) > max ? (right - left) : max;
+                    left = index + 1;
+                    break;
+                }
+            }
+        }
+        max = (right - left) > max ? (right - left) : max;
+        return max;
+    }
+
+    /*
+    最佳答案
+     */
+    public int lengthOfLongestSubstring4(String s) {
+        int ans = 0;
+        int[] vis = new int[257];
+        int len = s.length();
+        int left = -1;
+        Arrays.fill(vis, -1);
+        for (int i = 0; i < len; i++) {
+            if (vis[s.charAt(i)] > left) {
+                left = vis[s.charAt(i)];
+            }
+            ans = Math.max(ans, i - left);
+            vis[s.charAt(i)] = i;
+        }
+        return ans;
     }
 
     @Test
     public void t1() {
-        int i1 = lengthOfLongestSubstring2("bbbb");
-        Assert.isTrue(i1==1,"error");
-        int i2 = lengthOfLongestSubstring2("abcabcbb");
-        Assert.isTrue(i2==3,"error");
-        int i3 = lengthOfLongestSubstring2("pwwkew");
-        Assert.isTrue(i3==3,"error");
-        int i4 = lengthOfLongestSubstring2(" ");
-        Assert.isTrue(i4==1,"error");
-        int i5 = lengthOfLongestSubstring2("a");
-        Assert.isTrue(i5==1,"error");
-        int i6 = lengthOfLongestSubstring2("au");
-        Assert.isTrue(i6==2,"error");
+//        int i1 = lengthOfLongestSubstring3("bbbb");
+//        Assert.isTrue(i1 == 1, "error");
+//        int i2 = lengthOfLongestSubstring3("abcabcbb");
+//        Assert.isTrue(i2 == 3, "error");
+//        int i3 = lengthOfLongestSubstring3("pwwkew");
+//        Assert.isTrue(i3 == 3, "error");
+//        int i4 = lengthOfLongestSubstring3(" ");
+//        Assert.isTrue(i4 == 1, "error");
+//        int i5 = lengthOfLongestSubstring3("a");
+//        Assert.isTrue(i5 == 1, "error");
+//        int i6 = lengthOfLongestSubstring3("au");
+//        Assert.isTrue(i6 == 2, "error");
+        int i7 = lengthOfLongestSubstring4("abcdcefab");
+        Assert.isTrue(i7 == 6, "error");
     }
 }
