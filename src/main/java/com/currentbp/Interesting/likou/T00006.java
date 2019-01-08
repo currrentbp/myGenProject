@@ -1,5 +1,11 @@
 package com.currentbp.Interesting.likou;
 
+import com.currentbp.util.all.Assert;
+import org.junit.Test;
+
+import java.util.ArrayList;
+import java.util.List;
+
 /**
  * @author baopan
  * @createTime 20181228
@@ -34,6 +40,52 @@ E C   I H   N
 T     S     G
      */
 
-    //todo not work
     //https://leetcode-cn.com/problems/zigzag-conversion/
+    @Test
+    public void t1() {
+        String convert = convert1("LEETCODEISHIRING", 3);
+        Assert.isTrue(convert.equals("LCIRETOESIIGEDHN"), "error");
+        String convert2 = convert1("LEETCODEISHIRING", 4);
+        Assert.isTrue(convert2.equals("LDREOEIIECIHNTSG"), "error");
+    }
+
+    public String convert1(String s, int numRows) {
+        if (numRows < 2) {
+            return s;
+        }
+        if (null == s || s.length() == 0){
+            return s;
+        }
+        String result = "";
+        for (int i = 0; i < numRows; i++) {
+            result += getConvert(s, i, numRows);
+        }
+        return result;
+    }
+
+    /*
+    大概公式：index+N*length+（flag*index +length）,这是一个类似sin函数
+     */
+    private String getConvert(String s, int start, int numRows) {
+        String result = "";
+        int flag = -1;
+        int cycle = s.length() / (numRows - 1) + 1;
+        for (int j = 0; j < cycle; j++) {
+            if (0 == start || start == numRows - 1) {
+                int x = start + (numRows - 1) * 2 * j;
+                if (x >= s.length()) {
+                    break;
+                }
+                result += s.substring(x, x + 1);
+            } else {
+                int x = j * (numRows - 1) + (flag == -1 ? start : (numRows - 1 - start));
+                if (x >= s.length()) {
+                    break;
+                }
+                flag *= -1;
+                result += s.substring(x, x + 1);
+            }
+        }
+        return result;
+    }
 }
