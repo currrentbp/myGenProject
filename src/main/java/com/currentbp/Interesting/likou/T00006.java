@@ -88,4 +88,37 @@ T     S     G
         }
         return result;
     }
+
+    /*
+    官网最佳答案
+     */
+    public String convert2(String s, int numRows) {
+        StringBuffer r  = new StringBuffer();
+        int change = numRows > 1? 2 *( numRows - 2) + 2 : 1;
+
+        int cur_pos = 0;
+        for (int num = 1; num <= numRows; num ++ ) {
+            cur_pos = num -1;
+
+            //剩下的列
+            int restColumn = 2 *(numRows - num) ;
+            if (restColumn == change || restColumn == 0) {
+                while(cur_pos < s.length()) {
+                    r.append(s.charAt(cur_pos));
+                    cur_pos += change;
+                }
+            }else {
+                while(cur_pos < s.length()) {
+                    r.append(s.charAt(cur_pos));
+                    cur_pos += restColumn;
+                    if (cur_pos >= s.length()) {
+                        break;
+                    }
+                    r.append(s.charAt(cur_pos));
+                    cur_pos += (change - restColumn);
+                }
+            }
+        }
+        return r.toString();
+    }
 }
