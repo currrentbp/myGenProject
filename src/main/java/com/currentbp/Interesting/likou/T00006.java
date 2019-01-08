@@ -64,7 +64,7 @@ T     S     G
     }
 
     /*
-    大概公式：index+N*length+（flag*index +length）,这是一个类似sin函数
+    大概公式：N*length+(（-1*index +length）or index),这是一个类似sin函数
      */
     private String getConvert(String s, int start, int numRows) {
         String result = "";
