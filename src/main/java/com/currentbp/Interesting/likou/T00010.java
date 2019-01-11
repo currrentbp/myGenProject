@@ -96,4 +96,44 @@ p = "mis*is*p*."
         }
         return false;
     }
+    /*
+    官网的一个解答
+    bool MatchMore(const char* strInput,const char* match)
+{
+    bool bRet = false;
+    do
+    {
+        if (strInput[0] == '\0' && match[0] == '\0')
+        {
+            bRet = true;
+            break;
+        }
+        if (strInput[0] != '\0' && match[0] == '\0')
+        {
+            break;
+        }
+
+        if (match[1] == '*')
+        {
+            if (strInput[0] == match[0])
+            {
+                return MatchMore(strInput+1, match) || MatchMore(strInput, match + 2);
+            }
+            if (strInput[0] != '\0' && match[0] == '.')
+            {
+                return MatchMore(strInput+1, match)|| MatchMore(strInput, match + 2);
+            }
+            return MatchMore(strInput, match+2);
+
+        }
+
+        if (strInput[0] == match[0] || strInput[0] != '\0' && match[0] == '.')
+        {
+            return MatchMore(strInput + 1, match + 1);
+        }
+    } while (false);
+    return bRet;
+
+}
+     */
 }
