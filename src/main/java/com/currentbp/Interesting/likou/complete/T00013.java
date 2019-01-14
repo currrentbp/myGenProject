@@ -1,4 +1,4 @@
-package com.currentbp.Interesting.likou;
+package com.currentbp.Interesting.likou.complete;
 
 import com.currentbp.util.all.Assert;
 import org.junit.Test;
@@ -51,7 +51,6 @@ C 可以放在 D (500) 和 M (1000) 的左边，来表示 400 和 900。
 输出: 1994
 解释: M = 1000, CM = 900, XC = 90, IV = 4.
      */
-    //todo not work
     //https://leetcode-cn.com/problems/roman-to-integer/
 
     @Test
