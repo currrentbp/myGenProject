@@ -1,6 +1,7 @@
 package com.currentbp.bean.copy;
 
 import com.currentbp.util.all.CglibCopyBean;
+import com.currentbp.util.all.ModelCopyBean;
 import org.junit.Assert;
 import org.junit.Test;
 
@@ -42,5 +43,27 @@ public class DoCopy {
         CglibCopyBean.BasicCopyBean(first, firstCopy);
         Assert.assertTrue(null != firstCopy);
 
+    }
+    @Test
+    public void copy2(){
+        Other other = new Other();
+        other.setO1(11);
+        List<Other> others = new ArrayList<Other>();
+        others.add(other);
+        Second second = new Second();
+        second.setSe1("s1");
+        second.setDate(new Date());
+
+        First first = new First();
+        first.setF1(22);
+        first.setDate(new Date());
+        first.setS1("s111");
+        first.setSecond(second);
+        first.setOthers(others);
+
+
+        FirstCopy firstCopy = new FirstCopy();
+        ModelCopyBean.copy(first, firstCopy);
+        Assert.assertTrue(null != firstCopy);
     }
 }
