@@ -1,4 +1,4 @@
-package com.currentbp.Interesting.likou;
+package com.currentbp.Interesting.likou.complete;
 
 import com.currentbp.util.all.Assert;
 import org.junit.Test;
@@ -51,7 +51,7 @@ public class T00020 {
 
     @Test
     public void t1() {
-        Assert.isTrue(!isValid("]"), "error");
+        Assert.isTrue(!isValid2("([])"), "error");
         Assert.isTrue(isValid("()"), "error");
         Assert.isTrue(isValid("()[]{}"), "error");
         Assert.isTrue(!isValid("(]"), "error");
@@ -152,5 +152,13 @@ public class T00020 {
             }
         }
         return j == 0;
+    }
+
+    public boolean isValid3(String s) {
+        int length = s.length();
+        for(int i=0;i<(length+1)/2;i++){
+            s = s.replaceAll("\\(\\)", "").replaceAll("\\[\\]", "").replaceAll("\\{\\}", "");
+        }
+        return s.length() == 0;
     }
 }
