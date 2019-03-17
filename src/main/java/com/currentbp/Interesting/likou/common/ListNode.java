@@ -1,4 +1,4 @@
-package com.currentbp.Interesting.likou.complete;
+package com.currentbp.Interesting.likou.common;
 
 import com.currentbp.util.all.CheckUtil;
 
@@ -9,10 +9,10 @@ import java.util.List;
  * @createTime 20190211
  */
 public class ListNode {
-    int val;
-    ListNode next;
+    public int val;
+    public ListNode next;
 
-    ListNode(int x) {
+    public ListNode(int x) {
         val = x;
     }
 

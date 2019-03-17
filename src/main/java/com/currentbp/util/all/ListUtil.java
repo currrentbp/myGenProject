@@ -3,8 +3,7 @@ package com.currentbp.util.all;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
 
-import java.lang.reflect.Field;
-import java.lang.reflect.Method;
+import java.lang.reflect.Array;
 import java.util.ArrayList;
 import java.util.List;
 
@@ -14,7 +13,7 @@ import java.util.List;
  * @author current_bp
  * @createTime 20160513
  */
-public class ListUtil {
+public class ListUtil<V> {
     private final static Logger logger = LoggerFactory.getLogger(ListUtil.class);
 
     /**
@@ -161,6 +160,34 @@ public class ListUtil {
         return result;
     }
 
+    /**
+     * 将array转换成list
+     */
+    public static <V> List<V> array2List(V[] source) {
+        if (null == source || 0 == source.length) {
+            return new ArrayList<>();
+        }
+        List<V> result = new ArrayList<>(source.length);
+        for (V v : source) {
+            result.add(v);
+        }
+        return result;
+    }
+
+    /**
+     * 将list转换成array
+     */
+    public static <V> V[] list2Array(List<V> source) {
+        if (null == source || 0 == source.size()) {
+            return (V[]) new Object[]{};
+        }
+        V[] result = (V[]) Array.newInstance(source.get(0).getClass(), source.size());
+        for (int i = 0; i < source.size(); i++) {
+            result[i] = source.get(i);
+        }
+        return result;
+    }
+
     public static int[] list2intArray(List<Integer> source) {
         Assert.notEmpty(source, "数据源不能为空");
         int[] result = new int[source.size()];
@@ -196,21 +223,23 @@ public class ListUtil {
     public static void printList(Object[] array) {
         System.out.print("[");
         for (int i = 0; i < array.length; i++) {
-            printMiddle(array[i],i < array.length - 1);
+            printMiddle(array[i], i < array.length - 1);
         }
         System.out.println("]");
     }
+
     public static void printList(String[] array) {
         System.out.print("[");
         for (int i = 0; i < array.length; i++) {
-            printMiddle(array[i],i < array.length - 1);
+            printMiddle(array[i], i < array.length - 1);
         }
         System.out.println("]");
     }
+
     public static void printList(List<String> array) {
         System.out.print("[");
         for (int i = 0; i < array.size(); i++) {
-            printMiddle(array.get(i),i < array.size() - 1);
+            printMiddle(array.get(i), i < array.size() - 1);
         }
         System.out.println("]");
     }
@@ -218,15 +247,15 @@ public class ListUtil {
     public static void printList(int[] array) {
         System.out.print("[");
         for (int i = 0; i < array.length; i++) {
-            printMiddle(array[i],i < array.length - 1);
+            printMiddle(array[i], i < array.length - 1);
         }
         System.out.println("]");
     }
 
-    public static void printList(char[] array){
+    public static void printList(char[] array) {
         System.out.print("[");
         for (int i = 0; i < array.length; i++) {
-            printMiddle(array[i],i < array.length - 1);
+            printMiddle(array[i], i < array.length - 1);
         }
         System.out.println("]");
     }
@@ -234,7 +263,7 @@ public class ListUtil {
     private static void printMiddle(Object o, boolean isNotEnd) {
         if (isNotEnd) {
             System.out.print(o + ", ");
-        }else{
+        } else {
             System.out.print(o);
         }
     }

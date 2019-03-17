@@ -1,5 +1,6 @@
 package com.currentbp.Interesting.likou.complete;
 
+import com.currentbp.Interesting.likou.common.ListNode;
 import org.assertj.core.util.Lists;
 import org.junit.Test;
 
