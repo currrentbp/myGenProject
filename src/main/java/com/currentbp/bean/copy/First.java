@@ -1,5 +1,6 @@
 package com.currentbp.bean.copy;
 
+import java.util.Arrays;
 import java.util.Date;
 import java.util.List;
 
@@ -13,6 +14,8 @@ public class First {
     private Date date;
     private Second second;
     List<Other> others;
+    List<String> others1;
+    String[] others2;
 
 
     public Integer getF1() {
@@ -53,5 +56,34 @@ public class First {
 
     public void setDate(Date date) {
         this.date = date;
+    }
+
+    public List<String> getOthers1() {
+        return others1;
+    }
+
+    public void setOthers1(List<String> others1) {
+        this.others1 = others1;
+    }
+
+    public String[] getOthers2() {
+        return others2;
+    }
+
+    public void setOthers2(String[] others2) {
+        this.others2 = others2;
+    }
+
+    @Override
+    public String toString() {
+        return "First{" +
+                "f1=" + f1 +
+                ", s1='" + s1 + '\'' +
+                ", date=" + date +
+                ", second=" + second +
+                ", others=" + others +
+                ", others1=" + others1 +
+                ", others2=" + Arrays.toString(others2) +
+                '}';
     }
 }
