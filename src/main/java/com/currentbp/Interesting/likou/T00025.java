@@ -1,7 +1,10 @@
 package com.currentbp.Interesting.likou;
 
 import com.currentbp.Interesting.likou.common.ListNode;
+import org.assertj.core.util.Lists;
 import org.junit.Test;
+
+import java.util.Arrays;
 
 /**
  * @author baopan
@@ -29,40 +32,67 @@ k 是一个正整数，它的值小于或等于链表的长度。如果节点总
     //https://leetcode-cn.com/problems/reverse-nodes-in-k-group/
 
     @Test
-    public void t1(){
-
+    public void t1() {
+        ListNode listNode1 = ListNode.init(Lists.newArrayList(1, 2, 3, 4, 5));
+        ListNode.printListNodes(reverseKGroup(listNode1,1));
+        ListNode listNode2 = ListNode.init(Lists.newArrayList(1, 2, 3, 4, 5));
+        ListNode.printListNodes(reverseKGroup(listNode2, 2));
+        ListNode listNode3 = ListNode.init(Lists.newArrayList(1, 2, 3, 4, 5));
+        ListNode.printListNodes(reverseKGroup(listNode3, 3));
+        ListNode listNode4 = ListNode.init(Lists.newArrayList(1, 2, 3, 4, 5));
+        ListNode.printListNodes(reverseKGroup(listNode4, 4));
+        ListNode listNode5 = ListNode.init(Lists.newArrayList(1, 2));
+        ListNode.printListNodes(reverseKGroup(listNode5, 2));
     }
 
     public ListNode reverseKGroup(ListNode head, int k) {
-        if(null == head){
+        if (null == head) {
             return head;
         }
-        if(k<=1){
+        if (k <= 1) {
             return head;
         }
 
-        ListNode result = new ListNode(0);
+        ListNode result = new ListNode(0), newHead = result;
         ListNode current = head;
-        ListNode temp = new ListNode(0);
-        for(int i=0;;i++){
-            if(null != current && i%k != 0){
-                temp.next = new ListNode(current.val);
+        ListNode tempHead = new ListNode(0), tempTail = tempHead;
+        for (int i = 0; ; i++) {
+            if (i == 0 || i % k != 0) {
+                if (null == current) {
+                    break;
+                }
+                tempTail.next = new ListNode(current.val);
+                tempTail = tempTail.next;
+                current = current.next;
             }
-            if(null != current && i%k == 0){
-                ListNode next = temp.next;
-                ListNode tail = switchAll(next);
+            if (i != 0 && i % k == 0) {
+                ListNode fragment = tempHead.next;
+                ListNode[] headAndTail = switchAll(fragment);
+                result.next = headAndTail[0];
+                result = headAndTail[1];
+                tempHead.next = null;
+                tempTail = tempHead;
+                i = -1;
+                if (null == current) {
+                    break;
+                }
             }
         }
-        return result.next;
+        if (null != tempHead.next) {
+            result.next = tempHead.next;
+        }
+        return newHead.next;
     }
-    private ListNode switchAll(ListNode listNode){
+
+    private ListNode[] switchAll(ListNode listNode) {
+        ListNode[] result = new ListNode[2];
         ListNode head = new ListNode(0);
         ListNode tail = null;
         boolean flag = true;
-        while(null != listNode){
+        while (null != listNode) {
             ListNode temp = head.next;
             head.next = new ListNode(listNode.val);
-            if(flag){
+            if (flag) {
                 flag = false;
                 tail = head.next;
             }
@@ -70,6 +100,8 @@ k 是一个正整数，它的值小于或等于链表的长度。如果节点总
             listNode = listNode.next;
         }
         listNode = head.next;
-        return tail;
+        result[0] = listNode;
+        result[1] = tail;
+        return result;
     }
 }
