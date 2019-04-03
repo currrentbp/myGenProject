@@ -220,39 +220,55 @@ public class ListUtil<V> {
         return result;
     }
 
+    public static <V> void printList(List<V> list) {
+        System.out.print("[");
+        if (null != list) {
+            for (int i = 0; i < list.size(); i++) {
+                printMiddle(list.get(i), i < list.size() - 1);
+            }
+        }
+        System.out.println("]");
+    }
+
     public static void printList(Object[] array) {
         System.out.print("[");
-        for (int i = 0; i < array.length; i++) {
-            printMiddle(array[i], i < array.length - 1);
+        if (null != array) {
+            for (int i = 0; i < array.length; i++) {
+                printMiddle(array[i], i < array.length - 1);
+            }
         }
         System.out.println("]");
     }
 
     public static void printList(String[] array) {
         System.out.print("[");
-        for (int i = 0; i < array.length; i++) {
-            printMiddle(array[i], i < array.length - 1);
-        }
-        System.out.println("]");
-    }
-
-    public static void printList(List<String> array) {
-        System.out.print("[");
-        for (int i = 0; i < array.size(); i++) {
-            printMiddle(array.get(i), i < array.size() - 1);
+        if (null != array) {
+            for (int i = 0; i < array.length; i++) {
+                printMiddle(array[i], i < array.length - 1);
+            }
         }
         System.out.println("]");
     }
 
     public static void printList(int[] array) {
         System.out.print("[");
+        if (null != array) {
+            for (int i = 0; i < array.length; i++) {
+                printMiddle(array[i], i < array.length - 1);
+            }
+        }
+        System.out.println("]");
+    }
+
+    public static void printList(char[] array) {
+        System.out.print("[");
         for (int i = 0; i < array.length; i++) {
             printMiddle(array[i], i < array.length - 1);
         }
         System.out.println("]");
     }
 
-    public static void printList(char[] array) {
+    public static void printList(boolean[] array) {
         System.out.print("[");
         for (int i = 0; i < array.length; i++) {
             printMiddle(array[i], i < array.length - 1);
