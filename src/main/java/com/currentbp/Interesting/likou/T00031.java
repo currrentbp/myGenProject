@@ -1,4 +1,4 @@
-package com.currentbp.Interesting.likou.complete;
+package com.currentbp.Interesting.likou;
 
 import org.junit.Test;
 
