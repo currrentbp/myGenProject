@@ -15,6 +15,10 @@ public class Student {
     private Course course;
 
     public Student(){}
+    public Student(Integer id,String name){
+        this.id = id;
+        this.name = name;
+    }
 
     public Course getCourse() {
         return course;

@@ -1,8 +1,12 @@
 package com.currentbp.Interesting.likou;
 
 
+import com.currentbp.common.entity.Student;
 import com.currentbp.util.all.ListUtil;
+import org.assertj.core.util.Lists;
 import org.junit.Test;
+
+import java.util.*;
 
 /**
  * @author baopan
@@ -22,6 +26,25 @@ public class T00031 {
 2,3,1 → 3,1,2
 1,1,5 → 1,5,1
      */
+    @Test
+    public void t3(){
+        Map<Integer,String> ss = new HashMap<>();
+        ss.put(1,"ssss");
+        ss.put(2,"ffff");
+        Collection<String> values = ss.values();
+        ListUtil.printList(Lists.newArrayList(values));
+
+    }
+    @Test
+    public void t2(){
+        List<Student> students = new ArrayList<>();
+        students.add(new Student(1,"1111"));
+        students.add(new Student(2,"2222"));
+        Student student = students.get(0);
+        students.remove(0);
+        System.out.println(students);
+        System.out.println(student);
+    }
 
     @Test
     public void t1() {
