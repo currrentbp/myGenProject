@@ -37,9 +37,12 @@ public class T00031 {
 
     @Test
     public void t1() {
-        int[] nums5= new int[]{4,2,0,2,3,2,0};
-        nextPermutation(nums5);
-        ListUtil.printList(nums5);
+        int[] nums6 = new int[]{1, 3, 2};
+        nextPermutation(nums6);
+        ListUtil.printList(nums6);
+//        int[] nums5 = new int[]{4, 2, 0, 2, 3, 2, 0};
+//        nextPermutation(nums5);
+//        ListUtil.printList(nums5);
 //        int[] nums4 = new int[]{1, 3, 2};
 //        nextPermutation(nums4);
 //        ListUtil.printList(nums4);
@@ -65,19 +68,22 @@ public class T00031 {
             if (flag) {
                 break;
             }
-            for (int left = right - 1; left >= 0; left--) {
-                if (nums[left] < nums[right]) {
-                    flag = true;
-                    swap(nums, left, right);
-                    start = left;
-                    break;
-                }
+            if (right - 1 >= 0 && nums[right - 1] < nums[right]) {
+                flag = true;
+                start = right - 1;
             }
         }
         if (!flag) {
             swapEach(nums);
         } else {
-            ascSort(nums, start+1);
+            int index = start + 1;
+            for (int middle = start + 1; middle < nums.length; middle++) {
+                if (nums[start] < nums[middle] && nums[middle] < nums[index]) {
+                    index = middle;
+                }
+            }
+            swap(nums, start, index);
+            ascSort(nums, start + 1);
         }
     }
 
