@@ -22,10 +22,10 @@ public class Main3 {
     }
 }
 /*
-D:\soft\java8\bin>javap -c E:\ws\idea_ws\myGenProject\20170705\myGenProject\target\classes\com\currentbp\test\Main3.class
+D:\soft\java8\bin>javap -c E:\ws\idea_ws\myGenProject\20170705\myGenProject\target\classes\com\currentbp\annotationForTest\Main3.class
 Compiled from "Main3.java"
-public class com.currentbp.test.Main3 {
-  public com.currentbp.test.Main3();
+public class com.currentbp.annotationForTest.Main3 {
+  public com.currentbp.annotationForTest.Main3();
     Code:
        0: aload_0
        1: invokespecial #1                  // Method java/lang/Object."<init>":()V
@@ -39,7 +39,7 @@ public class com.currentbp.test.Main3 {
 
   public static void main(java.lang.String[]);
     Code:
-       0: new           #4                  // class com/currentbp/test/Main3
+       0: new           #4                  // class com/currentbp/annotationForTest/Main3
        3: dup
        4: invokespecial #5                  // Method "<init>":()V
        7: astore_1

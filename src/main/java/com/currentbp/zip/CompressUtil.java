@@ -209,13 +209,13 @@ public class CompressUtil {
 
     @Test
     public void zip() {
-        zip("C:\\Users\\Administrator\\Desktop\\test\\", "C:\\Users\\Administrator\\Desktop\\test\\MallDiyMessage.zip", "123");
+        zip("C:\\Users\\Administrator\\Desktop\\annotationForTest\\", "C:\\Users\\Administrator\\Desktop\\annotationForTest\\MallDiyMessage.zip", "123");
     }
 
     @Test
     public void unzip() {
         try {
-            File[] unzip = unzip("C:\\Users\\Administrator\\Desktop\\test\\MallDiyMessage.zip", "123");
+            File[] unzip = unzip("C:\\Users\\Administrator\\Desktop\\annotationForTest\\MallDiyMessage.zip", "123");
         } catch (ZipException e) {
             System.out.println("error!!!!!!!!!!!");
         }

@@ -1,4 +1,4 @@
-package com.currentbp.annotation.test;
+package com.currentbp.base.feature.annotationForTest;
 
 import java.lang.reflect.Method;
 
@@ -14,7 +14,7 @@ public class UseFirstAnnotation {
 	@FirstAnnotation("sssssdfsdfsd")
 	public static void use1(String s1) {
 		System.out.println("s1:" + s1);
-		
+
 
 		try {
 			// 通过运行时反射API获得annotation信息

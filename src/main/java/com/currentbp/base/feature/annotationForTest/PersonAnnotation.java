@@ -1,4 +1,4 @@
-package com.currentbp.annotation.test;
+package com.currentbp.base.feature.annotationForTest;
 
 /**
  * 

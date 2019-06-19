@@ -34,11 +34,11 @@ public class FindSomeThingFromFile {
 		SimpleDateFormat s1 = new SimpleDateFormat("yyyy-MM-dd HH:mm:ss");
 		
 		System.out.println("start time :"+s1.format(start));
-//		test.findOneKey("E:\\descFile.txt","E:\\report3.log", "TO_DAYS(now())-TO_DAYS(initTime)=1", 10);
-//		test.findSomeKey("", "", "1|2|3|4", 0);
+//		annotationForTest.findOneKey("E:\\descFile.txt","E:\\report3.log", "TO_DAYS(now())-TO_DAYS(initTime)=1", 10);
+//		annotationForTest.findSomeKey("", "", "1|2|3|4", 0);
 
 		//TODO not work
-//		test.myStream.findKeyWordFromFile("E:\\report3.log", "E:\\descFile.txt", "TO_DAYS(now())-TO_DAYS(initTime)=1", 10);
+//		annotationForTest.myStream.findKeyWordFromFile("E:\\report3.log", "E:\\descFile.txt", "TO_DAYS(now())-TO_DAYS(initTime)=1", 10);
 		Date end = new Date();
 		System.out.println("start time :"+s1.format(end));
 		

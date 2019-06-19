@@ -18,7 +18,7 @@ public class QuickSort {
     private final static Logger logger = LoggerFactory.getLogger(QuickSort.class);
 
     public void quickSort(int source[], int low, int high) {
-        //todo test is not ok
+        //todo annotationForTest is not ok
         int left = low;
         int right = high;
         int target = source[low];

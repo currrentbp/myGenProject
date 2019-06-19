@@ -55,7 +55,7 @@ public class UnzipTest {
                     if (queue.size() > 0) {
                         try {
                             String password = queue.poll();
-                            File[] unzip = CompressUtil.unzip("C:\\Users\\Administrator\\Desktop\\test\\MallDiyMessage.zip", password);
+                            File[] unzip = CompressUtil.unzip("C:\\Users\\Administrator\\Desktop\\annotationForTest\\MallDiyMessage.zip", password);
                             System.out.println("密码：" + password);
                         } catch (ZipException e) {
                             e.printStackTrace();

@@ -24,8 +24,8 @@ public class UseScriptEngineManager {
         int value = 7;
         String state = "正常";
         boolean flag = true;
-        String st = "test";
-        String str2 = "value > 5 && st == \"test\" && state == \"正常\" && flag == true";
+        String st = "annotationForTest";
+        String str2 = "value > 5 && st == \"annotationForTest\" && state == \"正常\" && flag == true";
         engine.put("value", value);
         engine.put("state", state);
         engine.put("flag", flag);

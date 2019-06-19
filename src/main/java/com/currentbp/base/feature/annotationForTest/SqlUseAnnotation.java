@@ -1,12 +1,12 @@
-package com.currentbp.annotation.test;
+package com.currentbp.base.feature.annotationForTest;
+
+import com.currentbp.util.all.ListUtil;
+import com.currentbp.util.all.StringUtil;
 
 import java.lang.reflect.Field;
 import java.lang.reflect.InvocationTargetException;
 import java.lang.reflect.Method;
 import java.util.Arrays;
-
-import com.currentbp.util.all.ListUtil;
-import com.currentbp.util.all.StringUtil;
 
 /**
  * 
@@ -16,7 +16,7 @@ import com.currentbp.util.all.StringUtil;
  */
 public class SqlUseAnnotation {
 	
-	public String getSql(PersonAnnotation person) 
+	public String getSql(PersonAnnotation person)
 			throws NoSuchMethodException, SecurityException, 
 			IllegalAccessException, IllegalArgumentException, 
 			InvocationTargetException {

@@ -10,7 +10,7 @@ public class ThreadStartMore {
     会抛异常：
     Exception in thread "main" java.lang.IllegalThreadStateException
 	at java.lang.Thread.start(Thread.java:705)
-	at com.currentbp.thread.test.ThreadStartMore.main(ThreadStartMore.java:19)
+	at com.currentbp.thread.annotationForTest.ThreadStartMore.main(ThreadStartMore.java:19)
      */
     public static void  main(String[] args){
         Thread thread = new Thread(new Runnable() {

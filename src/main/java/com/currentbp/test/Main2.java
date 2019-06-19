@@ -13,12 +13,12 @@ public class Main2 {
     }
 }
 /*
-D:\soft\java8\bin>javap -c E:\ws\idea_ws\myGenProject\20170705\myGenProject\target\classes\com\currentbp\test\Main2.class
+D:\soft\java8\bin>javap -c E:\ws\idea_ws\myGenProject\20170705\myGenProject\target\classes\com\currentbp\annotationForTest\Main2.class
 Compiled from "Main2.java"
-public class com.currentbp.test.Main2 {
+public class com.currentbp.annotationForTest.Main2 {
   public static final int id;
 
-  public com.currentbp.test.Main2();
+  public com.currentbp.annotationForTest.Main2();
     Code:
        0: aload_0
        1: invokespecial #1                  // Method java/lang/Object."<init>":()V

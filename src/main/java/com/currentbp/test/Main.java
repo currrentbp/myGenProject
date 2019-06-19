@@ -24,10 +24,10 @@ public class Main {
 }
 /*
 
-D:\soft\java8\bin>javap -c E:\ws\idea_ws\myGenProject\20170705\myGenProject\target\classes\com\currentbp\test\Main.class
+D:\soft\java8\bin>javap -c E:\ws\idea_ws\myGenProject\20170705\myGenProject\target\classes\com\currentbp\annotationForTest\Main.class
 Compiled from "Main.java"
-public class com.currentbp.test.Main {
-  public com.currentbp.test.Main();
+public class com.currentbp.annotationForTest.Main {
+  public com.currentbp.annotationForTest.Main();
     Code:
        0: aload_0
        1: invokespecial #1                  // Method java/lang/Object."<init>":()V

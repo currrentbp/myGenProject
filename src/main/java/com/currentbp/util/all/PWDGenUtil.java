@@ -417,7 +417,7 @@ public class PWDGenUtil {
 //        PWDGenUtil pu = new PWDGenUtil();
 //        pu.genNumAndLetterDic("e:/baopan.dic", 2);
 
-//        //test
+//        //annotationForTest
 //        PWDGenUtil pu = new PWDGenUtil();
 //        int[] s = new int[3];
 //        s[0] = 0;
@@ -425,7 +425,7 @@ public class PWDGenUtil {
 //        s[2] = 3;
 //        pu.getNums1(s);
 
-//        //test
+//        //annotationForTest
 //        PWDGenUtil pu = new PWDGenUtil();
 //        int[] s = new int[3];
 //        s[0] = 0;
