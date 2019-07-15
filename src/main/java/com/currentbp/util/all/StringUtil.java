@@ -1,6 +1,6 @@
 package com.currentbp.util.all;
 
-import org.junit.Test;
+import com.alibaba.fastjson.JSON;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
 
@@ -388,18 +388,52 @@ public class StringUtil {
     }
 
     /**
+     * 打印对象
+     */
+    public static void printObject(Object o) {
+        printObject("", o);
+    }
+    /**
+     * 打印对象：匹配格式"{}"
+     */
+    public static void printObject(String format, Object ... objects) {
+        if (null == format) {
+            System.out.println("");
+        }
+        if (null == objects || 0 == objects.length) {
+            System.out.println(format);
+        }
+        String[] formatSplit = format.split("\\{\\}");
+        int fIndex = 0, obIndex = 0;
+        StringBuilder str = new StringBuilder();
+        while (true) {
+            if (fIndex >= formatSplit.length && obIndex >= objects.length) {
+                break;
+            }
+            if (fIndex < formatSplit.length) {
+                str.append(formatSplit[fIndex++]);
+            }
+            if (obIndex < objects.length) {
+                str.append(JSON.toJSONString(objects[obIndex++]));
+            }
+        }
+        System.out.println(str);
+    }
+
+    /**
      * 获取驼峰格式的字符串
+     *
      * @param source 源：abc_der_fz
      * @return 结果：abcDerFz
      */
-    public static String getHumpFormat(String source){
-        if(CheckUtil.isEmpty(source)){
+    public static String getHumpFormat(String source) {
+        if (CheckUtil.isEmpty(source)) {
             return source;
         }
         String[] split = source.split("_");
-        StringBuilder result = new StringBuilder(split[0].substring(0,1).toLowerCase()+split[0].substring(1));
-        for (int i=1;i<split.length;i++) {
-            result.append(split[i].substring(0,1).toUpperCase()+split[i].substring(1));
+        StringBuilder result = new StringBuilder(split[0].substring(0, 1).toLowerCase() + split[0].substring(1));
+        for (int i = 1; i < split.length; i++) {
+            result.append(split[i].substring(0, 1).toUpperCase() + split[i].substring(1));
         }
         return result.toString();
     }
