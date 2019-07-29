@@ -1,8 +1,9 @@
 package com.currentbp.util.all;
 
-import org.springframework.util.StringUtils;
-
-import java.util.*;
+import java.util.ArrayList;
+import java.util.Collection;
+import java.util.List;
+import java.util.Map;
 import java.util.regex.Matcher;
 import java.util.regex.Pattern;
 
@@ -147,23 +148,45 @@ public class CheckUtil {
         }
     }
 
-    public static void main(String[] args) throws Exception {
-        //判断一个对象是否为空
-        System.out.println("map:" + CheckUtil.isEmpty(new HashMap()));
-        System.out.println("map:" + CheckUtil.isEmpty(null));
-        System.out.println("String:" + CheckUtil.isEmpty(""));
-        System.out.println("String:" + CheckUtil.isEmpty("ss"));
-        System.out.println("List:" + CheckUtil.isEmpty(new ArrayList()));
-        List l1 = new ArrayList();
-        l1.add("fff");
-        System.out.println("List:" + CheckUtil.isEmpty(l1));
-
-
-//		// 测试文件名称是否匹配正则
-//		CheckUtil.patternStringTest();
-
-        // //测试邮箱
-        // System.out.println(CheckUtil.isEmail("1403271248@@qq.com"));
+    /**
+     * 验证验证输入全部是汉字
+     */
+    public static boolean isChinese(String str) {
+        if (CheckUtil.isEmpty(str)) {
+            return false;
+        }
+        String regex = "[\u4e00-\u9fa5]*";
+        return match(regex, str);
     }
+
+    /**
+     * @param regex 正则表达式字符串
+     * @param str   要匹配的字符串
+     * @return 如果str 符合 regex的正则表达式格式,返回true, 否则返回 false;
+     */
+    private static boolean match(String regex, String str) {
+        Pattern pattern = Pattern.compile(regex);
+        Matcher matcher = pattern.matcher(str);
+        return matcher.matches();
+    }
+//
+//    public static void main(String[] args) throws Exception {
+//        //判断一个对象是否为空
+//        System.out.println("map:" + CheckUtil.isEmpty(new HashMap()));
+//        System.out.println("map:" + CheckUtil.isEmpty(null));
+//        System.out.println("String:" + CheckUtil.isEmpty(""));
+//        System.out.println("String:" + CheckUtil.isEmpty("ss"));
+//        System.out.println("List:" + CheckUtil.isEmpty(new ArrayList()));
+//        List l1 = new ArrayList();
+//        l1.add("fff");
+//        System.out.println("List:" + CheckUtil.isEmpty(l1));
+//
+//
+////		// 测试文件名称是否匹配正则
+////		CheckUtil.patternStringTest();
+//
+//        // //测试邮箱
+//        // System.out.println(CheckUtil.isEmail("1403271248@@qq.com"));
+//    }
 
 }
