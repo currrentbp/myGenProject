@@ -63,17 +63,9 @@ public class SortUtil {
 	 */
 	public boolean swapCondition(boolean isAsc, List<Integer> resource, int location1, int location2) {
 		if (isAsc) {// 升序
-			if (resource.get(location1) < resource.get(location2)) {
-				return false;
-			} else {
-				return true;
-			}
+			return !(resource.get(location1) < resource.get(location2));
 		} else {// 降序
-			if (resource.get(location1) > resource.get(location2)) {
-				return false;
-			} else {
-				return true;
-			}
+			return !(resource.get(location1) > resource.get(location2));
 		}
 	}
 
