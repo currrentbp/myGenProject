@@ -18,6 +18,11 @@ public class TimeTest {
 
 
 	@Test
+	public void t1(){
+		long currentTime = System.currentTimeMillis();
+	}
+
+	@Test
 	public void formateTime2(){
 		Date dd = new Date();
 		Calendar c = Calendar.getInstance();

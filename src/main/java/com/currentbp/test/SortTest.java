@@ -1,7 +1,9 @@
 package com.currentbp.test;
 
+import com.alibaba.fastjson.JSON;
 import com.currentbp.sort.BigSort;
 import com.currentbp.util.all.RandomUtil;
+import org.assertj.core.util.Lists;
 import org.junit.Test;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
@@ -17,6 +19,14 @@ import java.util.*;
 public class SortTest {
 
     private static Logger logger = LoggerFactory.getLogger(SortTest.class);
+
+    @Test
+    public void java8Sort(){
+        List<String> sorts = Lists.newArrayList("失败","成功","失败","成功");
+        System.out.println(JSON.toJSONString(sorts));
+        sorts.sort((o1,o2)->o1.compareTo(o2));
+        System.out.println(JSON.toJSONString(sorts));
+    }
 
     /*
     需时测试：
