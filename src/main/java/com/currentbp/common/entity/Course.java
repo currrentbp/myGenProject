@@ -8,6 +8,11 @@ package com.currentbp.common.entity;
 public class Course {
     private Integer id;
     private String name;
+    private Subject subject;
+
+    public Course(){}
+    public Course(Integer id,String name){this.id=id;this.name=name;}
+    public Course(Integer id,String name,Subject subject){this.id=id;this.name=name;this.subject=subject;}
 
     public Integer getId() {
         return id;
@@ -23,6 +28,14 @@ public class Course {
 
     public void setName(String name) {
         this.name = name;
+    }
+
+    public Subject getSubject() {
+        return subject;
+    }
+
+    public void setSubject(Subject subject) {
+        this.subject = subject;
     }
 
     @Override
@@ -45,6 +58,7 @@ public class Course {
         return "Course{" +
                 "id=" + id +
                 ", name='" + name + '\'' +
+                ", subject=" + subject +
                 '}';
     }
 }

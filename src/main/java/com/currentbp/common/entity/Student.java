@@ -13,11 +13,17 @@ public class Student {
     private String name;
     private List<String> hobbies;
     private Course course;
+    private List<Course> myCourses;
 
     public Student(){}
     public Student(Integer id,String name){
         this.id = id;
         this.name = name;
+    }
+    public Student(Integer id,String name,List<Course> myCourses){
+        this.id = id;
+        this.name = name;
+        this.myCourses = myCourses;
     }
 
     public Course getCourse() {
@@ -52,6 +58,14 @@ public class Student {
         this.hobbies = hobbies;
     }
 
+    public List<Course> getMyCourses() {
+        return myCourses;
+    }
+
+    public void setMyCourses(List<Course> myCourses) {
+        this.myCourses = myCourses;
+    }
+
     @Override
     public boolean equals(Object o) {
         if (this == o) return true;
@@ -74,6 +88,7 @@ public class Student {
                 ", name='" + name + '\'' +
                 ", hobbies=" + hobbies +
                 ", course=" + course +
+                ", myCourses=" + myCourses +
                 '}';
     }
 }
