@@ -18,6 +18,23 @@ import static java.util.stream.Collectors.toList;
 public class Java8Test {
 
     @Test
+    public void filter(){
+        List<Student> students = Lists.newArrayList(new Student(1,"s1"),new Student(2,"s2"));
+        List<Student> collect = students.stream().filter(s -> s.getId().equals(10)).collect(toList());
+        ListUtil.printList(collect);
+    }
+
+    @Test
+    public void sum(){
+        List<Student> students = Lists.newArrayList(new Student(1,"s1"),new Student(2,"s2"));
+        int sum = students.stream().mapToInt(Student::getId).sum();
+        System.out.println(sum);
+        List<Student> students1 = new ArrayList<>();
+        int sum1 = students1.stream().mapToInt(Student::getId).sum();
+        System.out.println(sum1);
+    }
+
+    @Test
     public void t6(){
         List<Student> students = new ArrayList<>();
         students.add(new Student(1,"1", Lists.newArrayList(new Course(1,"c1",new Subject(1,"s1")),new Course(2,"c2"))));
@@ -65,6 +82,7 @@ public class Java8Test {
 
     @Test
     public void t3(){
+        //结果：修改了，说明stream是浅拷贝
         List<Student> students = new ArrayList<>();
         students.add(new Student(1,"1"));
         students.add(new Student(2,"2"));
@@ -74,6 +92,16 @@ public class Java8Test {
         student.setName("fffffff");
         ListUtil.printList(students);
         ListUtil.printList(students1);
+    }
+    @Test
+    public void t3_1(){
+
+        List<Integer> students = new ArrayList<>();
+        students.add(1);
+        students.add(2);
+        students.add(3);
+        students.forEach(i->{if(i==1)i++;System.out.println(i);});
+        ListUtil.printList(students);
     }
 
 
