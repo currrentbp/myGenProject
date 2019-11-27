@@ -12,6 +12,13 @@ import org.junit.Test;
 public class IntTest {
 
     @Test
+    public void getTime(){
+        System.out.println(System.currentTimeMillis());
+        System.out.println((System.currentTimeMillis()-(1000*(2019)*365*24*60*60)));
+        System.out.println(System.currentTimeMillis()/1000/60);
+    }
+
+    @Test
     public void float2Int() {
         int x = Math.round(0.4F + 0.5F);
         int y = Math.round(0.4F);

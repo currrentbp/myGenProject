@@ -1,5 +1,6 @@
 package com.currentbp.test;
 
+import org.assertj.core.util.Lists;
 import org.junit.Test;
 
 import java.util.*;
@@ -10,6 +11,18 @@ import java.util.*;
  */
 public class ForTest {
 
+    @Test
+    public void forBreak(){
+        List<Integer> intes = Lists.newArrayList(1,2,3,4);
+        intes.forEach(i->{
+            if(i==2){
+                System.out.println("this is 2");
+                return;
+            }
+            System.out.println("i:"+i);
+        });
+
+    }
 
     @Test
     public void t1() {
