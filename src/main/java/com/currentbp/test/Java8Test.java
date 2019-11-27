@@ -27,7 +27,7 @@ public class Java8Test {
 
         Map<String, Integer> collect = students.stream().collect(Collectors.toMap(Student::getName, Student::getId, (k1, k2) -> k1 + k2));
         for (Map.Entry<String, Integer> stringIntegerEntry : collect.entrySet()) {
-            System.out.println("key:"+stringIntegerEntry.getKey()+" value:"+stringIntegerEntry.getValue());
+            System.out.println("key111:"+stringIntegerEntry.getKey()+" value:"+stringIntegerEntry.getValue());
         }
     }
 
