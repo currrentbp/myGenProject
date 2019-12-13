@@ -1,4 +1,4 @@
-package com.currentbp.Interesting.likou.common;
+package com.currentbp.common.entity;
 
 /**
  * @author baopan

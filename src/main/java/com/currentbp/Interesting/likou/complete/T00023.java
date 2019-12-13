@@ -1,16 +1,12 @@
 package com.currentbp.Interesting.likou.complete;
 
-import com.currentbp.Interesting.likou.common.ListNode;
-import com.currentbp.common.entity.Student;
+import com.currentbp.common.entity.ListNode;
 import com.currentbp.util.all.ListUtil;
-import org.assertj.core.util.Arrays;
 import org.assertj.core.util.Lists;
 import org.junit.Test;
 
 import java.util.ArrayList;
 import java.util.List;
-import java.util.Map;
-import java.util.stream.Collectors;
 
 /**
  * @author baopan
