@@ -1,9 +1,9 @@
 package com.currentbp.util.all;
 
 import com.alibaba.fastjson.JSON;
-import com.currentbp.common.entity.Chinese;
-import com.currentbp.common.entity.Course;
-import com.currentbp.common.entity.Student;
+import com.currentbp.common.model.Chinese;
+import com.currentbp.common.model.Course;
+import com.currentbp.common.model.Student;
 import org.junit.Test;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;

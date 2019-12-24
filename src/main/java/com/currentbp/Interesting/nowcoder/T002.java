@@ -1,5 +1,7 @@
 package com.currentbp.Interesting.nowcoder;
 
+import com.currentbp.util.all.Assert;
+import com.currentbp.util.all.ListUtil;
 import org.junit.Test;
 
 /**
@@ -13,10 +15,18 @@ public class T002 {
 
     @Test
     public void t1(){
-
+        Assert.isTrue("We%20Are%20Happy".equals(replaceSpace(new StringBuffer("We Are Happy"))),"error");
     }
 
     public String replaceSpace(StringBuffer str) {
-        return "";
+        StringBuilder result = new StringBuilder();
+        for(int i=0;i<str.length();i++){
+            if(' ' == str.charAt(i)){
+                result.append("%20");
+            }else{
+                result.append(str.charAt(i));
+            }
+        }
+        return result.toString();
     }
 }

@@ -1,13 +1,11 @@
 package com.currentbp.util.all;
 
 import com.alibaba.fastjson.JSON;
-import com.currentbp.common.entity.Chinese;
 import org.junit.Test;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
 
 import java.util.ArrayList;
-import java.util.Collections;
 import java.util.List;
 
 /**

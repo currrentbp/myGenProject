@@ -1,8 +1,8 @@
 package com.currentbp.test;
 
-import com.currentbp.common.entity.Course;
-import com.currentbp.common.entity.Student;
-import com.currentbp.common.entity.Subject;
+import com.currentbp.common.model.Course;
+import com.currentbp.common.model.Student;
+import com.currentbp.common.model.Subject;
 import com.currentbp.util.all.ListUtil;
 import org.assertj.core.util.Lists;
 import org.junit.Test;
@@ -21,9 +21,9 @@ public class Java8Test {
     @Test
     public void k1k2sum(){
         List<Student> students = Lists.newArrayList(new Student(1,"b1")
-                ,new Student(2,"b2")
+                ,new Student(2,"b1")
                 ,new Student(3,"b1")
-                ,new Student(4,"b3"));
+                ,new Student(4,"b1"));
 
         Map<String, Integer> collect = students.stream().collect(Collectors.toMap(Student::getName, Student::getId, (k1, k2) -> k1 + k2));
         for (Map.Entry<String, Integer> stringIntegerEntry : collect.entrySet()) {

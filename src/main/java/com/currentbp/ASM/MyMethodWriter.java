@@ -1,6 +1,6 @@
 package com.currentbp.ASM;
 
-import com.currentbp.common.entity.Student;
+import com.currentbp.common.model.Student;
 import org.junit.Test;
 
 import java.util.Arrays;

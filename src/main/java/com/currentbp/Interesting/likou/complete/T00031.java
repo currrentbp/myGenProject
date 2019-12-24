@@ -1,12 +1,8 @@
 package com.currentbp.Interesting.likou.complete;
 
 
-import com.currentbp.common.entity.Student;
 import com.currentbp.util.all.ListUtil;
-import org.assertj.core.util.Lists;
 import org.junit.Test;
-
-import java.util.*;
 
 /**
  * @author baopan

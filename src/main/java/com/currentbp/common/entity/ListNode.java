@@ -4,7 +4,7 @@ import com.currentbp.util.all.CheckUtil;
 
 import java.util.List;
 
-/**
+/** 链表
  * @author baopan
  * @createTime 20190211
  */

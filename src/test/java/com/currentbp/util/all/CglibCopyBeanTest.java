@@ -1,10 +1,8 @@
 package com.currentbp.util.all;
 
-import com.currentbp.common.entity.Course;
-import com.currentbp.common.entity.Student;
+import com.currentbp.common.model.Course;
+import com.currentbp.common.model.Student;
 import org.junit.Test;
-
-import static org.junit.Assert.*;
 
 /**
  * @author baopan

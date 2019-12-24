@@ -1,4 +1,4 @@
-package com.currentbp.common.entity;
+package com.currentbp.common.model;
 
 /**
  * @author current_bp
