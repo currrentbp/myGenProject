@@ -1,6 +1,8 @@
 package com.currentbp.test;
 
 import com.alibaba.fastjson.JSON;
+import org.assertj.core.util.Lists;
+import org.junit.Test;
 
 import java.util.HashMap;
 import java.util.Iterator;
@@ -13,6 +15,13 @@ import java.util.Map;
  * @createTime 20161111
  */
 public class MapTest {
+
+
+
+    @Test
+    public void t1(){
+        Lists.newArrayList();
+    }
 
 
     //==========================        测试方法中的实现方法          ===============================================================//

@@ -19,6 +19,13 @@ import static java.util.stream.Collectors.toList;
 public class Java8Test {
 
     @Test
+    public void t111(){
+        List<Student> students =new ArrayList<>();// Lists.newArrayList(new Student(1,"1"),new Student(2,"1"));
+        Map<String, Integer> collect = students.stream().collect(Collectors.toMap(Student::getName, Student::getId, (k1, k2) -> k1 + k2));
+        System.out.println(collect.get("1"));
+    }
+
+    @Test
     public void k1k2sum(){
         List<Student> students = Lists.newArrayList(new Student(1,"b1")
                 ,new Student(2,"b1")

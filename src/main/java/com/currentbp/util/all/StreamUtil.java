@@ -76,6 +76,7 @@ public abstract class StreamUtil {
     public static File createMyFile(String path, boolean isRelative) {
         if (isRelative) {
             path = System.getProperty("user.dir") + "/" + path;
+            System.out.println("path:"+path);
         }
         if (isFile(path)) {
             return new File(path);

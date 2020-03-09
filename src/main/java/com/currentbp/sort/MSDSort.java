@@ -36,8 +36,10 @@ public class MSDSort {
         }
         int length = ("" + max).length();
         int[] result = new int[source.length];
+
         for (int i = 0; i < length; i++) {
             //todo not work
+
         }
         return result;
     }
