@@ -16,6 +16,52 @@ import java.util.List;
 public class MathUtil {
     private final static Logger logger = LoggerFactory.getLogger(MathUtil.class);
 
+    /**
+     * 复利的计算公式2
+     * 本金随着次数每次追加
+     *
+     * @param base   基本数量
+     * @param growth 增长速度
+     * @param timer  增长次数
+     * @return 复利结果
+     */
+    public static double compoundInterest2(double base, double growth, int timer, int newScale) {
+        double result = 0d;
+        if (timer <= 0) {
+            return base;
+        }
+        for (int i = 0; i < timer; i++) {
+            result = MoneyUtil.multiply(
+                    MoneyUtil.add(result, base, newScale),
+                    MoneyUtil.add(1,growth,newScale),
+                    newScale);
+        }
+
+        return result;
+    }
+    /**
+     * 复利的计算公式
+     * 本金只投入一次的复利
+     *
+     * @param base   基本数量
+     * @param growth 增长速度
+     * @param timer  增长次数
+     * @return 复利结果
+     */
+    public static double compoundInterest(double base, double growth, int timer) {
+        double result = 0d;
+        if (timer <= 0) {
+            return base;
+        }
+        double temp = 1d;
+        for (int i = 0; i < timer; i++) {
+            temp = MoneyUtil.multiply(temp, MoneyUtil.add(1, growth, 2), 2);
+        }
+        result = MoneyUtil.multiply(base, temp, 2);
+        return result;
+    }
+
+
     public static long c(int m, int n) {
         Assert.isTrue(0<m && m <= m, "数学表达式不正确，0<m<=m");
         long result = factorial(m, n) / factorial(m);
