@@ -1,5 +1,7 @@
 package com.currentbp.test;
 
+import com.currentbp.entry.BusinessException;
+import com.currentbp.util.all.Assert;
 import org.junit.Test;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
@@ -27,4 +29,12 @@ public class JunitTest {
     public void t1() {
         logger.info("======================");
     }
+
+
+    @Test(expected = BusinessException.class)
+    public void testTimeOut(){
+        int i=0;
+        Assert.isTrue(i==1,"123");
+    }
+
 }

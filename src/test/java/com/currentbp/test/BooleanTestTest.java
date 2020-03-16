@@ -2,7 +2,7 @@ package com.currentbp.test;
 
 import com.alibaba.fastjson.JSONArray;
 import org.assertj.core.util.Lists;
-import org.junit.Test;
+import org.junit.*;
 
 import java.util.*;
 
@@ -12,6 +12,7 @@ import java.util.*;
 public class BooleanTestTest {
     private BooleanTest booleanTest = new BooleanTest();
     private boolean t1;
+    private static int x;
 
     public Boolean getT1() {
         return t1;
@@ -20,6 +21,48 @@ public class BooleanTestTest {
     public void setT1(boolean t1) {
         this.t1 = t1;
     }
+
+    //execute only once, in the starting
+    @BeforeClass
+    public static void beforeClass() {
+        System.out.println("in before class:"+(++x));
+    }
+
+    //execute only once, in the end
+    @AfterClass
+    public static void  afterClass() {
+        System.out.println("in after class:"+(++x));
+    }
+
+    @Before
+    public void before2() {
+        System.out.println("in before2:"+(++x));
+    }
+    //execute for each test, before executing test
+    @Before
+    public void before3() {
+        System.out.println("in before3:"+(++x));
+    }
+
+
+    //execute for each test, after executing test
+    @After
+    public void after() {
+        System.out.println("in after:"+(++x));
+    }
+
+    //test case 1
+    @Test
+    public void testCase1() {
+        System.out.println("in test case x:"+(++x));
+    }
+
+    //test case 2
+    @Test
+    public void testCase2() {
+        System.out.println("in test case 2");
+    }
+
 
 
 
