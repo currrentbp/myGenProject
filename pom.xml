@@ -254,6 +254,14 @@
         </dependency>
         <!-- the Java API for Microsoft Documents -->
 
+        <!-- alibaba excel -->
+        <dependency>
+            <groupId>com.alibaba</groupId>
+            <artifactId>easyexcel</artifactId>
+            <version>2.1.6</version>
+        </dependency>
+        <!-- alibaba excel -->
+
         <!-- mysql  -->
         <dependency>
             <groupId>mysql</groupId>
