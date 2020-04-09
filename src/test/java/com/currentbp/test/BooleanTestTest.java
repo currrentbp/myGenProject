@@ -65,11 +65,32 @@ public class BooleanTestTest {
 
 
 
+    @Test
+    public void integerSwap(){
+        Integer x=10111;
+        Integer y=11111;
+        swap(x,y);
+        System.out.println(x+":"+y);
+    }
+    private void swap(Integer x,Integer y){
+        Integer z = x;
+        x=y;
+        y=z;
+    }
 
 
     @Test
-    public void testParseObject(){
-        String ss= "{\"fieldCode\":\"305c8027d10847103920579b4bf2d52d\"," +
+    public void t123() {
+        String t1="5:";
+        String[] split = t1.split(":");
+        System.out.println(split.length);
+
+    }
+
+
+    @Test
+    public void testParseObject() {
+        String ss = "{\"fieldCode\":\"305c8027d10847103920579b4bf2d52d\"," +
                 "\"fieldLabel\":\"工作内容\"," +
                 "\"fieldName\":\"content\"," +
                 "\"fieldValue\":\"1.接受培训完成授课任务\n2.与家长联系，及时通知学生信息\n3.如果教学过关，参与部门工作\"\n\"," +
@@ -83,31 +104,32 @@ public class BooleanTestTest {
     }
 
     @Test
-    public void map(){
-        Map<String,String> map = new HashMap<>();
+    public void map() {
+        Map<String, String> map = new HashMap<>();
 
     }
+
     @Test
-    public void t12(){
+    public void t12() {
 //        setT1(true);
-        if(getT1()){
+        if (getT1()) {
             System.out.println("==========");
-        }else{
+        } else {
             System.out.println("+++++++++++++");
         }
     }
 
     @Test
-    public  void removeAll(){
+    public void removeAll() {
         List<Integer> l1 = new ArrayList<>();
         Set<Integer> set = new HashSet<>(l1);
-        List<Integer> list = Lists.newArrayList(10,11,12);
+        List<Integer> list = Lists.newArrayList(10, 11, 12);
         list.removeAll(set);
         System.out.println(list);
     }
 
     @Test
-    public void mod(){
+    public void mod() {
         ArrayList<String> strings = Lists.newArrayList("2018", "2019", "2017", "2000", "2010");
         System.out.println(strings);
         Arrays.sort(strings.toArray());
@@ -124,7 +146,7 @@ public class BooleanTestTest {
     }
 
     @Test
-    public void eachOperatorResult(){
+    public void eachOperatorResult() {
         booleanTest.eachOperatorResult();
     }
 
