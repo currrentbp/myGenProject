@@ -1,6 +1,7 @@
 package com.currentbp.util.all;
 
 import com.currentbp.common.model.Student;
+import org.apache.commons.collections.CollectionUtils;
 import org.apache.poi.hssf.usermodel.*;
 import org.assertj.core.util.Lists;
 import org.junit.Test;
@@ -28,14 +29,23 @@ public class ExcelUtil<T> {
 
 
     /**
-     * 通过类对象获取一个对应的excel
+     * 通过map数据集合获取excel
      */
-    public static <T> void setSource2Excel2(String excelName, List<Map<String,String>> source){
+    public static <T> void setSource2Excel2(String excelName, List<Map<String,String>> source) {
+        setSource2Excel2(excelName,source,null);
+    }
+    /**
+     * 通过map数据集合获取指定排序方式的excel
+     */
+    public static <T> void setSource2Excel2(String excelName, List<Map<String,String>> source,List<String> sortWith){
         if(null == source || 0 == source.size()){
             return;
         }
         Map<String, String> firstMap = source.get(0);
         List<String> titles = Lists.newArrayList(firstMap.keySet());
+        if(!CollectionUtils.isEmpty(sortWith)){
+            titles = sortWith;
+        }
 
         //创建文件
         File file = new File(""+excelName+".xls");

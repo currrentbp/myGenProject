@@ -72,13 +72,13 @@ public class JdbcQueryUtil {
     public void t2(){
         String sql = "select * from mall_item limit 10";
         List<Map<String, String>> maps = queryObject(Lists.newArrayList("id", "name","code"), sql);
-        ExcelUtil.setSource2Excel2("mallItem",maps);
+        ExcelUtil.setSource2Excel2("mallItem",maps,null);
     }
 
     @Test
     public void zangguadingdang(){
         String sql = "SELECT\n" +
-                "mo.order_id,\n" +
+                "mo.order_id as `order_id`,\n" +
                 "institution_id,\n" +
                 "mo.create_time,\n" +
                 "od.name as 'spuName',\n" +
@@ -143,8 +143,9 @@ public class JdbcQueryUtil {
                 "AND od.category_code IN ('1000','1027')\n" +
                 "      AND grade_id > 0;\n" +
                 "";
-        List<Map<String, String>> maps = queryObject(Lists.newArrayList("order_id", "institution_id","create_time",
-                "spuName","skuName","bar_code","period","年级","num","expressType","goodsNum","zg"), sql);
-        ExcelUtil.setSource2Excel2("202004091854_暂挂订单",maps);
+        ArrayList<String> titles = Lists.newArrayList("order_id", "institution_id", "create_time",
+                "spuName", "skuName", "bar_code", "period", "年级", "num", "expressType", "goodsNum", "zg");
+        List<Map<String, String>> maps = queryObject(titles, sql);
+        ExcelUtil.setSource2Excel2("202004101423_暂挂订单",maps,titles);
     }
 }
