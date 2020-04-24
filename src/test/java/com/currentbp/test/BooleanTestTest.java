@@ -1,6 +1,7 @@
 package com.currentbp.test;
 
 import com.alibaba.fastjson.JSONArray;
+import com.currentbp.common.model.Student;
 import org.assertj.core.util.Lists;
 import org.junit.*;
 
@@ -71,11 +72,38 @@ public class BooleanTestTest {
         Integer y=11111;
         swap(x,y);
         System.out.println(x+":"+y);
+
+        Student student = new Student(1,"11");
+        Student student2 = new Student(2,"22");
+        System.out.println("s1:"+student.hashCode());
+        swapStudent(student,student2);
+        System.out.println(student.toString()+"  ==== " +student2.toString());
+        Student student3 = new Student(3,"3333");
+        student=student3;
+        student.setName("fffffffffffffffffff");
+        System.out.println(student.toString()+"  ==== " +student3.toString());
+        System.out.println("s1:"+student.hashCode());
+        //结论：java 是值传递的，
     }
     private void swap(Integer x,Integer y){
         Integer z = x;
         x=y;
         y=z;
+    }
+
+    private void swapStudent(Student student,Student student2){
+        Student temp = null;
+        temp = student;
+        System.out.println(" temp:" +temp.toString());
+        student = student2;
+        System.out.println(" student:" +student.toString());
+        student2 = temp;
+        System.out.println(" student2:" +student2.toString());
+
+        student.setHobbies(Lists.newArrayList("fffffffff"));
+        System.out.println(" student:" +student.toString());
+        student2.setHobbies(Lists.newArrayList("kkkkkkkkkkk"));
+        System.out.println(" student2:" +student2.toString());
     }
 
 
