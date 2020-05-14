@@ -23,6 +23,21 @@ public class BooleanTestTest {
         this.t1 = t1;
     }
 
+    @Test
+    public void t2(){
+        String s = "XYTG420SSJ　";
+        System.out.println("===="+s.trim()+"===");
+        s = s.trim().replace("\u00A0", "");
+        s = s.trim().replace("\u0020", "");
+        s = s.trim().replace("\u0009", "");
+        s = s.trim().replace("\u0008", "");
+        s = s.trim().replace("\u2028", "");
+        s = s.trim().replace("\u2029", "");
+        s = s.trim().replace("\uFEFF", "");
+        s = s.trim().replace("\u3000", "");
+        System.out.println("===="+s.trim()+"===");
+    }
+
     //execute only once, in the starting
     @BeforeClass
     public static void beforeClass() {

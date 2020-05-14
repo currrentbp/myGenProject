@@ -1,6 +1,7 @@
 package com.currentbp.jvm;
 
 /**
+ * 程序加载顺序
  * @author baopan
  * @createTime 20181010
  */

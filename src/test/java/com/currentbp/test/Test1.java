@@ -1,6 +1,7 @@
 package com.currentbp.test;
 
 import com.currentbp.common.model.Student;
+import com.currentbp.entry.BusinessException;
 import com.currentbp.util.all.ListUtil;
 import org.assertj.core.util.Lists;
 import org.junit.Assert;
@@ -27,6 +28,19 @@ public class Test1 {
     public Integer x;
 
     private final static Logger logger = LoggerFactory.getLogger(Test1.class);
+
+    @Test
+    public void t6(){
+        if(1== 1) {
+            try {
+                throw new BusinessException("123");
+            } catch (Exception e) {
+                System.out.println(e.getMessage());
+                return;
+            }
+        }
+        System.out.println("11111111111");
+    }
 
     @Test
     public void t5(){

@@ -11,6 +11,19 @@ import java.util.List;
  * Created by issuser on 2017/5/25.
  */
 public class StringUtilTest {
+
+
+
+    @Test
+    public void t1212(){
+        Double x = 0D;
+        if(1==1 ){
+            x = null;
+        }
+
+        System.out.println(0D== x);//npe
+    }
+
     @Test
     public void t123(){
         List<Integer> x = new ArrayList<>();
@@ -130,5 +143,10 @@ public class StringUtilTest {
         System.out.println(StringUtil.getLabelContent(source, "em"));
     }
 
+    @Test
+    public void removeBlank(){
+        String s = "XYTG420SSJ　";
+        System.out.println("====="+StringUtil.removeBlank(s)+"==========");
+    }
 
 }

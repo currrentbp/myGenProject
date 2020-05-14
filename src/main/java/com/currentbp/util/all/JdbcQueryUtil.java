@@ -20,11 +20,11 @@ import java.util.Map;
  */
 public class JdbcQueryUtil {
 
-    private static String url = "jdbc:mysql://rr-2zeb92y8t5uu604u09o.mysql.rds.aliyuncs.com:3306/mall_trade" +
+    private static String url = "jdbc:mysql://rr-2ze3c5e8p8783u87zzo.mysql.rds.aliyuncs.com:3306/mall_trade" +
             "?useUnicode=true&amp;characterEncoding=UTF-8&autoReconnect=true&useSSL=false" +
             "&rewriteBatchedStatements=true&retrieveGeneratedKeys=true&serverTimezone=UTC";
     private static String user = "baopan";
-    private static String password = "9EWxcgQA";
+    private static String password = "eGrWbzqX2DapNdITdY9k";
 
     public List<Map<String, String>> queryObject(List<String> fieldNames, String sql) {
         List<Map<String, String>> result = new ArrayList<>();
@@ -146,6 +146,6 @@ public class JdbcQueryUtil {
         ArrayList<String> titles = Lists.newArrayList("order_id", "institution_id", "create_time",
                 "spuName", "skuName", "bar_code", "period", "年级", "num", "expressType", "goodsNum", "zg");
         List<Map<String, String>> maps = queryObject(titles, sql);
-        ExcelUtil.setSource2Excel2("202004211409_暂挂订单",maps,titles);
+        ExcelUtil.setSource2Excel2("202005140937_暂挂订单",maps,titles);
     }
 }
