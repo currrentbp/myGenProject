@@ -146,6 +146,6 @@ public class JdbcQueryUtil {
         ArrayList<String> titles = Lists.newArrayList("order_id", "institution_id", "create_time",
                 "spuName", "skuName", "bar_code", "period", "年级", "num", "expressType", "goodsNum", "zg");
         List<Map<String, String>> maps = queryObject(titles, sql);
-        ExcelUtil.setSource2Excel2("202005140937_暂挂订单",maps,titles);
+        ExcelUtil.setSource2Excel2("202005210917_暂挂订单",maps,titles);
     }
 }

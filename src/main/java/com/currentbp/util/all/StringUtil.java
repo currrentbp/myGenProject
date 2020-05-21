@@ -439,6 +439,7 @@ public class StringUtil {
     }
 
     /**
+     * 首位删除空格
      * 删除各种空格：删除前后的普通空格，删除
      * @param original 源数据中可能存在空格
      * @return
@@ -469,7 +470,7 @@ public class StringUtil {
         if("\u3000".equals(s)){//全角空格(中文符号)\u3000,中文文章中使用;
            return true;
         }
-        if(c <= ' '){
+        if(c <= ' '){//trim方法中的去空格方式
             return false;
         }
         return false;

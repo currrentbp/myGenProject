@@ -1,6 +1,8 @@
 package com.currentbp.util.all;
 
 import com.alibaba.fastjson.JSON;
+import com.currentbp.common.model.Student;
+import org.assertj.core.util.Lists;
 import org.junit.Test;
 
 import java.util.ArrayList;
@@ -114,7 +116,17 @@ public class StringUtilTest {
 
     @Test
     public void insertSomethingToWhere() throws Exception {
-
+        List<Student> students = Lists.newArrayList(new Student(1, "111"));
+        for (int i=0;
+             i<students.size();
+             i++) {
+            Student student = students.get(i);
+            if(student.getName().equals("111")){
+                students.remove(student);
+                i--;
+            }
+        }
+        StringUtil.printObject(students);
     }
 
     @Test
@@ -124,7 +136,8 @@ public class StringUtilTest {
 
     @Test
     public void stringToList1() throws Exception {
-
+        Double s = 2*199.00-397.99;
+        System.out.println(s);
     }
 
     @Test
