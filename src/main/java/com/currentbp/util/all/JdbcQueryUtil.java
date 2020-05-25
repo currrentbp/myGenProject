@@ -11,6 +11,7 @@ import java.util.ArrayList;
 import java.util.HashMap;
 import java.util.List;
 import java.util.Map;
+import org.apache.commons.collections4.ListUtils;
 
 /**
  * 原生的jdbc查询数据库
@@ -146,6 +147,52 @@ public class JdbcQueryUtil {
         ArrayList<String> titles = Lists.newArrayList("order_id", "institution_id", "create_time",
                 "spuName", "skuName", "bar_code", "period", "年级", "num", "expressType", "goodsNum", "zg");
         List<Map<String, String>> maps = queryObject(titles, sql);
-        ExcelUtil.setSource2Excel2("202005210917_暂挂订单",maps,titles);
+        ExcelUtil.setSource2Excel2("202005250923_暂挂订单",maps,titles);
+    }
+
+
+    @Test
+    public void query1(){
+        List<String> detailIds = StreamUtil.getListByAbstrackPath("C:\\Users\\Administrator\\Desktop\\mallOrderDetailIds2.txt");
+        List<List<String>> partition = ListUtils.partition(detailIds, 500);
+        List<Map<String, String>> result = new ArrayList<>(100000000);
+        ArrayList<String> titles = Lists.newArrayList("order_id", "freight", "consume_amount",
+                "institution_id", "time1", "time2", "time3", "status1", "mall_sku_id", "name", "mall_sku_name", "num","price","eas_code");
+        for (List<String> strings : partition) {
+            String s = list2String(strings);
+            if(null == s|| s.length()==0){
+                continue;
+            }
+            String sql = "select mo1.order_id,mo1.freight,mo1.consume_amount, mo1.institution_id,mo1.create_time as time1,mo1.update_time as time2,min(ot1.create_time) as time3,\n" +
+                    "\tif(mo1.`status`=4,'已完成',if(mo1.`status`=1,'待发货',if(mo1.`status`=2,'待收货',if(mo1.`status`=3,'已取消','其他')))) as status1 ,\n" +
+                    "\tmd.mall_sku_id,md.name,md.mall_sku_name,md.num,md.price,ms.eas_code\n" +
+                    "from mall_order mo1\n" +
+                    "inner join mall_order_detail md\n" +
+                    "on mo1.order_id=md.order_id \n" +
+                    "inner join mall_sku ms\n" +
+                    "on md.mall_sku_id=ms.id\n" +
+                    "left join order_logistics_track ot1 \n" +
+                    "on mo1.order_id = ot1.order_id\n" +
+                    "where 1=1 \n" +
+                    "and md.id in (\n" +
+                    s+
+                    ")\n" +
+                    "group by md.id";
+
+            List<Map<String, String>> maps = queryObject(titles, sql);
+            result.addAll(maps);
+        }
+        ExcelUtil.setSource2Excel2("订单信息2",result,titles);
+    }
+
+    private String list2String(List<String> strings) {
+        String result = "";
+        if(null == strings || strings.size()==0){
+            return result;
+        }
+        for (String string : strings) {
+            result = result + string +",";
+        }
+        return result.substring(0,result.length()-1);
     }
 }
