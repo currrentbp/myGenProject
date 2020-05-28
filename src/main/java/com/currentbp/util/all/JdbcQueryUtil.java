@@ -1,5 +1,7 @@
 package com.currentbp.util.all;
 
+import com.alibaba.fastjson.JSON;
+import org.apache.commons.collections4.CollectionUtils;
 import org.assertj.core.util.Lists;
 import org.junit.Test;
 
@@ -7,10 +9,8 @@ import java.sql.Connection;
 import java.sql.DriverManager;
 import java.sql.ResultSet;
 import java.sql.Statement;
-import java.util.ArrayList;
-import java.util.HashMap;
-import java.util.List;
-import java.util.Map;
+import java.util.*;
+
 import org.apache.commons.collections4.ListUtils;
 
 /**
@@ -147,23 +147,23 @@ public class JdbcQueryUtil {
         ArrayList<String> titles = Lists.newArrayList("order_id", "institution_id", "create_time",
                 "spuName", "skuName", "bar_code", "period", "年级", "num", "expressType", "goodsNum", "zg");
         List<Map<String, String>> maps = queryObject(titles, sql);
-        ExcelUtil.setSource2Excel2("202005260917_暂挂订单",maps,titles);
+        ExcelUtil.setSource2Excel2("202005280949_暂挂订单",maps,titles);
     }
 
 
     @Test
     public void query1(){
-        List<String> detailIds = StreamUtil.getListByAbstrackPath("C:\\Users\\Administrator\\Desktop\\mallOrderDetailIds2.txt");
+        List<String> detailIds = StreamUtil.getListByAbstrackPath("C:\\Users\\Administrator\\Desktop\\mallOrderDetailIds2_2.txt");
         List<List<String>> partition = ListUtils.partition(detailIds, 500);
         List<Map<String, String>> result = new ArrayList<>(100000000);
-        ArrayList<String> titles = Lists.newArrayList("order_id", "freight", "consume_amount",
+        ArrayList<String> titles = Lists.newArrayList("id","order_id", "freight", "consume_amount",
                 "institution_id", "time1", "time2", "time3", "status1", "mall_sku_id", "name", "mall_sku_name", "num","price","eas_code");
         for (List<String> strings : partition) {
-            String s = list2String(strings);
-            if(null == s|| s.length()==0){
+            String smallDetailIds = list2String(strings);
+            if(null == smallDetailIds|| smallDetailIds.length()==0){
                 continue;
             }
-            String sql = "select mo1.order_id,mo1.freight,mo1.consume_amount, mo1.institution_id,mo1.create_time as time1,mo1.update_time as time2,min(ot1.create_time) as time3,\n" +
+            String sql = "select md.id,mo1.order_id,mo1.freight,mo1.consume_amount, mo1.institution_id,mo1.create_time as time1,mo1.update_time as time2,min(ot1.create_time) as time3,\n" +
                     "\tif(mo1.`status`=4,'已完成',if(mo1.`status`=1,'待发货',if(mo1.`status`=2,'待收货',if(mo1.`status`=3,'已取消','其他')))) as status1 ,\n" +
                     "\tmd.mall_sku_id,md.name,md.mall_sku_name,md.num,md.price,ms.eas_code\n" +
                     "from mall_order mo1\n" +
@@ -175,14 +175,45 @@ public class JdbcQueryUtil {
                     "on mo1.order_id = ot1.order_id\n" +
                     "where 1=1 \n" +
                     "and md.id in (\n" +
-                    s+
+                    smallDetailIds+
                     ")\n" +
                     "group by md.id";
 
             List<Map<String, String>> maps = queryObject(titles, sql);
             result.addAll(maps);
+
+            Set<String> orderIds = new HashSet<>();
+            for (Map<String, String> map : maps) {
+                orderIds.add(map.get("id"));
+            }
+            for (String string : strings) {
+                if(!orderIds.contains(string)){
+                    System.out.println("===>strings:"+JSON.toJSONString(strings)+" string:"+string);
+//                    String sql2 = "select md.id,mo1.order_id,mo1.freight,mo1.consume_amount, mo1.institution_id,mo1.create_time as time1,mo1.update_time as time2,min(ot1.create_time) as time3,\n" +
+//                            "\tif(mo1.`status`=4,'已完成',if(mo1.`status`=1,'待发货',if(mo1.`status`=2,'待收货',if(mo1.`status`=3,'已取消','其他')))) as status1 ,\n" +
+//                            "\tmd.mall_sku_id,md.name,md.mall_sku_name,md.num,md.price,ms.eas_code\n" +
+//                            "from mall_order mo1\n" +
+//                            "inner join mall_order_detail md\n" +
+//                            "on mo1.order_id=md.order_id \n" +
+//                            "inner join mall_sku ms\n" +
+//                            "on md.mall_sku_id=ms.id\n" +
+//                            "left join order_logistics_track ot1 \n" +
+//                            "on mo1.order_id = ot1.order_id\n" +
+//                            "where 1=1 \n" +
+//                            "and mo1.parent_order_id in ('" +
+//                            string+
+//                            "')\n" +
+//                            "group by md.id";
+//                    List<Map<String, String>> map2s = queryObject(titles, sql2);
+//                    if(CollectionUtils.isEmpty(map2s)){
+//                        System.out.println("===>string:"+string);
+//                    }
+//                    result.addAll(map2s);
+                }
+            }
+
         }
-        ExcelUtil.setSource2Excel2("订单信息2",result,titles);
+        ExcelUtil.setSource2Excel2("订单信息2_2",result,titles);
     }
 
     private String list2String(List<String> strings) {
@@ -191,7 +222,11 @@ public class JdbcQueryUtil {
             return result;
         }
         for (String string : strings) {
-            result = result + string +",";
+            if(string.length()>10){
+                result = result +"'"+ string + "',";
+            }else {
+                result = result + string + ",";
+            }
         }
         return result.substring(0,result.length()-1);
     }
