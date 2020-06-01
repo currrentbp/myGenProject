@@ -438,4 +438,42 @@ public class StringUtil {
         return result.toString();
     }
 
+    /**
+     * 首位删除空格
+     * 删除各种空格：删除前后的普通空格，删除
+     * @param original 源数据中可能存在空格
+     * @return
+     */
+    public static String removeBlank(String original){
+        int len = original.length();
+        int st = 0;
+        char[] val = original.toCharArray();    /* avoid getfield opcode */
+
+        while ((st < len) && isBlank(val[st])) {
+            st++;
+        }
+        while ((st < len) && isBlank(val[len-1])) {
+            len--;
+        }
+        return ((st > 0) || (len < original.length())) ? original.substring(st, len) : original;
+    }
+
+    private static boolean isBlank(char c){
+        Character character = c;
+        String s = character.toString();
+        if("\u00A0".equals(s)){//不间断空格\u00A0,主要用在office中,让一个单词在结尾处不会换行显示,快捷键ctrl+shift+space
+            return true;
+        }
+        if("\u0020".equals(s)){//半角空格(英文符号)\u0020,代码中常用的;
+            return true;
+        }
+        if("\u3000".equals(s)){//全角空格(中文符号)\u3000,中文文章中使用;
+           return true;
+        }
+        if(c <= ' '){//trim方法中的去空格方式
+            return false;
+        }
+        return false;
+    }
+
 }

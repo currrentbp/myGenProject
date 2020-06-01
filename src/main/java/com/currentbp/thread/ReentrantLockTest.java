@@ -27,11 +27,20 @@ public class ReentrantLockTest {
         }
 
 
-        //此处如果没有，子线程可能无法完全执行
-        try {
-            Thread.sleep(5 * 1000L);
-        } catch (InterruptedException e) {
-            e.printStackTrace();
+//        //此处如果没有，子线程可能无法完全执行
+//        try {
+//            Thread.sleep(5 * 1000L);
+//        } catch (InterruptedException e) {
+//            e.printStackTrace();
+//        }
+
+        //第二种方式
+        synchronized (ReentrantLockTest.class) {
+            try {
+                ReentrantLockTest.class.wait();
+            } catch (Exception e) {
+
+            }
         }
     }
 

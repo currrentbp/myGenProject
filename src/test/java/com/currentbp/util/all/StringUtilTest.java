@@ -1,6 +1,8 @@
 package com.currentbp.util.all;
 
 import com.alibaba.fastjson.JSON;
+import com.currentbp.common.model.Student;
+import org.assertj.core.util.Lists;
 import org.junit.Test;
 
 import java.util.ArrayList;
@@ -11,6 +13,19 @@ import java.util.List;
  * Created by issuser on 2017/5/25.
  */
 public class StringUtilTest {
+
+
+
+    @Test
+    public void t1212(){
+        Double x = 0D;
+        if(1==1 ){
+            x = null;
+        }
+
+        System.out.println(0D== x);//npe
+    }
+
     @Test
     public void t123(){
         List<Integer> x = new ArrayList<>();
@@ -101,7 +116,17 @@ public class StringUtilTest {
 
     @Test
     public void insertSomethingToWhere() throws Exception {
-
+        List<Student> students = Lists.newArrayList(new Student(1, "111"));
+        for (int i=0;
+             i<students.size();
+             i++) {
+            Student student = students.get(i);
+            if(student.getName().equals("111")){
+                students.remove(student);
+                i--;
+            }
+        }
+        StringUtil.printObject(students);
     }
 
     @Test
@@ -111,7 +136,8 @@ public class StringUtilTest {
 
     @Test
     public void stringToList1() throws Exception {
-
+        Double s = 2*199.00-397.99;
+        System.out.println(s);
     }
 
     @Test
@@ -130,5 +156,10 @@ public class StringUtilTest {
         System.out.println(StringUtil.getLabelContent(source, "em"));
     }
 
+    @Test
+    public void removeBlank(){
+        String s = "XYTG420SSJ　";
+        System.out.println("====="+StringUtil.removeBlank(s)+"==========");
+    }
 
 }

@@ -1,15 +1,6 @@
 package com.currentbp.util.all;
 
-import java.io.BufferedReader;
-import java.io.BufferedWriter;
-import java.io.File;
-import java.io.FileOutputStream;
-import java.io.FileWriter;
-import java.io.IOException;
-import java.io.InputStream;
-import java.io.InputStreamReader;
-import java.io.OutputStream;
-import java.io.OutputStreamWriter;
+import java.io.*;
 import java.net.HttpURLConnection;
 import java.net.URL;
 import java.util.ArrayList;
@@ -100,6 +91,38 @@ public abstract class StreamUtil {
     public static List<String> getListByFileSource(String path) {
         Assert.isTrue(isFile(path), "the file :" + path + " is not exist!");
         InputStream is = Class.class.getResourceAsStream(path);
+        List<String> result = new ArrayList<String>();
+        InputStreamReader isr = new InputStreamReader(is);
+        BufferedReader br = new BufferedReader(isr);
+        String temp = null;
+        while (true) {
+            try {
+                if (null != (temp = br.readLine())) {
+                    result.add(temp);
+                } else {
+                    break;
+                }
+            } catch (Exception e) {
+                throw new BusinessException(e.getMessage());
+            }
+        }
+        return result;
+    }
+
+    /**
+     * 获取path下的文件内容
+     *
+     * @param path 文件绝对路径
+     * @return 文件内容列表
+     */
+    public static List<String> getListByAbstrackPath(String path) {
+//        Assert.isTrue(isFile(path), "the file :" + path + " is not exist!");
+        InputStream is = null;
+        try {
+            is = new FileInputStream(new File(path));
+        }catch (Exception e){
+            System.out.println("===>read file error,eMsg:"+e.getMessage());
+        }
         List<String> result = new ArrayList<String>();
         InputStreamReader isr = new InputStreamReader(is);
         BufferedReader br = new BufferedReader(isr);

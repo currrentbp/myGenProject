@@ -134,14 +134,13 @@ public class MathUtilTest {
 
     @Test
     public void subtractionTwoLongNum() {
+        Double x = 0.000000000D;
+        System.out.println(x!= 0D);
     }
 
     @Test
     public void compoundInterest2() {
-        double e = 3d /100 /365 ;
-        StringUtil.printObject(MoneyUtil.add(e,0,7));
-        double result = MathUtil.compoundInterest2(50D, e, 365*18,2);
+        double result = MathUtil.compoundInterest2(1000D, 0.0058D, 10*30,4);
         StringUtil.printObject(result);//14182578
-        StringUtil.printObject(3836.04-(262569.39-259805.50));
     }
 }
