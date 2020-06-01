@@ -2,6 +2,7 @@ package com.currentbp.util.all;
 
 import com.alibaba.fastjson.JSON;
 import org.apache.commons.collections4.CollectionUtils;
+import org.apache.commons.lang3.StringUtils;
 import org.assertj.core.util.Lists;
 import org.junit.Test;
 
@@ -12,6 +13,8 @@ import java.sql.Statement;
 import java.util.*;
 
 import org.apache.commons.collections4.ListUtils;
+import org.springframework.jdbc.core.BeanPropertyRowMapper;
+import org.springframework.jdbc.core.RowMapper;
 
 /**
  * 原生的jdbc查询数据库
@@ -26,6 +29,11 @@ public class JdbcQueryUtil {
             "&rewriteBatchedStatements=true&retrieveGeneratedKeys=true&serverTimezone=UTC";
     private static String user = "baopan";
     private static String password = "eGrWbzqX2DapNdITdY9k";
+
+    public<T> List<T> queryObject2(String sql) {
+
+        return null;
+    }
 
     public List<Map<String, String>> queryObject(List<String> fieldNames, String sql) {
         List<Map<String, String>> result = new ArrayList<>();
@@ -70,14 +78,14 @@ public class JdbcQueryUtil {
     }
 
     @Test
-    public void t2(){
+    public void t2() {
         String sql = "select * from mall_item limit 10";
-        List<Map<String, String>> maps = queryObject(Lists.newArrayList("id", "name","code"), sql);
-        ExcelUtil.setSource2Excel2("mallItem",maps,null);
+        List<Map<String, String>> maps = queryObject(Lists.newArrayList("id", "name", "code"), sql);
+        ExcelUtil.setSource2Excel2("mallItem", maps, null);
     }
 
     @Test
-    public void zangguadingdang(){
+    public void zangguadingdang() {
         String sql = "SELECT\n" +
                 "mo.order_id as `order_id`,\n" +
                 "institution_id,\n" +
@@ -147,20 +155,20 @@ public class JdbcQueryUtil {
         ArrayList<String> titles = Lists.newArrayList("order_id", "institution_id", "create_time",
                 "spuName", "skuName", "bar_code", "period", "年级", "num", "expressType", "goodsNum", "zg");
         List<Map<String, String>> maps = queryObject(titles, sql);
-        ExcelUtil.setSource2Excel2("202005280949_暂挂订单",maps,titles);
+        ExcelUtil.setSource2Excel2("202006010857_暂挂订单", maps, titles);
     }
 
 
     @Test
-    public void query1(){
+    public void query1() {
         List<String> detailIds = StreamUtil.getListByAbstrackPath("C:\\Users\\Administrator\\Desktop\\mallOrderDetailIds2_2.txt");
         List<List<String>> partition = ListUtils.partition(detailIds, 500);
         List<Map<String, String>> result = new ArrayList<>(100000000);
-        ArrayList<String> titles = Lists.newArrayList("id","order_id", "freight", "consume_amount",
-                "institution_id", "time1", "time2", "time3", "status1", "mall_sku_id", "name", "mall_sku_name", "num","price","eas_code");
+        ArrayList<String> titles = Lists.newArrayList("id", "order_id", "freight", "consume_amount",
+                "institution_id", "time1", "time2", "time3", "status1", "mall_sku_id", "name", "mall_sku_name", "num", "price", "eas_code");
         for (List<String> strings : partition) {
             String smallDetailIds = list2String(strings);
-            if(null == smallDetailIds|| smallDetailIds.length()==0){
+            if (null == smallDetailIds || smallDetailIds.length() == 0) {
                 continue;
             }
             String sql = "select md.id,mo1.order_id,mo1.freight,mo1.consume_amount, mo1.institution_id,mo1.create_time as time1,mo1.update_time as time2,min(ot1.create_time) as time3,\n" +
@@ -175,7 +183,7 @@ public class JdbcQueryUtil {
                     "on mo1.order_id = ot1.order_id\n" +
                     "where 1=1 \n" +
                     "and md.id in (\n" +
-                    smallDetailIds+
+                    smallDetailIds +
                     ")\n" +
                     "group by md.id";
 
@@ -187,8 +195,8 @@ public class JdbcQueryUtil {
                 orderIds.add(map.get("id"));
             }
             for (String string : strings) {
-                if(!orderIds.contains(string)){
-                    System.out.println("===>strings:"+JSON.toJSONString(strings)+" string:"+string);
+                if (!orderIds.contains(string)) {
+                    System.out.println("===>strings:" + JSON.toJSONString(strings) + " string:" + string);
 //                    String sql2 = "select md.id,mo1.order_id,mo1.freight,mo1.consume_amount, mo1.institution_id,mo1.create_time as time1,mo1.update_time as time2,min(ot1.create_time) as time3,\n" +
 //                            "\tif(mo1.`status`=4,'已完成',if(mo1.`status`=1,'待发货',if(mo1.`status`=2,'待收货',if(mo1.`status`=3,'已取消','其他')))) as status1 ,\n" +
 //                            "\tmd.mall_sku_id,md.name,md.mall_sku_name,md.num,md.price,ms.eas_code\n" +
@@ -213,21 +221,196 @@ public class JdbcQueryUtil {
             }
 
         }
-        ExcelUtil.setSource2Excel2("订单信息2_2",result,titles);
+        ExcelUtil.setSource2Excel2("订单信息2_2", result, titles);
+    }
+
+    /**
+     * 查询19年订单相关数据
+     */
+    @Test
+    public void query2() {
+        List<String> allDetailIds = StreamUtil.getListByAbstrackPath("C:\\Users\\Administrator\\Desktop\\mallOrderDetailIds_19year1.txt");
+        doQuery19OrderDetail(allDetailIds);
+    }
+
+    private void doQuery19OrderDetail(List<String> strings1) {
+        long startTime = System.currentTimeMillis();
+        List<List<String>> partition = ListUtils.partition(strings1, 500);
+        List<Map<String, String>> result = new ArrayList<>(100000000);
+        ArrayList<String> titles = Lists.newArrayList("id", "order_id", "parent_order_id", "status", "consume_amount", "freight", "create_time",
+                "update_time", "sendTime", "mall_sku_id", "name", "mall_sku_name", "num", "price", "bar_code", "eas_code", "itemType",
+                "slave_sku_id", "totalNum", "slave_name", "slave_sku_name");
+        for (List<String> strings : partition) {
+            String[] smallDetailIds = list2String2(strings);
+            if (null == smallDetailIds) {
+                continue;
+            }
+            String parentOrderIds = smallDetailIds[0];
+            String detailIds = smallDetailIds[1];
+
+            //如果长度小于10的则是订单详情id
+            if (StringUtils.isNotBlank(detailIds)) {
+                String sql = "select md.id,mo.order_id,mo.parent_order_id,mo.status,mo.consume_amount,mo.freight,mo.create_time,mo.update_time,\n" +
+                        "(select min(o.create_time) from order_logistics_track o where o.order_id=mo.order_id) as 'sendTime',\n" +
+                        "md.mall_sku_id,md.name,md.mall_sku_name,md.num,md.price,md.bar_code,ms.eas_code,if(md.publish_type=1,'单品','组合商品') as 'itemType',\n" +
+                        "mcd.slave_sku_id,mcd.slave_num*md.num as 'totalNum',mcd.slave_name,mcd.slave_sku_name\n" +
+                        "from mall_order mo inner join mall_order_detail md\n" +
+                        "on mo.order_id=md.order_id \n" +
+                        "inner join mall_sku ms\n" +
+                        "on md.mall_sku_id=ms.id\n" +
+                        "left join mall_order_combination_detail mcd\n" +
+                        "on mcd.order_id=mo.order_id and mcd.master_sku_id=md.mall_sku_id\n" +
+                        "where \n" +
+                        " md.id in (" + detailIds + ")\n" +
+                        "and md.mall_sku_id != 0";
+
+                List<Map<String, String>> maps = queryObject(titles, sql);
+                result.addAll(maps);
+
+                Set<String> existsDetailIds = new HashSet<>();
+                for (Map<String, String> map : maps) {
+                    existsDetailIds.add(map.get("id"));
+                }
+                String[] split = detailIds.split(",");
+                for (String detailId : split) {
+                    if (!existsDetailIds.contains(detailId)) {
+                        System.out.println("===>detailId:" + detailId + " is not exists!");
+                    }
+                }
+            }
+            //如果是长度大于10的是订单orderId 或者是parentOrderId
+            if (StringUtils.isNotBlank(parentOrderIds)) {
+                String sql2 = "select md.id,mo.order_id,mo.parent_order_id,mo.status,mo.consume_amount,mo.freight,mo.create_time,mo.update_time,\n" +
+                        "(select min(o.create_time) from order_logistics_track o where o.order_id=mo.order_id) as 'sendTime',\n" +
+                        "md.mall_sku_id,md.name,md.mall_sku_name,md.num,md.price,md.bar_code,ms.eas_code,if(md.publish_type=1,'单品','组合商品') as 'itemType',\n" +
+                        "mcd.slave_sku_id,mcd.slave_num*md.num as 'totalNum',mcd.slave_name,mcd.slave_sku_name\n" +
+                        "from mall_order mo inner join mall_order_detail md\n" +
+                        "on mo.order_id=md.order_id \n" +
+                        "inner join mall_sku ms\n" +
+                        "on md.mall_sku_id=ms.id\n" +
+                        "left join mall_order_combination_detail mcd\n" +
+                        "on mcd.order_id=mo.order_id and mcd.master_sku_id=md.mall_sku_id\n" +
+                        "where \n" +
+                        " mo.parent_order_id in (" + parentOrderIds + ")\n" +
+                        "and md.mall_sku_id != 0";
+                List<Map<String, String>> maps2 = queryObject(titles, sql2);
+                result.addAll(maps2);
+
+                Set<String> existsParentOrderIds = new HashSet<>();
+                for (Map<String, String> map : maps2) {
+                    existsParentOrderIds.add(map.get("parent_order_id"));
+                }
+
+                List<String> orderIds = new ArrayList<>();
+                String[] split2 = parentOrderIds.replace("'", "").split(",");
+                for (String parentOrderId : split2) {
+                    if (!existsParentOrderIds.contains(parentOrderId)) {
+                        orderIds.add(parentOrderId);
+                    }
+                }
+
+                if (CollectionUtils.isNotEmpty(orderIds)) {
+                    String sql3 = "select md.id,mo.order_id,mo.parent_order_id,mo.status,mo.consume_amount,mo.freight,mo.create_time,mo.update_time,\n" +
+                            "(select min(o.create_time) from order_logistics_track o where o.order_id=mo.order_id) as 'sendTime',\n" +
+                            "md.mall_sku_id,md.name,md.mall_sku_name,md.num,md.price,md.bar_code,ms.eas_code,if(md.publish_type=1,'单品','组合商品') as 'itemType',\n" +
+                            "mcd.slave_sku_id,mcd.slave_num*md.num as 'totalNum',mcd.slave_name,mcd.slave_sku_name\n" +
+                            "from mall_order mo inner join mall_order_detail md\n" +
+                            "on mo.order_id=md.order_id \n" +
+                            "inner join mall_sku ms\n" +
+                            "on md.mall_sku_id=ms.id\n" +
+                            "left join mall_order_combination_detail mcd\n" +
+                            "on mcd.order_id=mo.order_id and mcd.master_sku_id=md.mall_sku_id\n" +
+                            "where \n" +
+                            " mo.order_id in (" + list2String(orderIds) + ")\n" +
+                            "and md.mall_sku_id != 0";
+                    List<Map<String, String>> maps3 = queryObject(titles, sql3);
+                    result.addAll(maps3);
+
+                    Set<String> existsOrderIds = new HashSet<>();
+                    for (Map<String, String> map : maps3) {
+                        existsOrderIds.add(map.get("order_id"));
+                    }
+
+                    for (String orderId : orderIds) {
+                        if (!existsOrderIds.contains(orderId)) {
+                            System.out.println("===>orderId:" + orderId + " is not exists!");
+                        }
+                    }
+                }
+            }
+        }
+
+        long endTime = System.currentTimeMillis();
+        System.out.println("used time:"+(endTime-startTime)/1000);
+//        List<List<Map<String, String>>> partition1 = ListUtils.partition(result, 60000);
+//        for (int i1 = 0; i1 < partition1.size(); i1++) {
+            ExcelUtil.setSource2Excel3("订单信息_19", result, titles);
+//        }
+        long endTime2 = System.currentTimeMillis();
+        System.out.println("used time2:"+(endTime2-startTime)/1000);
+    }
+
+
+    /**
+     * 查询19年的售后工单信息
+     */
+    @Test
+    public void queryWorkOrder() {
+        ArrayList<String> titles = Lists.newArrayList("id", "work_order_code", "old_order_id", "create_time", "update_time", "waybill_num", "isXuni",
+                "sendTime", "type", "status", "should_amount", "freight", "mall_sku_id", "barCode", "price", "publish_type",
+                "usable_num", "eas_code", "signalSkuId", "signalNum");
+        String sql = "select word.id,wor.work_order_code,wor.old_order_id,wor.create_time,wor.update_time,wor.update_time,wor.waybill_num,if(wor.waybill_num like 'xuni%','ture','false') as 'isXuni',\n" +
+                "(select min(o.create_time) from order_logistics_track o where o.order_id=wor.old_order_id) as 'sendTime',wor.`type`,wor.`status`,\n" +
+                "wor.should_amount,wor.freight,word.mall_sku_id,word.barCode,word.price,word.publish_type,word.usable_num,ms.eas_code,\n" +
+                "mci.relation_mall_sku_id as 'signalSkuId',mci.num*word.usable_num as 'signalNum'\n" +
+                "from work_order_refund wor inner join work_order_refund_detail word\n" +
+                "on wor.work_order_code=word.work_order_code \n" +
+                "inner join mall_sku ms\n" +
+                "on ms.id=word.mall_sku_id\n" +
+                "left join mall_combination_item mci\n" +
+                "on word.mall_sku_id=mci.mall_sku_id\n" +
+                "where 1=1 \n" +
+                "and wor.update_time>='2019-01-01 00:00:00' and wor.update_time<'2020-01-01 00:00:00'";
+
+        List<Map<String, String>> maps = queryObject(titles, sql);
+        ExcelUtil.setSource2Excel2("19年售后工单信息", maps, titles);
+    }
+
+    private String[] list2String2(List<String> strings) {
+        String[] result = new String[]{"", ""};
+        if (null == strings || strings.size() == 0) {
+            return result;
+        }
+        String result1 = "";
+        String result2 = "";
+        for (String string : strings) {
+            if (string.length() > 10) {
+                result1 = result1 + "'" + string + "',";
+            } else {
+                result2 = result2 + string + ",";
+            }
+        }
+        if (StringUtils.isNotBlank(result1)) {
+            result[0] = result1.substring(0, result1.length() - 1);
+        }
+        if (StringUtils.isNotBlank(result2)) {
+            result[1] = result2.substring(0, result2.length() - 1);
+        }
+        return result;
     }
 
     private String list2String(List<String> strings) {
         String result = "";
-        if(null == strings || strings.size()==0){
+        if (null == strings || strings.size() == 0) {
             return result;
         }
         for (String string : strings) {
-            if(string.length()>10){
-                result = result +"'"+ string + "',";
-            }else {
+            if (string.length() > 10) {
+                result = result + "'" + string + "',";
+            } else {
                 result = result + string + ",";
             }
         }
-        return result.substring(0,result.length()-1);
+        return result.substring(0, result.length() - 1);
     }
 }
