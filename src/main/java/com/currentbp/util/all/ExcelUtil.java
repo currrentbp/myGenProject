@@ -53,71 +53,17 @@ public class ExcelUtil<T> {
             titles = sortWith;
         }
 
-        //创建文件
-        File file = new File("" + excelName + ".xls");
-        StringUtil.printObject("===>path" + file.getAbsolutePath());
-        OutputStream outputStream = null;
-        try {
-            outputStream = new FileOutputStream(file);
-        } catch (Exception e) {
+        List<List<Map<String, String>>> partition = ListUtils.partition(source, SHEET_MAX_ROW);//TODO to linkedList
+
+        createSheets(excelName, partition.size());
+
+        int index = 0;
+        for (List<Map<String, String>> maps : partition) {
+            doSetEachSheet(excelName, maps, titles, index);
+            index++;
         }
-
-        // 第一步，创建一个HSSFWorkbook，对应一个Excel文件
-        HSSFWorkbook wb = new HSSFWorkbook();
-
-        List<List<Map<String, String>>> partition = ListUtils.partition(source, SHEET_MAX_ROW);
-        for (int index = 0; index < partition.size(); index++) {
-            // 第二步，在workbook中添加一个sheet,对应Excel文件中的sheet
-            HSSFSheet sheet = wb.createSheet(excelName + "_" + index);
-        }
-        HSSFSheet sheetAt = wb.getSheetAt(1);
-        HSSFSheet sheetAt2 = wb.getSheetAt(2);
-        System.out.println("===>name:" + sheetAt.getSheetName()+" name2:"+sheetAt2.getSheetName());
-
-        for (int index = 0; index < partition.size(); index++) {
-            // 第二步，在workbook中添加一个sheet,对应Excel文件中的sheet
-//            HSSFSheet sheet = wb.createSheet(excelName + "_" + index);
-            HSSFSheet sheet = wb.getSheetAt(index);
-            wb.setActiveSheet(index);
-            // 第四步，创建单元格，并设置值表头 设置表头居中
-            HSSFCellStyle style = wb.createCellStyle();
-            style.setAlignment(HSSFCellStyle.ALIGN_CENTER); // 创建一个居中格式
-            // 第三步，在sheet中添加表头第0行,注意老版本poi对Excel的行数列数有限制
-            HSSFRow row = sheet.createRow(0);
-
-            //声明列对象
-            HSSFCell cell = null;
-            //创建标题
-            for (int i = 0; i < titles.size(); i++) {
-                cell = row.createCell(i);
-                cell.setCellValue(titles.get(i));
-                cell.setCellStyle(style);
-            }
-            List<Map<String, String>> partitionSources = partition.get(index);
-            //创建内容
-            for (int i = 0; i < partitionSources.size(); i++) {
-                row = sheet.createRow(i + 1);
-                Map<String, String> key2ValueMap = partitionSources.get(i);
-                for (int j = 0; j < titles.size(); j++) {
-                    //将内容按顺序赋给对应的列对象
-                    String value = key2ValueMap.get(titles.get(j));
-                    row.createCell(j).setCellValue(value);
-                }
-            }
-
-        }
-        try {
-            wb.write(outputStream);
-        } catch (Exception e) {
-            e.printStackTrace();
-        }
-        try {
-            outputStream.close();
-        } catch (Exception e) {
-            e.printStackTrace();
-        }
-
     }
+
 
     /**
      * 通过map数据集合获取指定排序方式的excel
@@ -152,7 +98,7 @@ public class ExcelUtil<T> {
         }
         HSSFSheet sheetAt = wb.getSheetAt(1);
         HSSFSheet sheetAt2 = wb.getSheetAt(2);
-        System.out.println("===>name:" + sheetAt.getSheetName()+" name2:"+sheetAt2.getSheetName());
+        System.out.println("===>name:" + sheetAt.getSheetName() + " name2:" + sheetAt2.getSheetName());
 
         for (int index = 0; index < partition.size(); index++) {
             // 第二步，在workbook中添加一个sheet,对应Excel文件中的sheet
@@ -357,5 +303,93 @@ public class ExcelUtil<T> {
             StringUtil.printObject(e.getMessage());
             return "";
         }
+    }
+
+    private static void createSheets(String excelName, int size) {
+        //创建文件
+        File file = new File("" + excelName + ".xls");
+        StringUtil.printObject("===>path" + file.getAbsolutePath());
+        OutputStream outputStream = null;
+        try {
+            outputStream = new FileOutputStream(file);
+        } catch (Exception e) {
+        }
+
+        // 第一步，创建一个HSSFWorkbook，对应一个Excel文件
+        HSSFWorkbook wb = new HSSFWorkbook();
+
+        for (int index = 0; index < size; index++) {
+            // 第二步，在workbook中添加一个sheet,对应Excel文件中的sheet
+            HSSFSheet sheet = wb.createSheet(excelName + "_" + index);
+        }
+        try {
+            wb.write(outputStream);
+        } catch (Exception e) {
+            e.printStackTrace();
+        }
+        try {
+            outputStream.close();
+        } catch (Exception e) {
+            e.printStackTrace();
+        }
+    }
+
+    private static void doSetEachSheet(String excelName, List<Map<String, String>> parrtions, List<String> titles, int index) {
+
+        //创建文件
+        File file = new File("" + excelName + ".xls");
+        StringUtil.printObject("===>path" + file.getAbsolutePath());
+        OutputStream outputStream = null;
+        try {
+            outputStream = new FileOutputStream(file);
+        } catch (Exception e) {
+        }
+
+        // 第一步，创建一个HSSFWorkbook，对应一个Excel文件
+        HSSFWorkbook wb = new HSSFWorkbook();
+
+
+        // 第二步，在workbook中添加一个sheet,对应Excel文件中的sheet
+//            HSSFSheet sheet = wb.createSheet(excelName + "_" + index);
+        HSSFSheet sheet = wb.getSheetAt(index);
+        wb.setActiveSheet(index);
+        // 第四步，创建单元格，并设置值表头 设置表头居中
+        HSSFCellStyle style = wb.createCellStyle();
+        style.setAlignment(HSSFCellStyle.ALIGN_CENTER); // 创建一个居中格式
+        // 第三步，在sheet中添加表头第0行,注意老版本poi对Excel的行数列数有限制
+        HSSFRow row = sheet.createRow(0);
+
+        //声明列对象
+        HSSFCell cell = null;
+        //创建标题
+        for (int i = 0; i < titles.size(); i++) {
+            cell = row.createCell(i);
+            cell.setCellValue(titles.get(i));
+            cell.setCellStyle(style);
+        }
+
+        //创建内容
+        for (int i = 0; i < parrtions.size(); i++) {
+            row = sheet.createRow(i + 1);
+            Map<String, String> key2ValueMap = parrtions.get(i);
+            for (int j = 0; j < titles.size(); j++) {
+                //将内容按顺序赋给对应的列对象
+                String value = key2ValueMap.get(titles.get(j));
+                row.createCell(j).setCellValue(value);
+            }
+        }
+
+        try {
+            wb.write(outputStream);
+        } catch (Exception e) {
+            e.printStackTrace();
+        }
+        try {
+            outputStream.close();
+        } catch (Exception e) {
+            e.printStackTrace();
+        }
+
+
     }
 }
