@@ -6,6 +6,7 @@ import org.assertj.core.util.Lists;
 import org.junit.*;
 
 import java.util.*;
+import java.util.concurrent.atomic.AtomicInteger;
 
 /**
  * Created by issuser on 2017/4/7.
@@ -68,6 +69,7 @@ public class BooleanTestTest {
 
     @Test
     public void integerSwap(){
+        System.out.println(15.65/(376.65-15.65));
         Integer x=10111;
         Integer y=11111;
         swap(x,y);
