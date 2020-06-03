@@ -35,7 +35,7 @@ public class JdbcQueryUtil {
         return null;
     }
 
-    public List<Map<String, String>> queryObject(List<String> fieldNames, String sql) {
+    public static List<Map<String, String>> queryObject(List<String> fieldNames, String sql) {
         List<Map<String, String>> result = new ArrayList<>();
         try {
             // 1.注册驱动
@@ -156,7 +156,7 @@ public class JdbcQueryUtil {
                 "spuName", "skuName", "bar_code", "period", "年级", "num", "expressType", "goodsNum", "zg");
         List<Map<String, String>> maps = queryObject(titles, sql);
 
-        ExcelUtil.setSource2Excel2("202006010857_暂挂订单", maps, titles);
+        ExcelUtil.setSource2Excel2("202006031026_暂挂订单", maps, titles);
     }
 
 
@@ -230,7 +230,7 @@ public class JdbcQueryUtil {
      */
     @Test
     public void query2() {
-        List<String> allDetailIds = StreamUtil.getListByAbstrackPath("C:\\Users\\Administrator\\Desktop\\mallOrderDetailIds_19year1.txt");
+        List<String> allDetailIds = StreamUtil.getListByAbstrackPath("C:\\Users\\Administrator\\Desktop\\mallOrderDetailIds_19year.txt");
         doQuery19OrderDetail(allDetailIds);
     }
 
@@ -343,10 +343,10 @@ public class JdbcQueryUtil {
 
         long endTime = System.currentTimeMillis();
         System.out.println("used time:"+(endTime-startTime)/1000);
-//        List<List<Map<String, String>>> partition1 = ListUtils.partition(result, 60000);
-//        for (int i1 = 0; i1 < partition1.size(); i1++) {
-            ExcelUtil.setSource2Excel3("订单信息_19", result, titles);
-//        }
+        List<List<Map<String, String>>> partition1 = ListUtils.partition(result, 60000);
+        for (int i1 = 0; i1 < partition1.size(); i1++) {
+            ExcelUtil.setSource2Excel3("订单信息_19_"+i1, result, titles);
+        }
         long endTime2 = System.currentTimeMillis();
         System.out.println("used time2:"+(endTime2-startTime)/1000);
     }
