@@ -3,6 +3,7 @@ package com.currentbp.test;
 import com.currentbp.common.model.Student;
 import com.currentbp.entry.BusinessException;
 import com.currentbp.util.all.ListUtil;
+import com.currentbp.util.all.StringUtil;
 import org.assertj.core.util.Lists;
 import org.junit.Assert;
 import org.junit.Test;
@@ -11,6 +12,7 @@ import org.slf4j.LoggerFactory;
 
 import java.lang.reflect.Field;
 import java.lang.reflect.Method;
+import java.util.ArrayList;
 import java.util.HashMap;
 import java.util.List;
 import java.util.Map;
@@ -28,6 +30,15 @@ public class Test1 {
     public Integer x;
 
     private final static Logger logger = LoggerFactory.getLogger(Test1.class);
+
+    @Test
+    public void t7(){
+        List<String> s1 = new ArrayList<>();
+        s1.add("1111");
+        s1.add(null);
+        s1.add("2222");
+        StringUtil.printObject(s1);
+    }
 
     @Test
     public void t6(){

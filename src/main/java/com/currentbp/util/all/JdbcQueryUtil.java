@@ -10,6 +10,7 @@ import java.sql.Connection;
 import java.sql.DriverManager;
 import java.sql.ResultSet;
 import java.sql.Statement;
+import java.text.SimpleDateFormat;
 import java.util.*;
 
 import org.apache.commons.collections4.ListUtils;
@@ -27,8 +28,8 @@ public class JdbcQueryUtil {
     private static String url = "jdbc:mysql://rr-2ze3c5e8p8783u87zzo.mysql.rds.aliyuncs.com:3306/mall_trade" +
             "?useUnicode=true&amp;characterEncoding=UTF-8&autoReconnect=true&useSSL=false" +
             "&rewriteBatchedStatements=true&retrieveGeneratedKeys=true&serverTimezone=UTC";
-    private static String user = "baopan";
-    private static String password = "eGrWbzqX2DapNdITdY9k";
+    private static String user = "baopan==========";
+    private static String password = "eGrWbzqX2DapNdITdY9k=======";
 
     public<T> List<T> queryObject2(String sql) {
 
@@ -156,7 +157,10 @@ public class JdbcQueryUtil {
                 "spuName", "skuName", "bar_code", "period", "年级", "num", "expressType", "goodsNum", "zg");
         List<Map<String, String>> maps = queryObject(titles, sql);
 
-        ExcelUtil.setSource2Excel2("202006031026_暂挂订单", maps, titles);
+        SimpleDateFormat simpleDateFormat = new SimpleDateFormat("yyyyMMddHHmmss");
+        String format = simpleDateFormat.format(new Date());
+        System.out.println("===>format:"+format);
+        ExcelUtil.setSource2Excel2(format+"_暂挂订单", maps, titles);
     }
 
 
