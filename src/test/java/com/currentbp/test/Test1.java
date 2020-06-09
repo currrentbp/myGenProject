@@ -32,11 +32,24 @@ public class Test1 {
     private final static Logger logger = LoggerFactory.getLogger(Test1.class);
 
     @Test
+    public void t8(){
+        Map<String,Integer> map = new HashMap<>();
+        map.put("1",1);
+        map.put("2",2);
+        map.put("3",3);
+        ArrayList<Integer> integers = Lists.newArrayList(map.values());
+        StringUtil.printObject(integers);
+    }
+
+    @Test
     public void t7(){
         List<String> s1 = new ArrayList<>();
         s1.add("1111");
         s1.add(null);
         s1.add("2222");
+        StringUtil.printObject(s1);
+        List<String> s2 = null;
+        s1.addAll(s2);
         StringUtil.printObject(s1);
     }
 
