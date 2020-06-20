@@ -28,8 +28,8 @@ public class JdbcQueryUtil {
     private static String url = "jdbc:mysql://rr-2ze3c5e8p8783u87zzo.mysql.rds.aliyuncs.com:3306/mall_trade" +
             "?useUnicode=true&amp;characterEncoding=UTF-8&autoReconnect=true&useSSL=false" +
             "&rewriteBatchedStatements=true&retrieveGeneratedKeys=true&serverTimezone=UTC";
-    private static String user = "baopan==========";
-    private static String password = "eGrWbzqX2DapNdITdY9k=======";
+    private static String user = "baopan";
+    private static String password = "eGrWbzqX2DapNdITdY9k";
 
     public<T> List<T> queryObject2(String sql) {
 

@@ -21,15 +21,17 @@ public class LockSupportPrint {
         thread1 = new Thread(() -> {
             for (char c : chars1) {
                 System.out.print(c);
-                LockSupport.unpark(thread2);
-                LockSupport.park();
+                LockSupport.unpark(thread2);//唤醒线程2
+                LockSupport.park();//睡眠当前线程，不能提前关闭当前线程，否则无法唤醒线程2
             }
         });
         thread2 = new Thread(() -> {
             for (char c : chars2) {
-                LockSupport.park();
+                LockSupport.park();//先关闭自己线程，等待线程1唤醒自己
                 System.out.print(c);
-                LockSupport.unpark(thread1);
+                LockSupport.unpark(thread1);//完成输出任务后，唤醒线程1
+//                LockSupportPrint.class.notifyAll();
+
             }
         });
 

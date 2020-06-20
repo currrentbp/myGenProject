@@ -33,5 +33,14 @@ public class AtomicIntegerPrint {
                 lock.compareAndSet(2, 1);
             }
         }).start();
+
+        try {
+            Thread.sleep(10000);
+        }catch (Exception e){
+
+        }
+        System.out.println("===>"+lock.get());
+        System.out.println("===>"+lock.getAndIncrement());
+        System.out.println("===>"+lock.get());
     }
 }

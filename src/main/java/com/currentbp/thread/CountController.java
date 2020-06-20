@@ -17,7 +17,7 @@ public class CountController {
 		Runnable task = new Runnable() {
 			@Override
 			public void run() {
-				for (int i = 0; i < 10000; i++) {
+				for (int i = 0; i < 100; i++) {
 					System.out.println("i:" + i);
 				}
 			}
@@ -42,21 +42,19 @@ public class CountController {
 		final CountDownLatch endGate = new CountDownLatch(nThreads);
 
 		for (int i = 0; i < nThreads; i++) {
-			Thread t = new Thread() {
-				public void run() {
+			Thread t = new Thread(() -> {
+				try {
+					startGate.await();
+
 					try {
-						startGate.await();
+						task.run();
 
-						try {
-							task.run();
-
-						} finally {
-							endGate.countDown();
-						}
-					} catch (InterruptedException e) {
+					} finally {
+						endGate.countDown();
 					}
+				} catch (InterruptedException e) {
 				}
-			};
+			});
 			t.start();
 
 		}
