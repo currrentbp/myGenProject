@@ -6,7 +6,7 @@ import java.util.concurrent.atomic.AtomicInteger;
  * @author baopan
  * @createTime 2020/4/24 17:20
  */
-public class AtomicIntegerPrint {
+public class  AtomicIntegerPrint {
 
     private static AtomicInteger lock = new AtomicInteger(1);
     private static String s1 = "12345";

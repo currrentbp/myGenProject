@@ -1,0 +1,3 @@
+com.currentbp.spi.service.impl.AHelloServiceImpl
+com.currentbp.spi.service.impl.AHelloServiceImpl
+#com.currentbp.spi.service.impl.BHelloServiceImpl

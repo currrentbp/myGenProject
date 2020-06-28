@@ -20,6 +20,11 @@ public class SynchronizedPrint {
         char[] chars1 = c1.toCharArray();
         char[] chars2 = c2.toCharArray();
         new Thread(()->{
+            try {
+                Thread.sleep(1);
+            }catch (Exception e){
+
+            }
             synchronized(lock){
                 for (char c : chars1) {
                     System.out.print(c);
