@@ -28,6 +28,15 @@ public class RBTree {
 		Node node1 = new Node();
 		node1.setValue(1);
 		rbTree.rbInsert(node1);
+		Node node2 = new Node();
+		node2.setValue(7);
+		rbTree.rbInsert(node2);
+		Node node3 = new Node();
+		node3.setValue(4);
+		rbTree.rbInsert(node3);
+		Node node4 = new Node();
+		node4.setValue(2);
+		rbTree.rbInsert(node4);
 	}
 
 

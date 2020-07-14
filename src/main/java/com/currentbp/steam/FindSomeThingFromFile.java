@@ -47,10 +47,10 @@ public class FindSomeThingFromFile {
 	
 	/**
 	 * 根据keys中的多个关键字查询，例如：2|3|4，其中多个关键字之间是用"|"分割的。
-	 * @param keys
-	 * @param descPath
-	 * @param sourcePath
-	 * @param num
+	 * @param keys 关键字s
+	 * @param descPath 生成文件路径
+	 * @param sourcePath 源文件路径
+	 * @param num 上下行数
 	 * @throws IOException 
 	 */
 	public void findSomeKey(String descPath ,String sourcePath,String keys,int num) throws IOException

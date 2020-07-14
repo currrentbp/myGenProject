@@ -1,8 +1,10 @@
 package com.currentbp.serializable;
 
+import org.assertj.core.util.Lists;
 import org.junit.Test;
 
 import java.io.*;
+import java.util.List;
 
 /**
  * @author baopan
@@ -16,6 +18,7 @@ public class SerializableTest {
         myDemo.setId(1);
         myDemo.setName("111111");
         myDemo.setInteresting("kkkkkkkk");
+        myDemo.setIds(Lists.newArrayList(1,2,3,4,5));
         ObjectOutputStream out  = new ObjectOutputStream(new FileOutputStream("xuliehua"));
         out.writeObject(myDemo);
         System.out.println("序列化完毕..");
@@ -53,6 +56,9 @@ class MyDemo implements Serializable{
     private String name;
     private transient String interesting;
 
+    private transient List<Integer> ids;//如果对一个列表做transient，那么表明默认的序列化不会对他做任何事情
+    //而ArrayList中的数组也是transient的，但是writeObject和readObject都做重写了
+
     public Integer getId() {
         return id;
     }
@@ -77,12 +83,21 @@ class MyDemo implements Serializable{
         this.interesting = interesting;
     }
 
+    public List<Integer> getIds() {
+        return ids;
+    }
+
+    public void setIds(List<Integer> ids) {
+        this.ids = ids;
+    }
+
     @Override
     public String toString() {
         return "MyDemo{" +
                 "id=" + id +
                 ", name='" + name + '\'' +
                 ", interesting='" + interesting + '\'' +
+                ", ids=" + ids +
                 '}';
     }
 }

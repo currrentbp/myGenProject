@@ -12,6 +12,7 @@ import org.apache.http.impl.client.HttpClients;
 import org.apache.http.util.EntityUtils;
 
 import java.io.*;
+import java.util.Date;
 
 /**
  * 我自己写的一个断点下载
@@ -26,14 +27,14 @@ public class HttpDownloader1 {
     private int threadMaxNum = 5;
     private int cacheMax = 500 * 1024;//每个文件的大小500Kb
     private volatile static int[] progress;//0:未开始，1：下载完成，2：下载中，3：写入完成，4：写入中
-    private String fileName = "tomcat";//文件名称
+    private String fileName = "despair";//文件名称
     //    private String requestUrl = "http://mirrors.cnnic.cn/apache/tomcat/tomcat-9/v9.0.0.M17/bin/apache-tomcat-9.0.0.M17.zip";//请求地址
-    private String baseTMPFilePath = "E:\\tmp\\20170203\\";//临时文件的路径
+    private String baseTMPFilePath = "E:\\tmp\\20200710\\";//临时文件的路径
 
     //http://localhost:8080/uploadController/download?id=1
     //http://mirrors.cnnic.cn/apache/tomcat/tomcat-9/v9.0.0.M17/bin/apache-tomcat-9.0.0.M17.zip
     //http://txt.bxwxtxt.com/packdown/fulltxt/126/126004.txt
-    private String requestUrl = "http://txt.bxwxtxt.com/packdown/fulltxt/126/126004.txt";
+    private String requestUrl = "http://www.0dutv.com/plug/down/up2.php/217518714.mp3";
     private String oldFileName = "";
     private String tail = "";
     private String tmpTail = ".tmp";
@@ -48,14 +49,14 @@ public class HttpDownloader1 {
      */
     public static void main(String[] args) {
         HttpDownloader1 httpDownloader1 = new HttpDownloader1();
-//        httpDownloader1.initProgress(10);
-//        System.out.println("----:" + httpDownloader1.canDownloadWithThread());
+        httpDownloader1.initProgress(10);
+        System.out.println("----:" + httpDownloader1.canDownloadWithThread());
         System.out.println("----:fileSize:" + httpDownloader1.getDownloadFileSize());
-//        httpDownloader1.useOneThreadDownloadFile();
-//        long time1 = new Date().getTime();
-//        httpDownloader1.useMoreThreadDownloadFile();
-//        long time2 = new Date().getTime();
-//        System.out.println("===>used time:" + (time2 - time1));
+        httpDownloader1.useOneThreadDownloadFile();
+        long time1 = new Date().getTime();
+        httpDownloader1.useMoreThreadDownloadFile();
+        long time2 = new Date().getTime();
+        System.out.println("===>used time:" + (time2 - time1));
 
 
     }
