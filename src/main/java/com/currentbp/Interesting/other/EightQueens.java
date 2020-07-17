@@ -28,7 +28,6 @@ public class EightQueens {
 
     private void getQueens(int row) {
         if (row == 8) {
-//            System.out.println("第"+count+"个方案：");
             print1();
             count++;
             return;
@@ -78,6 +77,7 @@ public class EightQueens {
      * 打印当前的八皇后位置
      */
     private void print1() {
+        //            System.out.println("第"+count+"个方案：");
         StringUtil.printObject(locals);
         for (int i = 0; i < 8; i++) {
             for (int j = 0; j < 8; j++) {

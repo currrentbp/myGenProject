@@ -63,6 +63,7 @@ public class ConsumerTest implements Serializable {
 
         List<Integer> list = new ArrayList<>();
         list.add(1);
+        list.get(0);
         List<Integer> list2 = new LinkedList<>();
         list2.add(1);
         list2.add(1,1);
