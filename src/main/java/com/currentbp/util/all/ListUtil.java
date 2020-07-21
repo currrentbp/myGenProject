@@ -197,6 +197,17 @@ public class ListUtil<V> {
         return result;
     }
 
+    public  static <V> List<V> newArrayList(V... values){
+        if(null == values || 0 == values.length){
+            return new ArrayList<>();
+        }
+        List<V> result = new ArrayList<>(values.length);
+        for (V value : values) {
+            result.add(value);
+        }
+        return result;
+    }
+
     /**
      * 将string类型的list转为long类型的list
      *
