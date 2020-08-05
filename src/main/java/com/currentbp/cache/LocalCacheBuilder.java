@@ -18,7 +18,7 @@ public class LocalCacheBuilder<K,V> {
         return this;
     }
 
-    public LocalCache<K, V> build(LocalCache<K, V> localCache) {
+    public <K1 extends K, V1 extends V> LocalCache<K1, V1> build(LocalCache<K1, V1> localCache) {
         localCache.setMaxTime(this.maxTime);
         return localCache;
     }

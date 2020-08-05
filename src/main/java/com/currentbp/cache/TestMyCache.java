@@ -32,10 +32,12 @@ public class TestMyCache {
         }
 
         System.out.println("==============");
-        new Thread(() -> {
-            List<Student> student = localCacheBuilder3.get(15);
-            StringUtil.printObject(student);
-        }).start();
+        for(int i=0;i<3;i++) {
+            new Thread(() -> {
+                List<Student> student = localCacheBuilder3.get(15);
+                StringUtil.printObject(student);
+            }).start();
+        }
 
         for (int i = 0; i < 3; i++) {
             List<Student> student = localCacheBuilder3.get(i);

@@ -1,4 +1,4 @@
-package com.currentbp.designPattern;
+package com.currentbp.designPattern.singleton;
 
 /**
  * 优点：绝对线程安全

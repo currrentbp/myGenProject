@@ -1,6 +1,7 @@
 package com.currentbp.sort.training;
 
 import com.alibaba.fastjson.JSON;
+import com.currentbp.util.all.StringUtil;
 import org.assertj.core.util.Lists;
 import org.junit.Test;
 import org.slf4j.Logger;
@@ -62,17 +63,15 @@ public class QuickSort {
         if (right < high) {
             quickSort(source, left + 1, high);
         }
-
-
     }
 
     @Test
     public void t1() {
         int arr[] = new int[]{3, 5, 7, 2, 1, 0, 2, 10};
-        logger.info(JSON.toJSONString(arr));
+        StringUtil.printObject(arr);
         QuickSort quickSort1 = new QuickSort();
         quickSort1.quickSort(arr, 0, arr.length - 1);
 
-        logger.info(JSON.toJSONString(arr));
+        StringUtil.printObject(arr);
     }
 }
