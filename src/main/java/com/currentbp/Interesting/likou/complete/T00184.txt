@@ -1,0 +1,58 @@
+Employee 表包含所有员工信息，每个员工有其对应的 Id, salary 和 department Id。
++----+-------+--------+--------------+
+| Id | Name  | Salary | DepartmentId |
++----+-------+--------+--------------+
+| 1  | Joe   | 70000  | 1            |
+| 2  | Jim   | 90000  | 1            |
+| 3  | Henry | 80000  | 2            |
+| 4  | Sam   | 60000  | 2            |
+| 5  | Max   | 90000  | 1            |
++----+-------+--------+--------------+
+Department 表包含公司所有部门的信息。
++----+----------+
+| Id | Name     |
++----+----------+
+| 1  | IT       |
+| 2  | Sales    |
++----+----------+
+编写一个 SQL 查询，找出每个部门工资最高的员工。
+对于上述表，您的 SQL 查询应返回以下行（行的顺序无关紧要）。
++------------+----------+--------+
+| Department | Employee | Salary |
++------------+----------+--------+
+| IT         | Max      | 90000  |
+| IT         | Jim      | 90000  |
+| Sales      | Henry    | 80000  |
++------------+----------+--------+
+
+select d1.name as 'Department',e1.name as 'Employee',e1.Salary
+from department d1,employee e1,(
+    select max(e2.Salary) as 'maxSalary',e2.DepartmentId
+    from employee e2
+    group by e2.DepartmentId
+) t1
+where d1.Id=e1.DepartmentId
+and d1.Id=t1.DepartmentId and t1.maxSalary=e1.Salary;
+
+{"headers": ["id", "select_type", "table", "partitions", "type", "possible_keys", "key", "key_len", "ref", "rows", "filtered", "Extra"],
+"values": [[1, "PRIMARY", "d1", null, "ALL", null, null, null, null, 2, 100.0, "Using where"],
+[1, "PRIMARY", "e1", null, "ALL", null, null, null, null, 5, 20.0, "Using where; Using join buffer (hash join)"],
+[1, "PRIMARY", "<derived2>", null, "ref", "<auto_key0>", "<auto_key0>", "10", "test.e1.Salary,test.d1.Id", 2, 100.0, "Using index"],
+[2, "DERIVED", "e2", null, "ALL", null, null, null, null, 5, 100.0, "Using temporary"]]}
+
+#官方最佳答案：实际上，我将这个答案放到网上，也是一样的耗时
+select
+    d.Name as Department,
+    e.Name as Employee,
+    e.Salary
+from
+    Employee as e,Department as d
+where
+    e.DepartmentId=d.Id
+    and
+    (e.Salary,e.DepartmentId) in (select max(Salary),DepartmentId from Employee group by DepartmentId)
+
+{"headers": ["id", "select_type", "table", "partitions", "type", "possible_keys", "key", "key_len", "ref", "rows", "filtered", "Extra"],
+"values": [[1, "PRIMARY", "d", null, "ALL", null, null, null, null, 2, 100.0, null],
+[1, "PRIMARY", "e", null, "ALL", null, null, null, null, 5, 20.0, "Using where; Using join buffer (hash join)"],
+[2, "SUBQUERY", "Employee", null, "ALL", null, null, null, null, 5, 100.0, "Using temporary"]]}

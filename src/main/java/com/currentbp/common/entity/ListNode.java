@@ -40,12 +40,13 @@ public class ListNode {
             System.out.println("is empty!");
         }
 
+        ListNode temp = original;
         while (true) {
-            System.out.print(original.val);
-            if (null == original.next) {
+            System.out.print(temp.val);
+            if (null == temp.next) {
                 break;
             } else {
-                original = original.next;
+                temp = temp.next;
             }
         }
         System.out.println();

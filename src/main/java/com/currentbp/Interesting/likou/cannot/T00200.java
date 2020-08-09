@@ -1,4 +1,4 @@
-package com.currentbp.Interesting.likou;
+package com.currentbp.Interesting.likou.cannot;
 
 import org.junit.Test;
 
