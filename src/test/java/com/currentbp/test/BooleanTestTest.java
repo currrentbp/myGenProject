@@ -2,11 +2,11 @@ package com.currentbp.test;
 
 import com.alibaba.fastjson.JSONArray;
 import com.currentbp.common.model.Student;
+import com.currentbp.test.baseTypeTest.BooleanTest;
 import org.assertj.core.util.Lists;
 import org.junit.*;
 
 import java.util.*;
-import java.util.concurrent.atomic.AtomicInteger;
 
 /**
  * Created by issuser on 2017/4/7.

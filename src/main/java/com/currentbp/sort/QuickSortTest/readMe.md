@@ -1,12 +1,12 @@
-这个文件夹下的类全部是用于测试快速排序的
+>这个文件夹下的类全部是用于测试快速排序的
 
-时间复杂度O（nlogn）空间复杂度O（logn）最差会变成冒泡排序O(n) 不稳定算法
+>时间复杂度O（nlogn）空间复杂度O（logn）最差会变成冒泡排序O(n) 不稳定算法
 
-[推导时间复杂度的博客](https://www.cnblogs.com/javawebsoa/p/3194015.html)
+>[推导时间复杂度的博客](https://www.cnblogs.com/javawebsoa/p/3194015.html)
 
-quickSort（source[] ,int hight(这个是左边的数字位置),int low(这个是右边的数字位置)）
+>quickSort（source[] ,int hight(这个是左边的数字位置),int low(这个是右边的数字位置)）
 
-步骤：
+####步骤：
 1. 最左边的数字A ，两个游标i（从最左端开始）、j（从最右端开始），
 2. 查出右边的数字B 小于数字A 的位置为j，查出左边的数字C 大于数字A的位置为i
 3. 对调i、j两个位置的数字

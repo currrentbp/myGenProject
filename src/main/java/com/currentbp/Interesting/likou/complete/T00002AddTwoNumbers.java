@@ -69,23 +69,23 @@ public class T00002AddTwoNumbers {
     官方答案
      */
     public ListNode addTwoNumbers2(ListNode l1, ListNode l2) {
-        ListNode dummyHead = new ListNode(0);
-        ListNode p = l1, q = l2, curr = dummyHead;
+        ListNode result = new ListNode(0);
+        ListNode p = l1, q = l2, current = result;
         int carry = 0;
         while (p != null || q != null) {
             int x = (p != null) ? p.val : 0;
             int y = (q != null) ? q.val : 0;
             int sum = carry + x + y;
             carry = sum / 10;
-            curr.next = new ListNode(sum % 10);
-            curr = curr.next;
+            current.next = new ListNode(sum % 10);
+            current = current.next;
             if (p != null) p = p.next;
             if (q != null) q = q.next;
         }
         if (carry > 0) {
-            curr.next = new ListNode(carry);
+            current.next = new ListNode(carry);
         }
-        return dummyHead.next;
+        return result.next;
     }
 
     @Test
@@ -102,7 +102,7 @@ public class T00002AddTwoNumbers {
         ListNode l2_3 = new ListNode(4);
         l2_2.next = l2_3;
 
-        ListNode listNode = addTwoNumbers2(l1, l2);
+        ListNode listNode = addTwoNumbers(l1, l2);
         printListNode(listNode);
     }
 }

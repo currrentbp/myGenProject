@@ -1,4 +1,4 @@
-package com.currentbp.test;
+package com.currentbp.test.baseTypeTest;
 
 import org.junit.Test;
 import org.slf4j.Logger;

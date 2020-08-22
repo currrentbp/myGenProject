@@ -1,4 +1,4 @@
-package com.currentbp.test;
+package com.currentbp.test.baseTypeTest;
 
 import com.alibaba.fastjson.JSON;
 import com.alibaba.fastjson.JSONObject;

@@ -1,5 +1,6 @@
 package com.currentbp.test;
 
+import com.currentbp.test.baseTypeTest.LongTest;
 import org.junit.Test;
 
 /**
