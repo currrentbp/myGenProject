@@ -1,6 +1,7 @@
 package com.currentbp.util.all;
 
 import com.alibaba.fastjson.JSON;
+import org.junit.Test;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
 
@@ -19,6 +20,17 @@ import java.util.regex.Pattern;
 public class StringUtil {
     private final static Logger logger = LoggerFactory.getLogger(StringUtil.class);
 
+    @Test
+    public void deleteLastTest() {
+        StringUtil.printObject(deleteLast(""));
+        StringUtil.printObject(deleteLast("1"));
+        StringUtil.printObject(deleteLast("12"));
+        StringUtil.printObject(deleteLast("123"));
+        StringUtil.printObject(deleteLast("123 "));
+
+    }
+
+
     /**
      * 删除字符串的最后一个字符
      *
@@ -26,17 +38,14 @@ public class StringUtil {
      * @return 最终数据
      */
     public static String deleteLast(String s) {
-        if (null == s) {
-            return null;
+        if (null == s || s.length() == 0) {
+            return s;
         }
-
-        if ("".equals(s)) {
+        if (1 == s.length()) {
             return "";
         }
 
-        StringBuffer sb = new StringBuffer(s);
-
-        return sb.deleteCharAt(sb.length() - 1).toString();
+        return s.substring(0, s.length() - 1);
     }
 
     /**
@@ -393,10 +402,11 @@ public class StringUtil {
     public static void printObject(Object o) {
         printObject("", o);
     }
+
     /**
      * 打印对象：匹配格式"{}"
      */
-    public static void printObject(String format, Object ... objects) {
+    public static void printObject(String format, Object... objects) {
         if (null == format) {
             System.out.println("");
         }
@@ -441,10 +451,11 @@ public class StringUtil {
     /**
      * 首位删除空格
      * 删除各种空格：删除前后的普通空格，删除
+     *
      * @param original 源数据中可能存在空格
      * @return
      */
-    public static String removeBlank(String original){
+    public static String removeBlank(String original) {
         int len = original.length();
         int st = 0;
         char[] val = original.toCharArray();    /* avoid getfield opcode */
@@ -452,25 +463,25 @@ public class StringUtil {
         while ((st < len) && isBlank(val[st])) {
             st++;
         }
-        while ((st < len) && isBlank(val[len-1])) {
+        while ((st < len) && isBlank(val[len - 1])) {
             len--;
         }
         return ((st > 0) || (len < original.length())) ? original.substring(st, len) : original;
     }
 
-    private static boolean isBlank(char c){
+    private static boolean isBlank(char c) {
         Character character = c;
         String s = character.toString();
-        if("\u00A0".equals(s)){//不间断空格\u00A0,主要用在office中,让一个单词在结尾处不会换行显示,快捷键ctrl+shift+space
+        if ("\u00A0".equals(s)) {//不间断空格\u00A0,主要用在office中,让一个单词在结尾处不会换行显示,快捷键ctrl+shift+space
             return true;
         }
-        if("\u0020".equals(s)){//半角空格(英文符号)\u0020,代码中常用的;
+        if ("\u0020".equals(s)) {//半角空格(英文符号)\u0020,代码中常用的;
             return true;
         }
-        if("\u3000".equals(s)){//全角空格(中文符号)\u3000,中文文章中使用;
-           return true;
+        if ("\u3000".equals(s)) {//全角空格(中文符号)\u3000,中文文章中使用;
+            return true;
         }
-        if(c <= ' '){//trim方法中的去空格方式
+        if (c <= ' ') {//trim方法中的去空格方式
             return false;
         }
         return false;

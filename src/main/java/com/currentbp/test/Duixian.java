@@ -16,6 +16,11 @@ public class Duixian {
 		//表示在方法的参数中传输一个对象时，该对象中的一些值被改变可以，但是该对象的地址不会被修改。
 		t1.createDuixiang(t2);
 		System.out.println(t2.i);
+		try {
+			Thread.sleep(100000);
+		} catch (InterruptedException e) {
+			e.printStackTrace();
+		}
 	}
 	
 	public void createDuixiang(Duixian t)

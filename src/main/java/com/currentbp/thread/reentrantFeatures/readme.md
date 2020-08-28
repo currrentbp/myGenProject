@@ -4,3 +4,8 @@
 2. ReentrantLockExceptionRunnable这个类是测试ReentrantLock的重入性
 
 
+
+#lock的读锁
+1. ReentrantReadWriteLockTest
+
+

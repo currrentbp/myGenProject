@@ -18,7 +18,6 @@ public class  AtomicIntegerPrint {
         new Thread(() -> {
             for (char c : c1) {
                 while (1 != lock.get()) {
-//                    System.out.println("========");
                 }
                 System.out.print(c);
                 lock.compareAndSet(1, 2);
@@ -27,7 +26,6 @@ public class  AtomicIntegerPrint {
         new Thread(() -> {
             for (char c : c2) {
                 while (2 != lock.get()) {
-//                    System.out.println("+++++++++");
                 }
                 System.out.print(c);
                 lock.compareAndSet(2, 1);
