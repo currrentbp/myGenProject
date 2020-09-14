@@ -1,4 +1,4 @@
-package com.currentbp.spring.cycleUseBean;
+package com.currentbp.test.spring.cycleUseBean;
 
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
@@ -8,7 +8,7 @@ import org.springframework.stereotype.Service;
  * @createTime 2020/7/30 10:06
  */
 @Service
-public class BeanB1 {
+public class BeanC1 {
     @Autowired
-    private BeanC1 beanC1;
+    private BeanA1 beanA1;
 }

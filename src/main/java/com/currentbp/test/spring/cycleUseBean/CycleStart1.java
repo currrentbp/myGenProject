@@ -1,4 +1,4 @@
-package com.currentbp.spring.cycleUseBean;
+package com.currentbp.test.spring.cycleUseBean;
 
 import com.alibaba.fastjson.JSON;
 import org.springframework.context.ApplicationContext;

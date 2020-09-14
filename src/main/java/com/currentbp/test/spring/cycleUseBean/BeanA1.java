@@ -1,4 +1,4 @@
-package com.currentbp.spring.cycleUseBean;
+package com.currentbp.test.spring.cycleUseBean;
 
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;

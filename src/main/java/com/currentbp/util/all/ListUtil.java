@@ -260,7 +260,14 @@ public class ListUtil<V> {
         }
         System.out.println("]");
     }
-
+    public static void printList(int[][] array) {
+        for (int i = 0; i < array.length; i++) {
+            for (int j = 0; j < array[0].length; j++) {
+                System.out.print(""+array[i][j]+" ");
+            }
+            System.out.println();
+        }
+    }
     public static void printList(int[] array) {
         System.out.print("[");
         if (null != array) {

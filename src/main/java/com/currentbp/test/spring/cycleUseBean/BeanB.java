@@ -1,6 +1,4 @@
-package com.currentbp.spring.cycleUseBean;
-
-import org.springframework.stereotype.Service;
+package com.currentbp.test.spring.cycleUseBean;
 
 /**
  * @author baopan
