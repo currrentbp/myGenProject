@@ -31,7 +31,7 @@ public class Base64Util {
         return result;
     }
 
-    /**
+    /**加密
      * @param value
      * @return
      * @Method：加密
