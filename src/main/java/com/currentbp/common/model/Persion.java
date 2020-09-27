@@ -8,6 +8,14 @@ public class Persion extends Human {
     private Integer id;
     private String name;
 
+    public Persion() {
+    }
+
+    public Persion(Integer id, String name) {
+        this.id = id;
+        this.name = name;
+    }
+
     public Integer getId() {
         return id;
     }
