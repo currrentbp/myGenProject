@@ -1,5 +1,6 @@
 package com.currentbp.test;
 
+import com.currentbp.test.javaBaseTest.MapTest;
 import org.junit.Test;
 
 /**

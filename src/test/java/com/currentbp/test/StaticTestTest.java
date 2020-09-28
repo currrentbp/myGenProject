@@ -1,5 +1,6 @@
 package com.currentbp.test;
 
+import com.currentbp.test.javaBaseTest.StaticTest;
 import org.junit.Test;
 
 /**

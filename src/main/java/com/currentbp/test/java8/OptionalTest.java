@@ -26,5 +26,15 @@ public class OptionalTest {
     }
 
 
+    @Test
+    public void t3(){
+        if(1!=1){
+
+        }else if(2==2){
+            System.out.println("========");
+        }else if(3==3){
+            System.out.println("+++++++");
+        }
+    }
 
 }
