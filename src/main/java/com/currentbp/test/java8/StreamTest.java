@@ -13,14 +13,26 @@ public class StreamTest {
 
 
     @Test
-    public void t1(){
-        List<Student> students = Lists.newArrayList(new Student(1,"1"),new Student(2,"2"));
+    public void t1() {
+        List<Student> students = Lists.newArrayList(new Student(1, "1"), new Student(2, "2"));
         List<Persion> collect = students.stream().map(s -> new Persion(s.getId(), s.getName())).collect(Collectors.toList());
         StringUtil.printObject(collect);
         List<Persion> persions = students.stream().map(s -> {
             return new Persion(s.getId(), s.getName());
         }).collect(Collectors.toList());
 
+    }
+
+    @Test
+    public void t2() {
+        List<Student> students = Lists.newArrayList(new Student(1, "1"), new Student(2, "2"));
+        List<Integer> collect = students
+                .stream()
+                .map(Student::getId)
+                .collect(
+                        Collectors.toList()
+                );
+        StringUtil.printObject(collect);
     }
 
 }
