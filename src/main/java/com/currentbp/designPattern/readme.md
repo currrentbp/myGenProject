@@ -2,6 +2,9 @@
 
 [markdown在线学习](http://www.mdeditor.com/)
 
+#已完成部分
+单例模式、工厂模式、抽象工厂模式、建造者模式
+
 ##1、单例模式：
 确保一个类在任何情况下都绝对只有一个实例，并提供一个全局访问点。
 代码在singleton路径下
@@ -40,4 +43,14 @@
 2. 打包类型的实现类：Wrapper（包装袋）、Bottle（杯子）
     商品类的抽象实现类：Burger（汉堡）、ColdDrink（冷饮）
     商品抽象类的具体实现类：VegBurger（蔬菜汉堡）、ChickenBurger（鸡肉汉堡）、Coke（可口可乐）、Pepsi（百事可乐）
+
+
+##5、 原型模式
+
+
+
+
+
+
+
 

@@ -34,7 +34,7 @@ public class HttpDownloader1 {
     //http://localhost:8080/uploadController/download?id=1
     //http://mirrors.cnnic.cn/apache/tomcat/tomcat-9/v9.0.0.M17/bin/apache-tomcat-9.0.0.M17.zip
     //http://txt.bxwxtxt.com/packdown/fulltxt/126/126004.txt
-    private String requestUrl = "http://www.0dutv.com/plug/down/up2.php/217518714.mp3";
+    private String requestUrl = "https://cnbj3-fusion.fds.api.xiaomi.com/aphrodite/MjYzNDVBRTQ4NUI2OUIyQUVFNUQyQTU1MzUzNzY1NkE..wav";
     private String oldFileName = "";
     private String tail = "";
     private String tmpTail = ".tmp";
