@@ -1,8 +1,15 @@
 package com.currentbp.util.all;
 
+import org.apache.commons.lang3.time.DateFormatUtils;
+
 import java.text.SimpleDateFormat;
+import java.time.LocalDate;
+import java.time.LocalDateTime;
+import java.time.LocalTime;
+import java.time.ZoneOffset;
 import java.util.Calendar;
 import java.util.Date;
+import java.util.TimeZone;
 
 /**
  * 关于时间的类。
@@ -11,6 +18,44 @@ import java.util.Date;
  * @time 20160405
  */
 public class TimeUtil {
+    private static final TimeZone zone = TimeZone.getTimeZone("Asia/Shanghai");
+    private final static ZoneOffset ZONE_OFFSET = ZoneOffset.ofHours(8);
+    private static final Long dayMillis = 24L * 3600 * 1000;
+
+    /**
+     * 获取今天开始时间
+     */
+    public static Date getTodayZero() {
+        return getDateZero(LocalDate.now(ZONE_OFFSET));
+    }
+
+    /**
+     * 获取今天结束时间
+     */
+    public static Date getTodayEnd() {
+        return getDateEnd(LocalDate.now(ZONE_OFFSET));
+    }
+
+    public static Date getDateZero(LocalDate localDate) {
+        return Date.from(
+                LocalDateTime.of(localDate, LocalTime.MIN)
+                        .toInstant(ZONE_OFFSET));
+    }
+
+    public static Date getDateEnd(LocalDate localDate) {
+        return Date.from(
+                LocalDateTime.of(localDate, LocalTime.of(23, 59, 59, 0))
+                        .toInstant(ZONE_OFFSET));
+    }
+
+    /**
+     * 获取昨天的这个时间
+     */
+    public static String getYesterdayStr() {
+        long now = System.currentTimeMillis();
+        long yester = now - dayMillis;
+        return DateFormatUtils.format(yester, "yyyyMMdd", zone);
+    }
 
     /**
      * 获取当前年份

@@ -12,6 +12,14 @@ import org.junit.Test;
 public class IntTest {
 
     @Test
+    public void t1(){
+        String s1 = " 1, 2";
+        String[] split = s1.split(",");
+        int i = Integer.parseInt(split[0]);
+        System.out.println(i);
+    }
+
+    @Test
     public void cacheTest(){
         int i = 128;
         Integer i2 = 128;

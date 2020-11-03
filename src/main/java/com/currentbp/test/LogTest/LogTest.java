@@ -11,7 +11,6 @@ import org.slf4j.MDC;
  */
 public class LogTest {
     private final static Logger logger = LoggerFactory.getLogger(LogTest.class);
-
     public static void main(String[] args) {
         MDC.put("currentOperatorId", "" + 22222);
         logger.info("11111111111111");
