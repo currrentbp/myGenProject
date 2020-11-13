@@ -13,11 +13,16 @@
                 http://www.springframework.org/schema/context
               http://www.springframework.org/schema/context/spring-context.xsd">
     <!-- 扫描路径 -->
-    <context:component-scan base-package="com.currentbp.test.spring"></context:component-scan>
+    <context:component-scan base-package="com.currentbp.test.spring.propagation.required"/>
+    <context:component-scan base-package="com.currentbp.interceptor"/>
+
+    <context:annotation-config />
+
+    <aop:aspectj-autoproxy proxy-target-class="true" expose-proxy="false" />
 
 
     <bean id="dataSource" class="com.alibaba.druid.pool.DruidDataSource" init-method="init" destroy-method="close">
-        <property name="driverClassName" value="com.mysql.jdbc.Driver"></property>
+        <property name="driverClassName" value="com.mysql.jdbc.Driver"/>
         <!-- 测试 185数据库  TEST -->
         <!--连接路径-->
         <property name="url"
@@ -50,7 +55,7 @@
     </bean>
 
     <bean name="jdbcTemplate" class="org.springframework.jdbc.core.JdbcTemplate">
-        <property name="dataSource" ref="dataSource"></property>
+        <property name="dataSource" ref="dataSource"/>
     </bean>
 
     <bean id="transactionManager" class="org.springframework.jdbc.datasource.DataSourceTransactionManager">
