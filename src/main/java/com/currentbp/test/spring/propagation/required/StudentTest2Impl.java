@@ -5,6 +5,7 @@ import org.slf4j.LoggerFactory;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.jdbc.core.JdbcTemplate;
 import org.springframework.stereotype.Service;
+import org.springframework.transaction.annotation.Propagation;
 import org.springframework.transaction.annotation.Transactional;
 
 /**
@@ -16,8 +17,8 @@ public class StudentTest2Impl implements StudentTest2 {
     private final static Logger logger = LoggerFactory.getLogger(StudentTest2Impl.class);
     @Autowired
     private JdbcTemplate jdbcTemplate;
-    //默认隔离级别
-    @Transactional()
+    //默认事务传播级别
+    @Transactional(propagation = Propagation.REQUIRED)
     public void insertTwo(){
         logger.info("=======================");
         this.insertOne();
@@ -25,7 +26,9 @@ public class StudentTest2Impl implements StudentTest2 {
         throw new RuntimeException("===>sssssssssssss");
     }
 
+    @Transactional(propagation = Propagation.REQUIRED)
     public void insertOne() {
+        logger.info("this is insert one");
         jdbcTemplate.update("insert student(id,`name`) value(2,'2')");
     }
 
