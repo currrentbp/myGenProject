@@ -1,13 +1,17 @@
 package com.currentbp.test.javaBaseTest;
 
 
+import com.currentbp.common.model.Human;
+import com.currentbp.common.model.Persion;
 import com.currentbp.common.model.Student;
 import com.currentbp.util.all.ListUtil;
 import com.currentbp.util.all.RandomUtil;
+import org.assertj.core.util.Lists;
 import org.junit.Test;
 
 import java.lang.reflect.Array;
-import java.util.Random;
+import java.util.ArrayList;
+import java.util.List;
 
 /**
  * 
@@ -38,5 +42,12 @@ public class FangxingTest<T> {
 		System.out.println("-911".matches("-?\\d+"));
 		System.out.println("+911".matches("-?\\d+"));
 	}
+
+	@Test
+    public void t2(){
+        List<? extends Human> persion = new ArrayList<Persion>();
+//        persion.add(new Persion(1,"1"));//error
+        List<? extends Human> persion2 = Lists.newArrayList(new Persion(1,"1"));
+    }
 
 }

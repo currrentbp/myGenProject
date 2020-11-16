@@ -35,7 +35,7 @@ public class T010NumWays {
 //        StringUtil.printObject(numWays(5));
 //        StringUtil.printObject(numWays(6));
 //        StringUtil.printObject(numWays(7));
-        StringUtil.printObject(numWays2(44));
+        StringUtil.printObject(numWays(66));
     }
     public int numWays2(int n) {
         if(n == 1){
@@ -47,7 +47,7 @@ public class T010NumWays {
         return numWays2(n-1)+numWays2(n-2);
     }
 
-    public int numWays(int n) {
+    public long numWays(int n) {
         if (n == 2) {
             return 2;
         }
@@ -58,10 +58,10 @@ public class T010NumWays {
             return 1;
         }
 
-        int result = 0;
+        long result = 0;
 
-        int first = 1;
-        int second = 2;
+        long first = 1;
+        long second = 2;
 
         for (int i = 3; i <= n; i++) {
             result = first+second;

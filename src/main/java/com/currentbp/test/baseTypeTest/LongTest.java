@@ -1,5 +1,7 @@
 package com.currentbp.test.baseTypeTest;
 
+import org.junit.Test;
+
 import java.util.Date;
 
 /**
@@ -10,6 +12,10 @@ import java.util.Date;
  */
 public class LongTest {
 
+	@Test
+	public void parseToString(){
+		System.out.println(Long.toString(10L));
+	}
 
 	//==========================        测试方法中的实现方法          ===============================================================//
 	public void nullToLong(){

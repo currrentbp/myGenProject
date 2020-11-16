@@ -17,8 +17,8 @@ import java.util.UUID;
  * @createTime 2020/10/30 17:12
  */
 
-@Aspect
 @Component
+@Aspect
 public class LogSpringFunctionInterceptor {
     private static final Logger LOGGER = LoggerFactory.getLogger(LogSpringFunctionInterceptor.class);
     {
@@ -31,14 +31,13 @@ public class LogSpringFunctionInterceptor {
 
     @Pointcut("execution(* com.currentbp.test.spring.propagation.required.StudentTest2.*(..))")
     public void pointCut1(){
-        LOGGER.info("=========222222222===========");
+        LOGGER.info("=========222222222===========StudentTest2");
     };
 
     @Before("pointCut1()")
     public void logStart() {
         MDC.put("invokeNo", UUID.randomUUID().toString().replaceAll("-", ""));
         System.out.println("======>logStart===========>");
-        System.out.println("除法运行....参数列表是:{}");
     }
 
     @Around("pointCut1()")
