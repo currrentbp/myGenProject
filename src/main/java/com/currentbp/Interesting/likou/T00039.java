@@ -1,5 +1,8 @@
 package com.currentbp.Interesting.likou;
 
+import com.currentbp.util.all.StringUtil;
+import org.junit.Test;
+
 import java.util.ArrayList;
 import java.util.List;
 
@@ -31,25 +34,31 @@ candidates中的数字可以无限制重复被选取。
  [3,5]
 ]
      */
+    @Test
+    public void t1() {
+        StringUtil.printObject(combinationSum(new int[]{2, 3, 5}, 8));
+    }
+
     public List<List<Integer>> combinationSum(int[] candidates, int target) {
         List<List<Integer>> result = new ArrayList<>();
-        int index = candidates.length;
-        getCombinationSum(candidates,target,index,result);
+        int currentSum = 0;
+        getCombinationSum(candidates, target, currentSum, 0, result, new ArrayList<>());
         return result;
     }
 
-    private void getCombinationSum(int[] candidates, int target, int index, List<List<Integer>> result) {
-        while(true) {
-            if (index>=0) {
-                getSonCombinationSum(candidates, target, index, result);
-                index--;
-            }else{
-                break;
-            }
+    private void getCombinationSum(int[] candidates, int target, int currentSum, int startIndex,
+                                   List<List<Integer>> result, List<Integer> before) {
+        if (target == currentSum) {
+            result.add(before);
+        }
+        if (target < currentSum) {
+            return;
+        }
+        for (int i = startIndex; i < candidates.length; i++) {
+            List<Integer> temp = new ArrayList<>(before);
+            temp.add(candidates[i]);
+            getCombinationSum(candidates, target, currentSum + candidates[i],i, result, temp);
         }
     }
 
-    private void getSonCombinationSum(int[] candidates, int target, int index, List<List<Integer>> result) {
-
-    }
 }
