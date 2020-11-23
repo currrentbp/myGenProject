@@ -1,10 +1,25 @@
 package com.currentbp.test.baseTypeTest;
 
+import org.junit.Test;
+
+import java.util.ArrayList;
+import java.util.List;
+
 /**
  * @author current_bp
  * @createTime 20170407
  */
 public class BooleanTest {
+
+    @Test
+    public void t1(){
+        List<Integer> t = null;
+        for(Integer i: t){
+            System.out.println(i);
+        }
+
+
+    }
     public static void main(String[] args) {
         int a = 10;
         assert a >9 :"baopan";
