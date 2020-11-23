@@ -1,4 +1,4 @@
-package com.currentbp.Interesting.likou;
+package com.currentbp.Interesting.likou.complete;
 
 import com.currentbp.util.all.StringUtil;
 import org.junit.Test;
@@ -51,7 +51,7 @@ public class T0054spiralOrder {
                 break;
             }
             while (true) {
-                int[] dir = directory.get(index / 4);
+                int[] dir = directory.get(index % 4);
                 if (top <= startX && startX <= down && left <= startY && startY <= right) {
                     result.add(matrix[startX][startY]);
                     startX = startX + dir[0];
@@ -59,21 +59,23 @@ public class T0054spiralOrder {
                 } else {
                     startX = startX - dir[0];
                     startY = startY - dir[1];
-                    switch (index / 4) {
+                    switch (index % 4) {
                         case 0:
                             top++;
                             break;
                         case 1:
                             right--;
+                            break;
                         case 2:
-                            down++;
+                            down--;
+                            break;
                         case 3:
                             left++;
                             break;
                     }
                     index++;
-                    startX = startX + directory.get(index / 4)[0];
-                    startY = startY + directory.get(index / 4)[1];
+                    startX = startX + directory.get(index % 4)[0];
+                    startY = startY + directory.get(index % 4)[1];
                     break;
                 }
             }
