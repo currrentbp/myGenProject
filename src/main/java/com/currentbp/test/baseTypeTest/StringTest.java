@@ -2,6 +2,7 @@ package com.currentbp.test.baseTypeTest;
 
 import java.util.*;
 
+import com.currentbp.util.all.StringUtil;
 import org.junit.Test;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
@@ -18,6 +19,12 @@ public class StringTest {
 
     //===================          测试方法          ========================================================//
 
+    @Test
+    public void specialStringSplit(){
+        String names = "baopan.1";
+        String[] split = names.split("\\.");
+        StringUtil.printObject(split);
+    }
 
     @Test
     public void stringSplit(){

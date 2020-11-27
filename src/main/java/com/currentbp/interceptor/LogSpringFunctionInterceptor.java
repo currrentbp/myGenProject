@@ -29,7 +29,7 @@ public class LogSpringFunctionInterceptor {
         LOGGER.info("====================");
     }
 
-    @Pointcut("execution(* com.currentbp.test.spring.propagation.required.StudentTest2.*(..))")
+    @Pointcut("execution(* com.currentbp.test.spring.propagation.*.*.*(..))")
     public void pointCut1(){
         LOGGER.info("=========222222222===========StudentTest2");
     };
