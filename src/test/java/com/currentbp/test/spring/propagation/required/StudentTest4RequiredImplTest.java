@@ -4,13 +4,13 @@ import com.currentbp.SpringBaseTest;
 import org.junit.Test;
 import org.springframework.beans.factory.annotation.Autowired;
 
-public class StudentTest2ImplTest extends SpringBaseTest {
+public class StudentTest4RequiredImplTest extends SpringBaseTest {
     @Autowired
-    private StudentTest2 studentTest2;
+    private StudentTest4Required studentTest4Required;
 
     @Test
     public void t1(){
-        studentTest2.insertTwo();
+        studentTest4Required.insertTwo();
     }
 
 }

@@ -13,8 +13,8 @@ import org.springframework.transaction.annotation.Transactional;
  * @createTime 2020/10/15 17:00
  */
 @Service
-public class StudentTest2Impl implements StudentTest2 {
-    private final static Logger logger = LoggerFactory.getLogger(StudentTest2Impl.class);
+public class StudentTest4RequiredImpl implements StudentTest4Required {
+    private final static Logger logger = LoggerFactory.getLogger(StudentTest4RequiredImpl.class);
     @Autowired
     private JdbcTemplate jdbcTemplate;
     //默认事务传播级别
