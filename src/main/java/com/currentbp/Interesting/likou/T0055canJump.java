@@ -32,10 +32,10 @@ public class T0055canJump {
     @Test
     public void t1() {
 
-        StringUtil.printObject(canJump(new int[]{2, 0, 0, 0, 2, 0, 0, 0}));
+//        StringUtil.printObject(canJump(new int[]{2, 0, 0, 0, 2, 0, 0, 0}));
 //        StringUtil.printObject(canJump(new int[]{3, 0, 8, 2, 0, 0, 1}));
 //        StringUtil.printObject(canJump(new int[]{2, 5, 0, 0}));
-//        StringUtil.printObject(canJump(new int[]{2, 3, 1, 1, 4}));
+        StringUtil.printObject(canJump(new int[]{2, 3, 1, 1, 4}));
 //        StringUtil.printObject(canJump(new int[]{3, 2, 1, 0, 4}));
     }
 
@@ -57,27 +57,43 @@ public class T0055canJump {
         if (nums.size() == 1) {
             return nums.get(0) > 0;
         }
-        return doEach3(nums, 0, 0);
+        return doCanJump(nums, 0);
     }
 
-    private boolean doEach3(List<Integer> nums, int currentIndex, int remain) {//todo not work
-        if (remain < 0) {
-            return false;
+    private boolean doCanJump(List<Integer> nums, int currentIndex) {
+        if (nums.size() <= currentIndex) {
+            return true;
         }
-        if (currentIndex == nums.size() - 1) {
-            if (nums.get(currentIndex) >= 0) {
+
+        for (int nextIndex = currentIndex + 1; nextIndex <= nums.size(); nextIndex++) {
+            if (nextIndex == nums.size()) {
                 return true;
-            } else {
-                return false;
             }
-        }
-        for (int i = currentIndex; i < nums.size(); i++) {
-            int remain1 = nums.get(currentIndex) + getCost(nums.get(currentIndex + 1));
-            if (remain1 >= 0) {
-                doEach3(nums, currentIndex + 1, remain1);
+            if (nums.get(nextIndex) < 0) {
+                int allCost = getAllCost(nums, currentIndex, nextIndex);
+                if (nums.get(currentIndex) + allCost < 0) {//不能继续前进了
+                    break;
+                }
+            }
+            if (nums.get(nextIndex) > 0) {//只有是陆地才能向下一个地方跳
+                boolean temp = doCanJump(nums, nextIndex);
+                if (temp) {
+                    return true;
+                }
             }
         }
         return false;
+    }
+
+    private int getAllCost(List<Integer> nums, int currentIndex, int nextIndex) {
+        if (currentIndex == nextIndex) {
+            return 0;
+        }
+        int result = 0;
+        for (int i = currentIndex + 1; i <= nextIndex; i++) {
+            result += getCost(nums.get(i));
+        }
+        return result;
     }
 
     private int getCost(int x) {
