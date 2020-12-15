@@ -130,6 +130,10 @@ public class RandomUtil {
 		return (int) (Math.random() * maxNum);
 	}
 
+	public static long getRandomNum(long maxNum) {
+		return (int) (Math.random() * maxNum);
+	}
+
 	/**
 	 * 获取比较大的数的随机数
 	 * 
