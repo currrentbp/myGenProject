@@ -351,6 +351,10 @@ public class RedisCacheUtilImpl implements RedisCacheUtil {
         return jedis.sort(key, sortingParameters);
     }
 
+    public String getSet(String cacheKey, String valueOf) {
+        return jedis.getSet(cacheKey,valueOf);
+    }
+
     /**
      * @param lock    所标记key
      * @param expired 超时时间  超时认为发生死锁，强制得到锁
@@ -399,4 +403,6 @@ public class RedisCacheUtilImpl implements RedisCacheUtil {
         }
         return del;
     }
+
+
 }
