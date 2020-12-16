@@ -24,9 +24,7 @@ public class T0055canJump {
 输出: false
 解释: 无论怎样，你总会到达索引为 3 的位置。但该位置的最大跳跃长度是 0 ， 所以你永远不可能到达最后一个位置。
 解题思路：
-1、将0比作河，不是0的都是孤岛，
-2、河为负数，孤岛需要渡河能最大走几步，如果两个和为小于等于0的话，则跳不过
-3、寻找最后一个陆地0的可达地点，如果寻找不到地方，则认为不可达
+1、从后往前遍历，如果遇到nums[i] = 0，就找i前面的元素j，使得nums[j] > i - j。如果找不到，则不可能跳跃到num[i+1]，返回false。
      */
 
     @Test
@@ -35,109 +33,56 @@ public class T0055canJump {
 //        StringUtil.printObject(canJump(new int[]{2, 0, 0, 0, 2, 0, 0, 0}));
 //        StringUtil.printObject(canJump(new int[]{3, 0, 8, 2, 0, 0, 1}));
 //        StringUtil.printObject(canJump(new int[]{2, 5, 0, 0}));
-        StringUtil.printObject(canJump(new int[]{2, 3, 1, 1, 4}));
+//        StringUtil.printObject(canJump(new int[]{2, 3, 1, 1, 4}));
 //        StringUtil.printObject(canJump(new int[]{3, 2, 1, 0, 4}));
+//        StringUtil.printObject(canJump(new int[]{0, 1}));
+        StringUtil.printObject(canJump(new int[]{2, 0, 0}));
+//        StringUtil.printObject(canJump(new int[]{4, 0, 2, 2, 2, 1, 0, 1, 4, 2, 1, 0}));
+//        StringUtil.printObject(canJump(new int[]{0}));
     }
 
-    public boolean canJump(int[] nums) {
+    private boolean canJump(int[] nums) {
         if (null == nums || nums.length <= 1) {
             return true;
         }
-
-        List<List<Integer>> temp = getRiverAndIsland(nums);
-        List<Integer> costAndSelfLength = getCostAndSelfLength(temp);
-
-        return cal(costAndSelfLength);
-    }
-
-    public boolean cal(List<Integer> nums) {
-        if (null == nums || nums.size() <= 0) {
-            return true;
-        }
-        if (nums.size() == 1) {
-            return nums.get(0) > 0;
-        }
-        return doCanJump(nums, 0);
-    }
-
-    private boolean doCanJump(List<Integer> nums, int currentIndex) {
-        if (nums.size() <= currentIndex) {
-            return true;
-        }
-
-        for (int nextIndex = currentIndex + 1; nextIndex <= nums.size(); nextIndex++) {
-            if (nextIndex == nums.size()) {
-                return true;
-            }
-            if (nums.get(nextIndex) < 0) {
-                int allCost = getAllCost(nums, currentIndex, nextIndex);
-                if (nums.get(currentIndex) + allCost < 0) {//不能继续前进了
-                    break;
+        for (int i = nums.length - 1; i >= 0; i--) {
+            if (nums[i] == 0) {
+                if (i - 1 < 0) {
+                    return false;
                 }
-            }
-            if (nums.get(nextIndex) > 0) {//只有是陆地才能向下一个地方跳
-                boolean temp = doCanJump(nums, nextIndex);
-                if (temp) {
-                    return true;
+                boolean flag = false;//能找到nums[j] > i - j
+                for (int j = i - 1; j >= 0; j--) {
+                    if(nums[j] >= i - j && i==nums.length-1){
+                        flag = true;
+                    }
+                    if (nums[j] > i - j) {
+                        flag = true;
+                    }
+                }
+                if (!flag) {
+                    return false;
                 }
             }
         }
-        return false;
-    }
-
-    private int getAllCost(List<Integer> nums, int currentIndex, int nextIndex) {
-        if (currentIndex == nextIndex) {
-            return 0;
-        }
-        int result = 0;
-        for (int i = currentIndex + 1; i <= nextIndex; i++) {
-            result += getCost(nums.get(i));
-        }
-        return result;
-    }
-
-    private int getCost(int x) {
-        return x >= 0 ? -x : x;
-    }
-
-    private List<Integer> getCostAndSelfLength(List<List<Integer>> temp) {
-        List<Integer> result = new ArrayList<>();
-        temp.forEach(x -> {
-            int size = x.size();
-            if (x.get(0) == 0) {
-                result.add(size * -1);
-            } else {
-                int maxArrive = x.get(0) - size + 1;
-                for (int i = 0; i < x.size(); i++) {
-                    maxArrive = Math.max(maxArrive, x.get(i) - size + 1 + i);
-                }
-                result.add(maxArrive);
-            }
-        });
-        return result;
+        return true;
     }
 
     /**
-     * 获取河流和岛屿的结构体
+     * 官方评论第一个解题思路
      */
-    private List<List<Integer>> getRiverAndIsland(int[] nums) {
-        List<List<Integer>> result = new ArrayList<>();
-        List<Integer> temp = new ArrayList<>();
-        boolean isRiver = nums[0] == 0;//是否是河流
-        for (int i = 0; i < nums.length; i++) {
-            if (isRiver ^ nums[i] == 0) {//true ^ false, false^true
-                if (0 != temp.size()) {
-                    result.add(temp);
-                }
-                temp = new ArrayList<>();
-                isRiver = nums[i] == 0;
+    public boolean canJump3(int[] nums) {
+        int n = 1;
+        for (int i = nums.length - 2; i >= 0; i--) {
+            if (nums[i] >= n) {
+                n = 1;
+            } else {
+                n++;
             }
-            temp.add(nums[i]);
+            if (i == 0 && n > 1) {
+                return false;
+            }
         }
-        if (0 != temp.size()) {
-            result.add(temp);
-        }
-        return result;
+        return true;
     }
 
 
