@@ -3,6 +3,8 @@ package com.currentbp.Interesting.likou;
 import com.currentbp.util.all.StringUtil;
 import org.junit.Test;
 
+import java.text.MessageFormat;
+
 /**
  * @author baopan
  * @createTime 20201220
@@ -49,5 +51,12 @@ public class T0062uniquePaths {
             result /= x;
         }
         return result;
+    }
+
+    @Test
+    public void t2(){
+        String description = "\uD83D\uDC8C您关注的【{0}】更新啦";
+        String fff = MessageFormat.format(description, "[耐克。态动了更新[亲了");
+        System.out.println(fff);
     }
 }
