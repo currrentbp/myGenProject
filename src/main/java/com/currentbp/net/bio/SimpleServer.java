@@ -1,4 +1,4 @@
-package com.currentbp.net.nio;
+package com.currentbp.net.bio;
 
 
 import java.io.InputStream;
@@ -6,7 +6,6 @@ import java.net.ServerSocket;
 import java.net.Socket;
 import java.util.concurrent.ExecutorService;
 import java.util.concurrent.Executors;
-import java.util.concurrent.ThreadPoolExecutor;
 
 /**
  * @author baopan
