@@ -1,4 +1,4 @@
-package com.currentbp.nettyTest.v1;
+package com.currentbp.net.netty.v1;
 
 import io.netty.bootstrap.Bootstrap;
 import io.netty.channel.ChannelFuture;
