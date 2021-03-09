@@ -12,7 +12,7 @@ public class HexDecoding {
 
     @Test
     public void t2() {
-        String source = "\u76fc\u76fc";
+        String source = "\u542C\u9053";
         String s = doDecoding4HexString(source);
         System.out.println(s);
     }
@@ -28,7 +28,7 @@ public class HexDecoding {
         int read = -1;
         byte[] byte3 = new byte[4];
         while ((read = inputStream.read()) > -1) {
-            System.out.println("read:"+read);
+//            System.out.println("read:"+read);
             if (read == '\\') {
                 try {
                     inputStream.read(byte3);
