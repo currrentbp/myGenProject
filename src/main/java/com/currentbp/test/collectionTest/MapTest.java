@@ -20,6 +20,7 @@ public class MapTest {
         users.put(1L, 1L);
         users.put(2L, 2L);
         users.put(3L, 3L);
+        //ssssss
         Map<Long, Long> noRobotUsers = users.entrySet().stream()
                 .filter(kv -> kv.getKey() != 2L)
                 .collect(Collectors.toMap(Map.Entry::getKey, Map.Entry::getValue));
