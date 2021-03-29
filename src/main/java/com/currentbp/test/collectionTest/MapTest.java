@@ -17,6 +17,7 @@ public class MapTest {
     @Test
     public void t1() {
         Map<Long, Long> users = new HashMap<>();
+        //11111111
         users.put(1L, 1L);
         users.put(2L, 2L);
         users.put(3L, 3L);
