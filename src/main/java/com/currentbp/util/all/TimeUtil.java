@@ -93,11 +93,13 @@ public class TimeUtil {
      * @return 当前时间
      */
     public static String currentTimePrecise() {
+        return currentTime("yyyy-MM-dd HH:mm:ss:SSS");
+    }
+    public static String currentTime(String pattern){
         String time;
         Date d = new Date();
-        SimpleDateFormat s = new SimpleDateFormat("yyyy-MM-dd HH:mm:ss:SSS");
+        SimpleDateFormat s = new SimpleDateFormat(pattern);
         time = s.format(d);
-
         return time;
     }
 
