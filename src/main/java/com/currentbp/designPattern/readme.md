@@ -48,6 +48,13 @@
 ##5、 原型模式
 
 
+##6、 策略模式 strategyPattern
+
+##7、 代理模式 proxyPattern
+
+
+
+
 
 
 

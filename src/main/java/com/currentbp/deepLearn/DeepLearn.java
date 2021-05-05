@@ -1,4 +1,4 @@
-package com.currentbp.deepLearn.T180428;
+package com.currentbp.deepLearn;
 
 import java.util.Random;
 
