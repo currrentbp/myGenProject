@@ -30,6 +30,13 @@ public class StringUtil {
 
     }
 
+    public static boolean isEmpty(String content){
+        return null == content || content.length()==0;
+    }
+
+    public static boolean isNotEmpty(String content){
+        return !isEmpty(content);
+    }
 
     /**
      * 删除字符串的最后一个字符

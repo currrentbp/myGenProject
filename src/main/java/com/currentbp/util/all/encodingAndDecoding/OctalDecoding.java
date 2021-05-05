@@ -27,7 +27,7 @@ public class OctalDecoding {
 
     @Test
     public void t1() {
-        String source1 = "\\347\\261\\263\\350\\201\\212\\345\\256\\230\\346\\226\\271\\345\\233\\242\\351\\230\\237";
+        String source1 = "\\344\\270\\273\\346\\222\\255\\345\\267\\262\\345\\274\\200\\345\\205\\266\\344\\273\\226\\346\\210\\277\\351\\227\\264";
         String s1 = doDecoding4Octal(source1);
         System.out.println(s1);
     }
@@ -47,6 +47,7 @@ public class OctalDecoding {
                 } catch (IOException e) {
                     e.printStackTrace();
                 }
+//                System.out.println("===>"+new String(byte3)+", parse:"+Integer.parseInt(new String(byte3), 8));
                 outputStream.write(Integer.parseInt(new String(byte3), 8));
             } else {
                 outputStream.write(read);
@@ -59,5 +60,21 @@ public class OctalDecoding {
             e.printStackTrace();
         }
         return decodeMessage;
+    }
+
+    @Test
+    public void t4(){
+        String s = doEncoding4Octal("你加入的什么是快乐星球聊天室涉及敏感话题，已被管理员强制关闭。");
+        System.out.println(s);
+    }
+
+    public String doEncoding4Octal(String source){
+        //todo not work
+        char[] chars = source.toCharArray();
+        StringBuffer stringBuffer = new StringBuffer("");
+        for (char aChar : chars) {
+            stringBuffer.append(Integer.toOctalString(aChar));
+        }
+        return stringBuffer.toString();
     }
 }

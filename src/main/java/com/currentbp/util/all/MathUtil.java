@@ -63,7 +63,7 @@ public class MathUtil {
 
 
     public static long c(int m, int n) {
-        Assert.isTrue(0<m && m <= m, "数学表达式不正确，0<m<=m");
+        Assert.isTrue(0<m && m <= n, "数学表达式不正确，0<m<=m");
         long result = factorial(m, n) / factorial(m);
 
         return result;
@@ -91,6 +91,7 @@ public class MathUtil {
      * @return 结果
      */
     public static long factorial(int m, int n) {
+        Assert.isTrue(m>0 && m<=n ,"格式错误");
         long result = 1;
         for (int i = n - m + 1; i <= n; i++) {
             result = result * i;

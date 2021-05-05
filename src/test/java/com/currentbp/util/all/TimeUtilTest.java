@@ -4,6 +4,8 @@ import org.junit.Test;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
 
+import java.text.ParseException;
+import java.text.SimpleDateFormat;
 import java.util.Date;
 
 /**
@@ -105,6 +107,22 @@ public class TimeUtilTest {
     public void getCurrentDay() throws Exception {
         Integer currentDay = TimeUtil.getCurrentDay();
         logger.info("===>" + currentDay);
+    }
+
+    @Test
+    public void t1() throws ParseException {
+        SimpleDateFormat s = new SimpleDateFormat("yyyy-MM-dd HH:mm:ss:SSS");
+        System.out.println(s.parse("2021-04-14 20:51:30:111"));
+    }
+
+    @Test
+    public void t3(){
+        String currentTime = TimeUtil.currentTime("yyyyMMddHHmmss");
+        String minute = currentTime.substring(0, 12);
+        String secondsStr = currentTime.substring(12);
+        int seconds = Integer.parseInt(secondsStr);
+
+        System.out.println( minute + (seconds >= 30 ? "30" : "00"));
     }
 
 
