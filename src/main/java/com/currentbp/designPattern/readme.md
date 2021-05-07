@@ -52,6 +52,8 @@
 
 ##7、 代理模式 proxyPattern
 
+##8、 门面模式 FacadePattern
+
 
 
 
