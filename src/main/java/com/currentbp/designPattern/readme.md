@@ -50,9 +50,38 @@
 
 ##6、 策略模式 strategyPattern
 
+
+
 ##7、 代理模式 proxyPattern
 
 ##8、 门面模式 FacadePattern
+~~~
+1、业务实现层：serviceImpl
+2、门面实现层：facade层
+~~~
+
+##9、 适配器模式 AdapterPattern
+~~~
+适配器模式有两种：类适配器模式，对象适配器模式
+base:
+1、内部用户信息的接口和接口实现：IUserInfo,UserInfoImpl
+2、外部用户信息的接口和接口实现：IOutUserInfo,OutUserInfoImpl
+3、最初原始调用的方法：UseAdapterPattern
+4、增加一个中间实现，使之改动最小，UseOutUserInfo，这个类继承了OutUserInfoImpl，实现了IUserInfo
+5、再在UseAdapterPattern稍微修改一下类，使之调用方修改最少
+
+1、类适配模式： base
+2、对象适配式： 就是将OutUserInfoImpl的继承关系变成内部成员变量
+~~~
+
+##10、  模板方法模式 templateMethodPattern
+~~~
+
+~~~
+
+
+
+
 
 
 
