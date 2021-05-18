@@ -60,7 +60,7 @@
 2、门面实现层：facade层
 ~~~
 
-##9、 适配器模式 AdapterPattern
+##9、 适配器模式 adapterPattern
 ~~~
 适配器模式有两种：类适配器模式，对象适配器模式
 base:
@@ -76,10 +76,15 @@ base:
 
 ##10、  模板方法模式 templateMethodPattern
 ~~~
+板方法模式就是在模板方法中按照一个的规则和顺序调用基本方法
 
 ~~~
 
+##11、 桥梁模式 bridgePattern
+```
+ssssssss
 
+```
 
 
 
