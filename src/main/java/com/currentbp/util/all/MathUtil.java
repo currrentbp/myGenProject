@@ -136,6 +136,26 @@ public class MathUtil {
         return result;
     }
 
+    private static ArrayList<Integer> tmpArr = new ArrayList<>();
+    public static void combination2(int index,int k,int []arr) {
+        if(k == 1){
+            for (int i = index; i < arr.length; i++) {
+                tmpArr.add(arr[i]);
+                System.out.print(tmpArr.toString() + ",");
+                tmpArr.remove((Object)arr[i]);
+            }
+        }else if(k > 1){
+            for (int i = index; i <= arr.length - k; i++) {
+                tmpArr.add(arr[i]); //tmpArr都是临时性存储一下
+                combination2(i + 1,k - 1, arr); //索引右移，内部循环，自然排除已经选择的元素
+                tmpArr.remove((Object)arr[i]); //tmpArr因为是临时存储的，上一个组合找出后就该释放空间，存储下一个元素继续拼接组合了
+            }
+        }else{
+            return ;
+        }
+    }
+
+
     /**
      * 是否存在下一个可以标记的位置
      *
