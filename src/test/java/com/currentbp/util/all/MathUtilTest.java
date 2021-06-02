@@ -5,6 +5,7 @@ import org.junit.Test;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
 
+import java.util.ArrayList;
 import java.util.List;
 
 /**
@@ -28,9 +29,18 @@ public class MathUtilTest {
 
     @Test
     public void combination3(){
+        //,13,14,15,16,17,18,19,20,21,22,23,24,25,26,27,28,29,30,31,32
+        MathUtil.combination2(0,2,new int[]{1,2,3,4,5,6,7,8,9,10,11,12});
+        List<int[]> combinationArr = MathUtil.combinationArr;
+        StringUtil.printObject(combinationArr.size());
+        StringUtil.printObject(combinationArr);
+
+        MathUtil.combinationArr = new ArrayList<>();
         MathUtil.combination2(0,5,new int[]{1,2,3,4,5,6,7,8,9,10,11,12,13,14,15,16,17,18,19,20,21,22,23,24,25,26,27,28,29,30,31,32});
-        StringUtil.printObject(MathUtil.combinationArr.size());
-        StringUtil.printObject(MathUtil.combinationArr);
+        List<int[]> combinationArr2 = MathUtil.combinationArr;
+        StringUtil.printObject(combinationArr2.size());
+        StringUtil.printObject(combinationArr2);
+        StringUtil.printObject(combinationArr);
     }
 
 
