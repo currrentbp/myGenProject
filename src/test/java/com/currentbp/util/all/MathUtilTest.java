@@ -12,6 +12,13 @@ import java.util.List;
  */
 public class MathUtilTest {
     private final static Logger logger = LoggerFactory.getLogger(MathUtilTest.class);
+
+    @Test
+    public void combination2(){
+        int[] source = {1,2,3,4};
+        MathUtil.combination2(0,3,source);
+    }
+
     @Test
     public void combination() throws Exception {
         int[] source = {1,2,3,4,5};
