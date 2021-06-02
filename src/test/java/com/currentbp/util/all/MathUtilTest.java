@@ -26,6 +26,13 @@ public class MathUtilTest {
         logger.info(JSON.toJSONString(combination));
     }
 
+    @Test
+    public void combination3(){
+        MathUtil.combination2(0,5,new int[]{1,2,3,4,5,6,7,8,9,10,11,12,13,14,15,16,17,18,19,20,21,22,23,24,25,26,27,28,29,30,31,32});
+        StringUtil.printObject(MathUtil.combinationArr.size());
+        StringUtil.printObject(MathUtil.combinationArr);
+    }
+
 
     @Test
     public void divideTwo() throws Exception {
