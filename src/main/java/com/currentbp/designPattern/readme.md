@@ -82,10 +82,13 @@ base:
 
 ##11、 桥梁模式 bridgePattern
 ```
-ssssssss
+
 
 ```
+##12、 命令模式 commendPattern
+```
 
+```
 
 
 
