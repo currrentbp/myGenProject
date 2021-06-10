@@ -12,6 +12,15 @@ import org.junit.Test;
 public class IntTest {
 
     @Test
+    public void t3(){
+        int i=5;
+        int a = i++;
+        int b = ++i;
+        i= (a) + (b);
+        System.out.println(i+" a:"+a+" b:"+b);
+    }
+
+    @Test
     public void t1(){
         String s1 = " 1, 2";
         String[] split = s1.split(",");

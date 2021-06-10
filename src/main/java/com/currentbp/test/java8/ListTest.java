@@ -2,6 +2,7 @@ package com.currentbp.test.java8;
 
 import com.currentbp.common.model.Student;
 import com.currentbp.util.all.RandomUtil;
+import com.currentbp.util.all.StringUtil;
 import org.junit.Test;
 
 import java.util.*;
@@ -14,6 +15,30 @@ public class ListTest {
         list.add("1");
         System.out.println(list);
         int abs = java.lang.Math.abs(1);
+    }
+
+    @Test
+    public void nullAdd(){
+        List<Integer> list = new ArrayList<>();
+        List<Integer> list1 = new ArrayList<>();
+        list1.add(1);
+        list.addAll(list1);
+        StringUtil.printObject(list);
+    }
+
+    @Test
+    public void testDistinct(){
+        List<Integer> list = new ArrayList<>();
+        list.add(1);
+        list.add(2);
+        list.add(3);
+        list.add(2);
+        list.add(1);
+        list.add(6);
+        list.add(5);
+        list.add(6);
+        List<Integer> collect = list.stream().distinct().collect(Collectors.toList());
+        StringUtil.printObject(collect);
     }
 
     @Test
