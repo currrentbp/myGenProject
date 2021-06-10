@@ -106,9 +106,7 @@ invoker角色：调用者
 
 ##14、  迭代器模式  iteratorPattern
 ```
-111111
-22222
-3333
+clean
 
 
 ```
