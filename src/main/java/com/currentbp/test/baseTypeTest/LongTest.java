@@ -1,8 +1,11 @@
 package com.currentbp.test.baseTypeTest;
 
+import com.currentbp.util.all.StringUtil;
 import org.junit.Test;
 
+import java.util.ArrayList;
 import java.util.Date;
+import java.util.List;
 
 /**
  * 
@@ -15,6 +18,15 @@ public class LongTest {
 	@Test
 	public void parseToString(){
 		System.out.println(Long.toString(10L));
+	}
+
+	@Test
+	public void remove(){
+		List<Long> l1 = new ArrayList<>();
+		l1.add(1L);
+		long t = 10000000037L;
+		l1.remove(t);
+		StringUtil.printObject(l1);
 	}
 
 	//==========================        测试方法中的实现方法          ===============================================================//

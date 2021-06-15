@@ -82,10 +82,48 @@ base:
 
 ##11、 桥梁模式 bridgePattern
 ```
-ssssssss
+
+
+```
+##12、 命令模式 commandPattern
+```
+实用场景：
+高思教育的：物流相关接口：不同的仓库，通过指定的仓库code获取对应的结果
+
+group角色：干活的角色
+command角色：命令
+invoker角色：调用者
+
+缺点：由于功能的增加，命令种类也在增加，类的量也在增加
 
 ```
 
+##13、 装饰模式 decoratorPattern
+```
+类似坦克大战的饰品装饰
+
+```
+
+##14、  迭代器模式  iteratorPattern
+```
+clean
+1
+2
+3-1
+1
+2
+3
+4
+5
+
+11
+10
+
+bug2:
+222
+
+
+```
 
 
 

@@ -137,11 +137,13 @@ public class MathUtil {
     }
 
     private static ArrayList<Integer> tmpArr = new ArrayList<>();
+    public static List<int[]> combinationArr = new ArrayList<>();
     public static void combination2(int index,int k,int []arr) {
         if(k == 1){
             for (int i = index; i < arr.length; i++) {
                 tmpArr.add(arr[i]);
-                System.out.print(tmpArr.toString() + ",");
+                combinationArr.add(getArr(tmpArr));
+//                System.out.print(tmpArr.toString() + ",");
                 tmpArr.remove((Object)arr[i]);
             }
         }else if(k > 1){
@@ -153,6 +155,14 @@ public class MathUtil {
         }else{
             return ;
         }
+    }
+
+    private static int[] getArr(List<Integer> tmpArr) {
+        int[] result = new int[tmpArr.size()];
+        for (int i = 0; i < tmpArr.size(); i++) {
+            result[i] = tmpArr.get(i);
+        }
+        return result;
     }
 
 
