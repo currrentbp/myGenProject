@@ -102,6 +102,8 @@ invoker角色：调用者
 ```
 类似坦克大战的饰品装饰
 
+master:fixbug1
+
 ```
 
 ##14、  迭代器模式  iteratorPattern
