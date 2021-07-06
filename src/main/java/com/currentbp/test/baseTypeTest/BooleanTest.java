@@ -11,6 +11,14 @@ import java.util.List;
  */
 public class BooleanTest {
 
+
+    @Test
+    public void diffBool(){
+        String x = null;
+        String y = "";
+        System.out.println(x == null ^ y == null);
+    }
+
     @Test
     public void t1(){
         List<Integer> t = null;

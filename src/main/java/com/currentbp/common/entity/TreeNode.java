@@ -1,6 +1,7 @@
 package com.currentbp.common.entity;
 
 import java.util.ArrayList;
+import java.util.Arrays;
 import java.util.List;
 
 /**
@@ -20,7 +21,16 @@ public class TreeNode {
     }
 
     public TreeNode(List<Integer> list) {
-        /*
+        doList(list);
+    }
+
+    public TreeNode(Integer[] arr) {
+        List<Integer> result = new ArrayList<>(Arrays.asList(arr));
+        doList(result);
+    }
+
+    private void doList(List<Integer> list) {
+    /*
     [3,9,20,null,null,15,7]
     3
    / \

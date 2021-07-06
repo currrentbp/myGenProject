@@ -108,12 +108,16 @@ master:fixbug1
 
 ##14、  迭代器模式  iteratorPattern
 ```
-
+todo not work 
 
 
 
 ```
+##15、 组合模式  compositePattern
+```
 
+
+```
 
 
 
