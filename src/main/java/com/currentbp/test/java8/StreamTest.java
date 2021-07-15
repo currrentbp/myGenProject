@@ -6,11 +6,26 @@ import com.currentbp.util.all.StringUtil;
 import org.assertj.core.util.Lists;
 import org.junit.Test;
 
+import java.util.ArrayList;
+import java.util.Comparator;
 import java.util.List;
 import java.util.stream.Collectors;
 
 public class StreamTest {
 
+    @Test
+    public void time(){
+        System.out.println(518400/(60*60*24));
+    }
+
+    @Test
+    public void sort(){
+        List<Long>result1 = new ArrayList<>();
+        result1.add(1L);
+        result1.add(2L);
+        List<Long> result = result1.stream().sorted(Comparator.comparingLong(x-> -x)).collect(Collectors.toList());
+        StringUtil.printObject(result);
+    }
 
     @Test
     public void t1() {

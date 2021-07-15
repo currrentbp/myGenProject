@@ -37,7 +37,6 @@ public class SimpleServer {
             Set<SelectionKey> selectedKeys = selector.selectedKeys();
             Iterator<SelectionKey> it = selectedKeys.iterator();
 
-//            System.out.println(selectedKeys.size());
             while (it.hasNext()) {
                 String msg = new String();
                 SelectionKey key = (SelectionKey) it.next();
@@ -60,7 +59,6 @@ public class SimpleServer {
                         echoBuffer.get(b);
                         msg += new String(b, "UTF-8");
                     }
-
                     //client关闭时，收到可读事件，code = -1
                     if (code == -1 ||
                             msg.toUpperCase().indexOf("BYE") > -1) {
@@ -72,7 +70,6 @@ public class SimpleServer {
                     }
                     System.out.println("msg: " + msg + " from: " + sc + "code:  " + code);
                     it.remove();
-
                     //注册可写通知
                     sc.register(selector, SelectionKey.OP_WRITE);
                 } else if (key.isWritable()) {
@@ -82,7 +79,6 @@ public class SimpleServer {
                     sendBuffer.put(sendTxt.getBytes());
                     sendBuffer.flip();
                     int code = 0;
-
                     //如果sendBuffer内容一次没有写完，会在下一次事件中处理吗？
                     while (client.write(sendBuffer) != 0) {
                     }
@@ -95,7 +91,6 @@ public class SimpleServer {
                     }
                     it.remove();
                     System.out.println("Send message to client ");
-
                     //在读通知里面注册为写事件，所以这里还需要注册为读，否则不在接受客户端消息
                     client.register(selector, SelectionKey.OP_READ);
                 }else{

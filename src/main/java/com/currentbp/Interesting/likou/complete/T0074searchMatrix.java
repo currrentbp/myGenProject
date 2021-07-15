@@ -1,4 +1,4 @@
-package com.currentbp.Interesting.likou;
+package com.currentbp.Interesting.likou.complete;
 
 import com.currentbp.util.all.StringUtil;
 import org.junit.Test;
@@ -26,38 +26,36 @@ public class T0074searchMatrix {
 
     @Test
     public void t1() {
-//        StringUtil.printObject(searchMatrix(
-//                new int[][]{
-//                        {1, 3, 5, 7},
-//                        {10, 11, 16, 20},
-//                        {23, 30, 34, 50}
-//                }, 12
-//        ));
+        StringUtil.printObject(searchMatrix(
+                new int[][]{
+                        {1, 3, 5, 7},
+                        {10, 11, 16, 20},
+                        {23, 30, 34, 50}
+                }, 12
+        ));
 
 //        StringUtil.printObject(searchMatrix(new int[][]{{1}}, 0));
-        StringUtil.printObject(searchMatrix(new int[][]{{1,1}}, 2));
+        StringUtil.printObject(searchMatrix(new int[][]{{1, 1}}, 2));
     }
 
     public boolean searchMatrix(int[][] matrix, int target) {
         if (null == matrix || 0 == matrix.length) {
             return false;
         }
-        int x = matrix[0].length;
-        int y = matrix.length;
-        int i = y-1, j = 0;
-        for (; j < x; j++) {
-            for (; i >= 0; ) {
-                int temp = matrix[j][i];
-                if (temp == target) {
+        int start = 0, end = matrix[0].length-1;
+        for (int levelIndex = 0; levelIndex < matrix.length; levelIndex++) {
+            for (int currentIndex = start; currentIndex <= end; currentIndex++) {
+                if(matrix[levelIndex][currentIndex] == target){
                     return true;
                 }
-                if (temp < target) {
+                if(matrix[levelIndex][currentIndex]>target){
+                    end = currentIndex;
                     break;
-                } else {
-                    i--;
                 }
             }
         }
+
+
         return false;
     }
 }
