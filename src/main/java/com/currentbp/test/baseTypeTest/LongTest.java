@@ -6,6 +6,7 @@ import org.junit.Test;
 import java.util.ArrayList;
 import java.util.Date;
 import java.util.List;
+import java.util.stream.Collectors;
 
 /**
  * 
@@ -14,6 +15,18 @@ import java.util.List;
  *
  */
 public class LongTest {
+
+	@Test
+	public void string2LongWithNull(){
+		List<String> l = new ArrayList<>();
+		l.add(null);
+		l.add("1");
+		l.add("2");
+		//抛异常了，原因：null不能转换成Long
+		List<Long> collect = l.stream().map(Long::parseLong).collect(Collectors.toList());
+		StringUtil.printObject(collect);
+	}
+
 
 	@Test
 	public void parseToString(){

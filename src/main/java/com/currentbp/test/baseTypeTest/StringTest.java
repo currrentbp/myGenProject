@@ -3,6 +3,7 @@ package com.currentbp.test.baseTypeTest;
 import java.util.*;
 
 import com.currentbp.util.all.StringUtil;
+import org.apache.commons.lang3.StringUtils;
 import org.junit.Test;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
@@ -18,6 +19,16 @@ public class StringTest {
     public List<String> l2 = new ArrayList<String>();
 
     //===================          测试方法          ========================================================//
+
+    @Test
+    public void join(){
+        List<Long> ids = new ArrayList<>();
+        ids.add(1L);
+        ids.add(2L);
+        ids.add(4L);
+        String join = StringUtils.join(ids, ",");
+        StringUtil.printObject(join);
+    }
 
     @Test
     public void specialStringSplit(){

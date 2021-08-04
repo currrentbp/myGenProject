@@ -1,6 +1,10 @@
 package com.currentbp.test.baseTypeTest;
 
 import com.alibaba.fastjson.JSON;
+import com.currentbp.common.model.Human;
+import com.currentbp.common.model.Student;
+import com.currentbp.common.model.Teacher;
+import com.currentbp.util.all.StringUtil;
 import org.assertj.core.util.Lists;
 import org.junit.Test;
 import org.slf4j.Logger;
@@ -16,6 +20,27 @@ import java.util.*;
  */
 public class ListTest {
     private static Logger logger = LoggerFactory.getLogger(ListTest.class);
+
+    @Test
+    public void fanxing(){
+        /**
+         * 1、如果泛型是子类，add时必须是子类
+         * 2、如果泛型是父类，add是可以是父类也可以是子类
+         */
+//        List<Teacher> students = new ArrayList<>();
+//        Human human = new Teacher();
+//        students.add(human);
+
+        List<Human> humans = new ArrayList<>();
+        Teacher teacher = new Teacher();
+        teacher.setId(1);
+        humans.add(teacher);
+        Human teacher2 = new Teacher();
+        teacher2.setType(0);
+        humans.add(teacher2);
+        StringUtil.printObject(humans);
+    }
+
 
     @Test
     public void listRemove(){
