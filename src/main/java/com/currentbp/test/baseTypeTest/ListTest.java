@@ -5,6 +5,7 @@ import com.currentbp.common.model.Human;
 import com.currentbp.common.model.Student;
 import com.currentbp.common.model.Teacher;
 import com.currentbp.util.all.StringUtil;
+import org.apache.commons.lang3.StringUtils;
 import org.assertj.core.util.Lists;
 import org.junit.Test;
 import org.slf4j.Logger;
@@ -20,6 +21,13 @@ import java.util.*;
  */
 public class ListTest {
     private static Logger logger = LoggerFactory.getLogger(ListTest.class);
+
+    @Test
+    public void ListToString(){
+        List<Long> tabIds = new ArrayList<>();
+        String chooseTabIds = StringUtils.join(tabIds, ",");
+        StringUtil.printObject("====="+chooseTabIds+"+++++");
+    }
 
     @Test
     public void fanxing(){
