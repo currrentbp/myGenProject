@@ -1,5 +1,7 @@
 package com.currentbp.common.model;
 
+import java.util.List;
+
 /**
  * @author baopan
  * @createTime 20210802
@@ -7,6 +9,8 @@ package com.currentbp.common.model;
 public class Teacher extends Human{
     private Integer id;
     private String name ;
+    private Course course;
+    private List<Course> myCourses;
 
     public Integer getId() {
         return id;
@@ -24,11 +28,29 @@ public class Teacher extends Human{
         this.name = name;
     }
 
+    public Course getCourse() {
+        return course;
+    }
+
+    public void setCourse(Course course) {
+        this.course = course;
+    }
+
+    public List<Course> getMyCourses() {
+        return myCourses;
+    }
+
+    public void setMyCourses(List<Course> myCourses) {
+        this.myCourses = myCourses;
+    }
+
     @Override
     public String toString() {
         return "Teacher{" +
                 "id=" + id +
                 ", name='" + name + '\'' +
+                ", course=" + course +
+                ", myCourses=" + myCourses +
                 "} " + super.toString();
     }
 }

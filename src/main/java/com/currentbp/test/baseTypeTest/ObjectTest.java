@@ -3,12 +3,14 @@ package com.currentbp.test.baseTypeTest;
 import com.alibaba.fastjson.JSON;
 import com.alibaba.fastjson.JSONObject;
 import com.currentbp.common.model.Student;
+import com.currentbp.util.all.StringUtil;
 import org.junit.Test;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
 
 import java.util.ArrayList;
 import java.util.List;
+import java.util.Optional;
 
 /**
  * @author current_bp
@@ -16,6 +18,15 @@ import java.util.List;
  */
 public class ObjectTest {
     private final static Logger logger = LoggerFactory.getLogger(ObjectTest.class);
+
+    @Test
+    public void optional(){
+        Long sevenDay =  60 * 1000L;
+        System.out.println(sevenDay);
+        Student student = new Student();
+        Optional.ofNullable(student).filter(x->x.getId()== null).map(x->{x.setId(1);return x;});
+        StringUtil.printObject(student);
+    }
 
 
     @Test
