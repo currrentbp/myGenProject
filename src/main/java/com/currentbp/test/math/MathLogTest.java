@@ -26,4 +26,14 @@ public class MathLogTest {
         System.out.println("最差中奖概率:  "+(21425712/(27*26*25*24*23*5*9/(5*4*3*2))));
     }
 
+    @Test
+    public void t3(){
+        double v = MathUtil.compoundInterest(10000, 0.5, 17);
+        System.out.println(v);
+        double v1 = MathUtil.compoundInterest2(10000, 1, 17, 1);
+        System.out.println(v1);
+        double v2 = MathUtil.compoundInterest3(10000, 1.1, 27, 10000,2);
+        System.out.println(v2);
+    }
+
 }

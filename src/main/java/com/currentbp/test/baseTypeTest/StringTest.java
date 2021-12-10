@@ -18,6 +18,15 @@ public class StringTest {
     public List<String> l1 = new ArrayList<String>();
     public List<String> l2 = new ArrayList<String>();
 
+    @Test
+    public void intern(){
+        String str1 = new StringBuilder("计算机").append("软件").toString();
+        String intern = str1.intern();
+        System.out.println("s1:"+(intern == str1));
+        String str2 = new StringBuilder("ja").append("va").toString();
+        System.out.println("s2:"+(str2.intern() == str2));
+    }
+
     //===================          测试方法          ========================================================//
 
     @Test

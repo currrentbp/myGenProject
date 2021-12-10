@@ -5,11 +5,37 @@ import com.currentbp.common.model.Student;
 import com.currentbp.util.all.StringUtil;
 import org.junit.Test;
 
+import java.util.function.Function;
+
 /**
  * @author baopan
  * @createTime 2020/9/26 16:07
  */
 public class FunctionTest {
+
+    @Test
+    public void useFun() {
+        simpleFun("baopan", f -> "kkk");
+    }
+
+    private void simpleFun(String str, Function<String, String> fun) {
+        String apply = fun.apply(str);
+        System.out.println("str:" + str + ",apply:" + apply);
+    }
+
+    @Test
+    public void useMultFunc(){
+        multFunc("baopan",(f)->{
+            System.out.println("f:"+f);
+            return f+f;
+        });
+    }
+    private void multFunc(String str,Function<String,String> func){
+        String apply = func.apply(str);
+        System.out.println("str:" + str + ",apply:" + apply);
+    }
+
+
     @Test
     public void t2() {
         Functions.Function0<Student> function0 = () -> {
