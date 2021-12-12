@@ -10,6 +10,18 @@ import java.util.Optional;
 public class OptionalTest {
 
     @Test
+    public void t4(){
+        Student student = new Student(1, "1");
+
+        String format = String.format("%.2f", 1234567 / 100d);
+        System.out.println(format);
+
+        long l = Math.addExact(99998L, 1L);
+        long maxAmount = 1_0000L;
+        System.out.println(l<=maxAmount);
+    }
+
+    @Test
     public void t1(){
         Optional<List> studentsOpt = Optional.of(Lists.newArrayList(new Student(1,"1"),new Student(2,"2")));
         studentsOpt.ifPresent(System.out::println);

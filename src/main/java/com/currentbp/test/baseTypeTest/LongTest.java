@@ -15,6 +15,46 @@ import java.util.stream.Collectors;
  *
  */
 public class LongTest {
+	static class S4{
+
+	}
+
+	public static void main(String[] args) {
+		class S3{
+			private static final int x=1;//com/currentbp/test/baseTypeTest/LongTest.java:21
+		}
+		S3 s3 = new S3();
+		System.out.println("===>"+s3.getClass().getName());
+	}
+	
+	@Test
+	public void parseLong(){
+		class S3{
+			private int x=1;//com/currentbp/test/baseTypeTest/LongTest.java:21
+		}
+		S3 s3 = new S3();
+		System.out.println("===>"+s3.getClass().getName());
+
+
+		String s1 = "1.1.1";
+		String[] split = s1.split("\\.");
+//		System.out.println(Long.parseLong(s1));
+		String[] subVersions = s1.split("\\.");
+		try {
+			Long temp = Long.parseLong(subVersions[0]);
+			temp = temp * 100 + Long.parseLong(subVersions[1]);
+			temp = temp * 1000 + Long.parseLong(subVersions[2]);
+			System.out.println(temp);
+		} catch (Exception e) {
+			throw new RuntimeException("version is error");
+		}
+		StringUtil.printObject(split);
+	}
+
+	@Test
+	public void printLong(){
+		System.out.println(10000L+"");
+	}
 
 	@Test
 	public void string2LongWithNull(){

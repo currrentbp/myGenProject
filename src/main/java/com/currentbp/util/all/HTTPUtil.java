@@ -9,19 +9,18 @@ import org.apache.http.client.config.RequestConfig;
 import org.apache.http.client.entity.UrlEncodedFormEntity;
 import org.apache.http.client.methods.HttpGet;
 import org.apache.http.client.methods.HttpPost;
-import org.apache.http.conn.ClientConnectionManager;
 import org.apache.http.impl.client.CloseableHttpClient;
 import org.apache.http.impl.client.HttpClients;
 import org.apache.http.message.BasicNameValuePair;
 import org.apache.http.util.EntityUtils;
 
-import java.io.BufferedReader;
-import java.io.IOException;
-import java.io.InputStreamReader;
-import java.io.PrintWriter;
+import java.io.*;
 import java.net.URL;
 import java.net.URLConnection;
-import java.util.*;
+import java.util.ArrayList;
+import java.util.List;
+import java.util.Map;
+import java.util.Set;
 
 /**
  * 关于http的
@@ -30,6 +29,17 @@ import java.util.*;
  * @createTime 20170112
  */
 public class HTTPUtil {
+
+    public InputStream getStreamByUrl(String url) {
+        try {
+            URLConnection urlConnection = new URL(url).openConnection();
+            InputStream inputStream = urlConnection.getInputStream();
+            return inputStream;
+        } catch (Exception e) {
+            System.out.println("===>getStreamByUrl is error,msg:" + e.getMessage());
+        }
+        return null;
+    }
 
 
     /**
@@ -68,13 +78,14 @@ public class HTTPUtil {
         return result;
     }
 
-    public static HttpResultData postRequest(String url, String source){
-        return postRequest(url,source,"","",5000,5000);
+    public static HttpResultData postRequest(String url, String source) {
+        return postRequest(url, source, "", "", 5000, 5000);
     }
+
     public static HttpResultData postRequest(String url, String source, String contentType, String charset, int socketTimeOut, int connectTimeout) {
         PrintWriter out = null;
         BufferedReader in = null;
-        HttpResultData result = new HttpResultData(HttpResultData.ERROR,HttpResultData.IS_OTHER_ERROR,"");
+        HttpResultData result = new HttpResultData(HttpResultData.ERROR, HttpResultData.IS_OTHER_ERROR, "");
         String temp = "";
         try {
             URL realUrl = new URL(url);
@@ -103,21 +114,20 @@ public class HTTPUtil {
             }
             result.setBody(temp).setCode(200);
         } catch (Exception e) {
-            System.out.println("发送 POST 请求出现异常！"+e);
+            System.out.println("发送 POST 请求出现异常！" + e);
             e.printStackTrace();
             result.setBody(e.getMessage());
         }
         //使用finally块来关闭输出流、输入流
-        finally{
-            try{
-                if(out!=null){
+        finally {
+            try {
+                if (out != null) {
                     out.close();
                 }
-                if(in!=null){
+                if (in != null) {
                     in.close();
                 }
-            }
-            catch(IOException ex){
+            } catch (IOException ex) {
                 ex.printStackTrace();
                 result.setBody(ex.getMessage());
             }
@@ -150,7 +160,7 @@ public class HTTPUtil {
      */
     public static HttpResultData postRequest(String url, Map<String, Object> params, String contentType, String charset, int socketTimeOut, int connectTimeout) {
         CloseableHttpClient httpclient = HttpClients.createDefault();
-        HttpResultData result = new HttpResultData(HttpResultData.ERROR,HttpResultData.IS_OTHER_ERROR,"");
+        HttpResultData result = new HttpResultData(HttpResultData.ERROR, HttpResultData.IS_OTHER_ERROR, "");
         try {
             HttpPost httpPost = new HttpPost(url);
             RequestConfig requestConfig = RequestConfig.custom().setSocketTimeout(socketTimeOut).setConnectTimeout(connectTimeout).build();
@@ -201,7 +211,7 @@ public class HTTPUtil {
 
     public static HttpResultData postRequest2(String url, Map<String, Object> params) {
         CloseableHttpClient httpclient = HttpClients.createDefault();
-        HttpResultData result = new HttpResultData(HttpResultData.ERROR,HttpResultData.IS_OTHER_ERROR,"");
+        HttpResultData result = new HttpResultData(HttpResultData.ERROR, HttpResultData.IS_OTHER_ERROR, "");
         try {
             HttpPost httpPost = new HttpPost(url);
             RequestConfig requestConfig = RequestConfig.custom().setSocketTimeout(5000).setConnectTimeout(5000).build();

@@ -17,6 +17,29 @@ public class MathUtil {
     private final static Logger logger = LoggerFactory.getLogger(MathUtil.class);
 
     /**
+     * 第二种复利：在基本的复利基础上，每次增长后再增加固定成本
+     *
+     * @param base     基本数量
+     * @param growth   增长速度
+     * @param timer    增长次数
+     * @param eachAdd  以后每次固定追加数量
+     * @param newScale 精度
+     * @return
+     */
+    public static double compoundInterest3(double base, double growth, int timer, double eachAdd, int newScale) {
+        double result = 0d;
+        if (timer <= 0) {
+            return base;
+        }
+        for (int i = 0; i < timer; i++) {
+            result = MoneyUtil.add(MoneyUtil.multiply(MoneyUtil.add(result, base, newScale), MoneyUtil.add(1, growth, newScale), newScale),
+                    eachAdd, newScale);
+        }
+
+        return result;
+    }
+
+    /**
      * 复利的计算公式2
      * 本金随着次数每次追加
      *
@@ -33,12 +56,13 @@ public class MathUtil {
         for (int i = 0; i < timer; i++) {
             result = MoneyUtil.multiply(
                     MoneyUtil.add(result, base, newScale),
-                    MoneyUtil.add(1,growth,newScale),
+                    MoneyUtil.add(1, growth, newScale),
                     newScale);
         }
 
         return result;
     }
+
     /**
      * 复利的计算公式
      * 本金只投入一次的复利
@@ -63,7 +87,7 @@ public class MathUtil {
 
 
     public static long c(int m, int n) {
-        Assert.isTrue(0<m && m <= n, "数学表达式不正确，0<m<=m");
+        Assert.isTrue(0 < m && m <= n, "数学表达式不正确，0<m<=m");
         long result = factorial(m, n) / factorial(m);
 
         return result;
@@ -91,7 +115,7 @@ public class MathUtil {
      * @return 结果
      */
     public static long factorial(int m, int n) {
-        Assert.isTrue(m>0 && m<=n ,"格式错误");
+        Assert.isTrue(m > 0 && m <= n, "格式错误");
         long result = 1;
         for (int i = n - m + 1; i <= n; i++) {
             result = result * i;
@@ -138,22 +162,23 @@ public class MathUtil {
 
     private static ArrayList<Integer> tmpArr = new ArrayList<>();
     public static List<int[]> combinationArr = new ArrayList<>();
-    public static void combination2(int index,int k,int []arr) {
-        if(k == 1){
+
+    public static void combination2(int index, int k, int[] arr) {
+        if (k == 1) {
             for (int i = index; i < arr.length; i++) {
                 tmpArr.add(arr[i]);
                 combinationArr.add(getArr(tmpArr));
 //                System.out.print(tmpArr.toString() + ",");
-                tmpArr.remove((Object)arr[i]);
+                tmpArr.remove((Object) arr[i]);
             }
-        }else if(k > 1){
+        } else if (k > 1) {
             for (int i = index; i <= arr.length - k; i++) {
                 tmpArr.add(arr[i]); //tmpArr都是临时性存储一下
-                combination2(i + 1,k - 1, arr); //索引右移，内部循环，自然排除已经选择的元素
-                tmpArr.remove((Object)arr[i]); //tmpArr因为是临时存储的，上一个组合找出后就该释放空间，存储下一个元素继续拼接组合了
+                combination2(i + 1, k - 1, arr); //索引右移，内部循环，自然排除已经选择的元素
+                tmpArr.remove((Object) arr[i]); //tmpArr因为是临时存储的，上一个组合找出后就该释放空间，存储下一个元素继续拼接组合了
             }
-        }else{
-            return ;
+        } else {
+            return;
         }
     }
 
