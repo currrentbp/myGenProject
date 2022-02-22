@@ -10,7 +10,9 @@ import org.springframework.context.annotation.AnnotationConfigApplicationContext
  */
 public class MyAopServiceUseMain {
     public static void main(String[] args) {
-        ApplicationContext ac = new AnnotationConfigApplicationContext(AopContext.class);
+        //直接写默认的路径，可以获取该路径下的所有bean
+        ApplicationContext ac = new AnnotationConfigApplicationContext("com.currentbp.test.spring.aop");
+//        ApplicationContext ac = new AnnotationConfigApplicationContext(MyAopConfig.class);
         MyAopService m = ac.getBean(MyAopService.class);
         String myStudent = m.getMyStudent(1);
         System.out.println("===>"+myStudent);
