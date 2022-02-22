@@ -10,6 +10,12 @@ import org.junit.Test;
 public class MathLogTest {
 
     @Test
+    public void t4(){
+        String x = " can not join this group, reason:user: staging_100031 already in group: 165576711405569";
+        System.out.println(x.contains("already in group"));
+    }
+
+    @Test
     public void t1(){
         System.out.println(Math.log10(5));
         System.out.println(((int)Math.floor(Math.log10(5))));
@@ -30,9 +36,9 @@ public class MathLogTest {
     public void t3(){
         double v = MathUtil.compoundInterest(10000, 0.5, 17);
         System.out.println(v);
-        double v1 = MathUtil.compoundInterest2(10000, 1, 17, 1);
+        double v1 = MathUtil.compoundInterest3(10000, 0.05, 17, 10000,2);
         System.out.println(v1);
-        double v2 = MathUtil.compoundInterest3(10000, 1.1, 27, 10000,2);
+        double v2 = MathUtil.compoundInterest3(10000, 0.04, 27, 10000,2);
         System.out.println(v2);
     }
 

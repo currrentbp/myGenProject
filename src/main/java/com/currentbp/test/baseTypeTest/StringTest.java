@@ -1,7 +1,9 @@
 package com.currentbp.test.baseTypeTest;
 
 import java.util.*;
+import java.util.stream.Collectors;
 
+import com.currentbp.common.model.Student;
 import com.currentbp.util.all.StringUtil;
 import org.apache.commons.lang3.StringUtils;
 import org.junit.Test;
@@ -17,6 +19,92 @@ public class StringTest {
 
     public List<String> l1 = new ArrayList<String>();
     public List<String> l2 = new ArrayList<String>();
+
+    @Test
+    public void testSort(){
+        List<Student> students = new ArrayList<>();
+        students.add(new Student(1,"a"));
+        students.add(new Student(2,"Abc"));
+        students.add(new Student(3,"abc"));
+        students.add(new Student(4,"zab"));
+        students.add(new Student(5,"Zab"));
+        students.sort(Comparator.comparing(Student::getName, Comparator.nullsLast(String::compareTo)));
+        StringUtil.printObject(students);
+    }
+
+    @Test
+    public void testFirstChar(){
+        System.out.println(getFirstChar("abc"));
+        System.out.println(getFirstChar("Abc"));
+        System.out.println(getFirstChar("Fbc"));
+        System.out.println(getFirstChar("1"));
+        System.out.println(getFirstChar("啊"));
+        System.out.println(getFirstChar("看"));
+        System.out.println(getFirstChar("  "));
+        System.out.println(getFirstChar(null));
+        System.out.println((int)'a');
+        System.out.println((int)'A');
+    }
+
+    private String getFirstChar(String pinyin){
+        String firstChar = StringUtils.isEmpty(pinyin) ?
+                "{" : ('a' <= pinyin.charAt(0) && pinyin.charAt(0) <= 'z') || ('A' <= pinyin.charAt(0) && pinyin.charAt(0) <= 'Z')
+                ? ("" + pinyin.charAt(0)).toLowerCase() : "{";
+        return firstChar;
+    }
+
+
+    @Test
+    public void char2String(){
+        char a = 'a';
+        System.out.println((""+a).toUpperCase());
+
+    }
+
+    @Test
+    public void testTrim(){
+        String trim = " 123    ";
+        System.out.println("======="+trim.trim()+"+++++++++");
+        String trim2 = " 123\n";
+        System.out.println("======="+trim2.trim()+"+++++++++");
+        String trim3 = " 123\r";
+        System.out.println("======="+trim3.trim()+"+++++++++");
+        String trim4 = " 123\t   ";
+        System.out.println("======="+trim4.trim()+"+++++++++");
+        String trim5 = " 123\r\n";
+        System.out.println("======="+trim5.trim()+"+++++++++");
+    }
+
+    @Test
+    public void stringSort(){
+        List<Student> students = new ArrayList<>();
+        Student student2 = new Student(2, "2");
+        Student student1 = new Student(1, "1");
+        Student student7 = new Student(7, "az");
+        Student student5 = new Student(5, "b");
+        Student student3 = new Student(3, "a");
+        Student student4 = new Student(4, "A");
+        Student student6 = new Student(6, "aa");
+        Student student8 = new Student(8, "za");
+        Student student9 = new Student(9, "{");
+        Student student10 = new Student(10, "{z");
+        Student student11 = new Student(11, "{a");
+        students.add(student1);
+        students.add(student2);
+        students.add(student3);
+        students.add(student4);
+        students.add(student5);
+        students.add(student6);
+        students.add(student7);
+        students.add(student8);
+        students.add(student9);
+        students.add(student10);
+        students.add(student11);
+        List<Student> sortedStudents = students.stream()
+                .sorted(Comparator.comparing(Student::getName, Comparator.nullsLast(String::compareTo)))
+                .collect(Collectors.toList());
+        StringUtil.printObject(sortedStudents);
+    }
 
     @Test
     public void intern(){

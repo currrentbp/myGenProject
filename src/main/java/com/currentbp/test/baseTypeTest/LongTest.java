@@ -1,8 +1,10 @@
 package com.currentbp.test.baseTypeTest;
 
 import com.currentbp.util.all.StringUtil;
+import org.apache.http.impl.nio.bootstrap.HttpServer;
 import org.junit.Test;
 
+import java.lang.reflect.Proxy;
 import java.util.ArrayList;
 import java.util.Date;
 import java.util.List;
@@ -25,6 +27,24 @@ public class LongTest {
 		}
 		S3 s3 = new S3();
 		System.out.println("===>"+s3.getClass().getName());
+	}
+
+	@Test
+	public void remain(){
+		System.out.println(getPriceFormat(10L));
+		System.out.println(getPriceFormat(1L));
+		System.out.println(getPriceFormat(101L));
+		System.out.println(getPriceFormat(100L));
+		System.out.println(getPriceFormat(1100L));
+		System.out.println(getPriceFormat(12345678900L));
+		System.out.println(getPriceFormat(123456789123L));
+		System.out.println(getPriceFormat(1234567891203L));
+		System.out.println(getPriceFormat(1234567891230L));
+
+	}
+
+	private String getPriceFormat(Long price) {
+		return price % 100L == 0L ? "" + (price / 100L) : String.format("%.2f", price / 100d);
 	}
 	
 	@Test
