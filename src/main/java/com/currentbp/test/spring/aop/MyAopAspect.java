@@ -14,7 +14,7 @@ import org.springframework.stereotype.Component;
 @Component
 public class MyAopAspect {
 
-    @Pointcut("execution(* * com.currentbp.test.spring.*(..)")
+    @Pointcut("execution(* com.currentbp.test.spring..*(..))")
     public void pointCut() {
     }
 
