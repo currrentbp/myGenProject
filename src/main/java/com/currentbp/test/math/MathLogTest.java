@@ -36,8 +36,8 @@ public class MathLogTest {
     public void t3(){
         double v = MathUtil.compoundInterest(10000, 0.5, 17);
         System.out.println(v);
-        double v1 = MathUtil.compoundInterest3(10000, 0.05, 17, 10000,2);
-        System.out.println(v1);
+        double v1 = MathUtil.compoundInterest3(3600, 0, 30, 3600,2);
+        System.out.println(v1+" "+3600*30*1.4);
         double v2 = MathUtil.compoundInterest3(10000, 0.04, 27, 10000,2);
         System.out.println(v2);
     }
