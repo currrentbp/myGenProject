@@ -22,15 +22,23 @@ import java.util.*;
 public class ListTest {
     private static Logger logger = LoggerFactory.getLogger(ListTest.class);
 
+
     @Test
-    public void ListToString(){
+    public void ListToString() {
         List<Long> tabIds = new ArrayList<>();
+        tabIds.add(1L);
+        List<Long> tabIds2 = new LinkedList<>();
+        tabIds2.add(2L);
+        Set<Long> set = new HashSet<>();
+        set.add(1L);
+        Map<Long, Long> map = new HashMap();
+        map.put(1L, 2L);
         String chooseTabIds = StringUtils.join(tabIds, ",");
-        StringUtil.printObject("====="+chooseTabIds+"+++++");
+        StringUtil.printObject("=====" + chooseTabIds + "+++++");
     }
 
     @Test
-    public void fanxing(){
+    public void fanxing() {
         /**
          * 1、如果泛型是子类，add时必须是子类
          * 2、如果泛型是父类，add是可以是父类也可以是子类
@@ -51,8 +59,8 @@ public class ListTest {
 
 
     @Test
-    public void listRemove(){
-        List<Integer> integers = Lists.newArrayList(1,2,3,0);
+    public void listRemove() {
+        List<Integer> integers = Lists.newArrayList(1, 2, 3, 0);
         integers.remove(Integer.valueOf(0));
         integers.remove(0);
         System.out.println(integers.toString());

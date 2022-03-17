@@ -29,6 +29,14 @@ public class AES {
             return null;
         }
     }
+    public String encrypt4Default(String content) {
+        try {
+            String pass = encrypt(content.getBytes(default_charset),default_key.getBytes(default_charset) ,default_iv.getBytes(default_charset));
+            return pass;
+        }catch(Exception e){
+            return null;
+        }
+    }
     /**
      * 加密
      * @param content 加密内容
@@ -90,6 +98,13 @@ public class AES {
         try{
             String pass = content.substring(8, 12)+content.substring(0, 4)+content.substring(16, 20)+content.substring(12, 16)+content.substring(4, 8)+content.substring(20, content.length());
             return decrypt(new BASE64Decoder().decodeBuffer(pass),default_key.getBytes(default_charset) ,default_iv.getBytes(default_charset));
+        }catch(Exception e){
+            return null;
+        }
+    }
+    public String decrypt4Default(String content) {
+        try{
+            return decrypt(new BASE64Decoder().decodeBuffer(content),default_key.getBytes(default_charset) ,default_iv.getBytes(default_charset));
         }catch(Exception e){
             return null;
         }
