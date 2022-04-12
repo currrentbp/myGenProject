@@ -16,6 +16,7 @@ public class MaopaoSort {
         int[] ints = {11,1, 3, 2, 7, 5};
         myMaopaoSort(ints);
         StringUtil.printObject(ints);
+
     }
 
     private void myMaopaoSort(int[] ints) {
