@@ -12,6 +12,7 @@ import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
 
 import java.util.*;
+import java.util.concurrent.locks.ReentrantLock;
 
 /**
  * 专门用于列表的测试
@@ -22,6 +23,14 @@ import java.util.*;
 public class ListTest {
     private static Logger logger = LoggerFactory.getLogger(ListTest.class);
 
+
+    @Test
+    public void t11(){
+        long myRemainMoney = 20;
+        float rate = 0.5F;
+        long drawMoney = (long) Math.floor(myRemainMoney * rate);
+        System.out.println(drawMoney);
+    }
 
     @Test
     public void ListToString() {
@@ -35,6 +44,8 @@ public class ListTest {
         map.put(1L, 2L);
         String chooseTabIds = StringUtils.join(tabIds, ",");
         StringUtil.printObject("=====" + chooseTabIds + "+++++");
+
+        ReentrantLock reentrantLock = new ReentrantLock();
     }
 
     @Test
