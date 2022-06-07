@@ -1,7 +1,12 @@
 package com.currentbp.test.baseTypeTest;
 
+import com.currentbp.common.model.Student;
+import com.currentbp.util.all.StringUtil;
 import org.junit.Assert;
 import org.junit.Test;
+
+import java.util.ArrayList;
+import java.util.List;
 
 /**
  * 关于int的测试
@@ -10,6 +15,34 @@ import org.junit.Test;
  * @createTime 20170602
  */
 public class IntTest {
+
+    @Test
+    public void t11(){
+        List<Student> students = new ArrayList<>();
+        students.add(new Student(1,"1"));
+        students.add(new Student(2,"2"));
+        students.add(new Student(3,"3"));
+        students.add(new Student(4,"4"));
+        students.add(new Student(5,"5"));
+
+        StringUtil.printObject(students);
+        List<Integer> ids = new ArrayList<>();
+        ids.add(5);
+        ids.add(2);
+        ids.add(3);
+        ids.add(1);
+        ids.add(4);
+        students.sort(Student::getId,ids);
+
+    }
+
+    @Test
+    public void IntegerEqString(){
+        Integer integer = 2;
+        String str  = "2";
+        System.out.println(integer.toString().equals(str));
+        System.out.println(1<<2);
+    }
 
     @Test
     public void t3(){
