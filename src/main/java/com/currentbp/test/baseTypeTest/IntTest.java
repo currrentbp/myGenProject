@@ -12,6 +12,13 @@ import org.junit.Test;
 public class IntTest {
 
     @Test
+    public void intEqStr(){
+        Integer one = 1;
+        String oneStr = "1";
+        System.out.println(one.equals(oneStr));
+    }
+
+    @Test
     public void t3(){
         int i=5;
         int a = i++;

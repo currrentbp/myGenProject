@@ -23,6 +23,15 @@ import java.util.concurrent.locks.ReentrantLock;
 public class ListTest {
     private static Logger logger = LoggerFactory.getLogger(ListTest.class);
 
+    @Test
+    public void listToString(){
+        List<Long> tabIds = new ArrayList<>();
+        tabIds.add(1L);
+        System.out.println(tabIds.toString());
+        List<Student> students = new ArrayList<>();
+        students.add(new Student(1,"1"));
+        System.out.println(students.toString());
+    }
 
     @Test
     public void t11(){
