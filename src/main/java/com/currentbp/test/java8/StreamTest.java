@@ -15,7 +15,16 @@ public class StreamTest {
 
     @Test
     public void time(){
+        System.out.println(3496.89-(185180.64-182416.76));
         System.out.println(518400/(60*60*24));
+    }
+
+    @Test
+    public void sortStudent(){
+        List<Student> students = Lists.newArrayList(new Student(null, "1"), new Student(2, "2"),
+                new Student(1, "3"));
+        List<Student> result2 = students.stream().sorted(Comparator.comparingLong(x-> x.getId() == null ? Integer.MAX_VALUE: x.getId())).collect(Collectors.toList());
+        StringUtil.printObject(result2);
     }
 
     @Test
@@ -24,7 +33,9 @@ public class StreamTest {
         result1.add(1L);
         result1.add(2L);
         List<Long> result = result1.stream().sorted(Comparator.comparingLong(x-> -x)).collect(Collectors.toList());
+        List<Long> result2 = result1.stream().sorted(Comparator.comparingLong(x-> x == null ? Integer.MAX_VALUE: x)).collect(Collectors.toList());
         StringUtil.printObject(result);
+        StringUtil.printObject(result2);
     }
 
     @Test

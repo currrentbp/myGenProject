@@ -32,7 +32,7 @@ public class IntTest {
         ids.add(3);
         ids.add(1);
         ids.add(4);
-        students.sort(Student::getId,ids);
+//        students.sort(Student::getId,ids);
 
     }
 
