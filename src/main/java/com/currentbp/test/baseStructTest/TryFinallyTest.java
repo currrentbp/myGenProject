@@ -5,9 +5,27 @@ import org.junit.Test;
 
 public class TryFinallyTest {
 
+    @Test
+    public void testReturn() {
+        System.out.println(do1());
+    }
+
+    private int do1() {
+        try {
+            if (1 / 0 == 0) {
+//            if (1 / 1 == 0) {
+                throw new RuntimeException("1111");
+            }
+            return 0;
+        } catch (Exception e) {
+            System.out.println(e.getMessage());
+        }
+        return 1;
+    }
+
 
     @Test
-    public void tryFinallyTest(){
+    public void tryFinallyTest() {
         /*
         结论：1、先走catche，如果能捕获，则捕获异常，正常走下去
         2、如果没有被捕获异常，则直接周finally
@@ -17,15 +35,14 @@ public class TryFinallyTest {
         System.out.println("end ");
     }
 
-    private void doTry(){
-        try{
+    private void doTry() {
+        try {
             throw new BusinessException("baopan is error");
-        }catch (IllegalAccessError e){
+        } catch (IllegalAccessError e) {
             e.printStackTrace();
-        }catch (Exception e){
+        } catch (Exception e) {
             e.printStackTrace();
-        }
-        finally {
+        } finally {
             System.out.println("===>finally");
         }
     }

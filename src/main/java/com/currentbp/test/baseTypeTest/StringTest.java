@@ -1,5 +1,6 @@
 package com.currentbp.test.baseTypeTest;
 
+import java.text.DecimalFormat;
 import java.util.*;
 import java.util.stream.Collectors;
 
@@ -19,6 +20,22 @@ public class StringTest {
 
     public List<String> l1 = new ArrayList<String>();
     public List<String> l2 = new ArrayList<String>();
+
+    @Test
+    public void test1(){
+        System.out.println(StringUtils.endsWithIgnoreCase("ES", "es"));
+        System.out.println(StringUtils.endsWithIgnoreCase("ES", "es_1"));
+        System.out.println(StringUtils.endsWithIgnoreCase("ES", "2_es"));
+        System.out.println(StringUtils.endsWithIgnoreCase("1ES", "es"));
+        System.out.println(StringUtils.endsWithIgnoreCase("ES2", "es"));
+    }
+
+    @Test
+    public void format(){
+        DecimalFormat decimalFormat = new DecimalFormat("##.##%");
+        String format = decimalFormat.format((float) 10 / (float) 11);
+        System.out.println(format);
+    }
 
     @Test
     public void testSort(){

@@ -10,9 +10,11 @@ import org.assertj.core.util.Lists;
 import org.junit.Test;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
+import org.springframework.util.CollectionUtils;
 
 import java.util.*;
 import java.util.concurrent.locks.ReentrantLock;
+import java.util.stream.Collectors;
 
 /**
  * 专门用于列表的测试
@@ -24,17 +26,144 @@ public class ListTest {
     private static Logger logger = LoggerFactory.getLogger(ListTest.class);
 
     @Test
-    public void listToString(){
+    public void listSort(){
+        List<Integer> list = Lists.newArrayList(10,1, 2, 3, 4, 5, 7, 15, 16, 17);
+        List<Integer> collect = list.stream().sorted().collect(Collectors.toList());
+
+        StringUtil.printObject(collect);
+    }
+
+    @Test
+    public void testShrink() {
+        System.out.println(shrink(Lists.newArrayList(1, 2, 3, 4, 5, 7, 15, 16, 17)));
+    }
+
+    @Test
+    public void parallel() {
+        List<Integer> ids = Lists.newArrayList(1, 2, 3, 4, 5, 6);
+        try {
+            ids.stream().parallel().forEach(id -> {
+                if (id == 3) {
+                    throw new RuntimeException("id is three");
+                } else {
+                    try {
+                        Thread.sleep(1);
+                    } catch (Exception e1) {
+
+                    }
+                }
+                System.out.println("id:" + id);
+            });
+            try {
+                Thread.sleep(111);
+            } catch (Exception e1) {
+
+            }
+        } catch (Exception e) {
+            System.out.println(e.getMessage());
+        }
+        //可以设置并行数量
+        System.setProperty("java.util.concurrent.ForkJoinPool.common.parallelism", "20");
+        System.out.println("parallel:"+System.getProperty("java.util.concurrent.ForkJoinPool.common.parallelism"));
+    }
+
+
+    @Test
+    public void testExtend() {
+        System.out.println(extend("1-5,7,15-17"));
+    }
+
+    public static List<Integer> extend(String ids) {
+        if (org.springframework.util.StringUtils.isEmpty(ids)) {
+            return Collections.emptyList();
+        } else {
+            List<Integer> result = new ArrayList();
+            String[] intervals = ids.split(",");
+            String[] var3 = intervals;
+            int var4 = intervals.length;
+
+            for (int var5 = 0; var5 < var4; ++var5) {
+                String intervalStr = var3[var5];
+                String[] interval = intervalStr.split("-");
+                if (interval.length == 1) {
+                    result.add(Integer.parseInt(interval[0]));
+                } else {
+                    if (interval.length != 2) {
+                        throw new IllegalStateException("invalid interval, interval=" + interval);
+                    }
+
+                    int start = Integer.parseInt(interval[0]);
+                    int end = Integer.parseInt(interval[1]);
+
+                    for (int i = start; i <= end; ++i) {
+                        result.add(i);
+                    }
+                }
+            }
+
+            return result;
+        }
+    }
+
+    public static String shrink(List<Integer> idList) {
+        if (CollectionUtils.isEmpty((Collection) idList)) {
+            return null;
+        } else {
+            Set<Integer> set = new HashSet((Collection) idList);
+            if (set.size() < ((List) idList).size()) {
+                idList = new ArrayList(set);
+            }
+
+            Collections.sort((List) idList);
+            int start = (Integer) ((List) idList).get(0);
+            int end = start;
+            StringBuilder stringBuilder = new StringBuilder();
+
+            for (int i = 1; i < ((List) idList).size(); ++i) {
+                int current = (Integer) ((List) idList).get(i);
+                if (current != end + 1) {
+                    if (stringBuilder.length() > 0) {
+                        stringBuilder.append(",");
+                    }
+
+                    if (start == end) {
+                        stringBuilder.append(start);
+                    } else {
+                        stringBuilder.append(start).append("-").append(end);
+                    }
+
+                    start = current;
+                }
+
+                end = current;
+            }
+
+            if (stringBuilder.length() > 0) {
+                stringBuilder.append(",");
+            }
+
+            if (start == end) {
+                stringBuilder.append(start);
+            } else {
+                stringBuilder.append(start).append("-").append(end);
+            }
+
+            return stringBuilder.toString();
+        }
+    }
+
+    @Test
+    public void listToString() {
         List<Long> tabIds = new ArrayList<>();
         tabIds.add(1L);
         System.out.println(tabIds.toString());
         List<Student> students = new ArrayList<>();
-        students.add(new Student(1,"1"));
-        System.out.println(students.toString());
+        students.add(new Student(1, "1"));
+        System.out.println(students.toString());//[Student{id=1, name='1', hobbies=null, course=null, myCourses=null, teacher=null, teachers=null}]
     }
 
     @Test
-    public void t11(){
+    public void t11() {
         long myRemainMoney = 20;
         float rate = 0.5F;
         long drawMoney = (long) Math.floor(myRemainMoney * rate);

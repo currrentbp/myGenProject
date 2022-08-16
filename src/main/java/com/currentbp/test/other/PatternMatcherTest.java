@@ -14,6 +14,14 @@ import java.util.regex.Pattern;
 public class PatternMatcherTest {
 
     @Test
+    public void koPattern(){
+        String ko1 = "123장";
+        String p1 = "장";
+        Pattern pattern = Pattern.compile("[0-9]+장");
+        System.out.println(pattern.matcher(ko1).find());
+    }
+
+    @Test
     public void isPhone() {
         Pattern pattern = Pattern.compile("^1[3|4|5|8]\\d{9}$");
         Matcher matcher = pattern.matcher("15711310502");
