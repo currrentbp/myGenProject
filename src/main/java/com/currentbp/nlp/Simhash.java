@@ -35,6 +35,7 @@ public class Simhash {
      * @return Long
      */
     public Long calSimhash(String content) {
+        //去除空白字符
         String filterContent = content.trim().replaceAll("\\p{Punct}|\\p{Space}", "");
         // 切词
         List<SegToken> lsegStr = segmenter.process(filterContent, SegMode.SEARCH);
