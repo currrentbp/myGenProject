@@ -69,6 +69,9 @@ public class Simhash {
      */
     public boolean isDuplicate(String content) {
         Long simhash = calSimhash(content);
+        return isDuplicate(simhash);
+    }
+    public boolean isDuplicate(Long simhash) {
         List<String> lFrac = splitSimhash(simhash);
         int dis = 0;
         for (int i = 0; i < fracCount; i++) {

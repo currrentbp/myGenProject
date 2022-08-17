@@ -14,4 +14,5 @@ https://www.cnblogs.com/huilixieqi/p/6493089.html
 1. LevenshteinTest
 2. JaroDistanceTest
 3. SimHashTest
+  这个类的目的是大规模文本去重
 ~~~
