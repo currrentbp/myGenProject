@@ -31,7 +31,7 @@ public class JaroDistanceTest {
             String[] splits = others.split(",");
             for (String split : splits) {
                 double dis = StringUtils.getJaroWinklerDistance(source.toLowerCase(), split.toLowerCase());
-                System.out.println("source:"+source+":value:"+split+":distance:"+dis);
+                System.out.println("source:" + source + ":value:" + split + ":distance:" + dis);
             }
         });
     }

@@ -1,6 +1,6 @@
 package com.currentbp.util.all;
 
-import com.alibaba.fastjson.JSON;
+import com.alibaba.fastjson2.JSON;
 import com.currentbp.common.model.Chinese;
 import com.currentbp.common.model.Course;
 import com.currentbp.common.model.Student;

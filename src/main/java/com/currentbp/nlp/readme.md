@@ -7,3 +7,11 @@
 https://www.cnblogs.com/huilixieqi/p/6493089.html
 
 ~~~
+
+
+#3 学习步骤
+~~~
+1. LevenshteinTest
+2. JaroDistanceTest
+3. SimHashTest
+~~~

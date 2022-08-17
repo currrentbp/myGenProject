@@ -1,6 +1,6 @@
 package com.currentbp.test;
 
-import com.alibaba.fastjson.JSONArray;
+import com.alibaba.fastjson2.JSONArray;
 import com.currentbp.common.model.Student;
 import com.currentbp.test.baseTypeTest.BooleanTest;
 import org.assertj.core.util.Lists;
@@ -144,8 +144,8 @@ public class BooleanTestTest {
                 "\"sortNo\":2," +
                 "\"fieldType\":\"textarea\"," +
                 "\"unitInfo\":\"\"}";
-        Object parse = JSONArray.parse(ss);
-        System.out.println(parse);
+//        Object parse = JSONArray.parse(ss);
+//        System.out.println(parse);
     }
 
     @Test

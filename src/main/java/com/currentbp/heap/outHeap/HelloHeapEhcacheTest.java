@@ -1,6 +1,6 @@
 package com.currentbp.heap.outHeap;
 
-import com.alibaba.fastjson.JSON;
+import com.alibaba.fastjson2.JSON;
 import org.ehcache.Cache;
 import org.ehcache.config.CacheConfiguration;
 import org.ehcache.config.ResourcePools;

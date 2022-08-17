@@ -1,7 +1,7 @@
 package com.currentbp.util.all;
 
-import com.alibaba.fastjson.JSON;
-import com.alibaba.fastjson.TypeReference;
+import com.alibaba.fastjson2.JSON;
+import com.alibaba.fastjson2.TypeReference;
 import com.currentbp.common.model.Student;
 import org.apache.http.HttpHost;
 import org.elasticsearch.action.get.GetRequest;

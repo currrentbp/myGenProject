@@ -1,7 +1,7 @@
 package com.currentbp.test.baseTypeTest;
 
-import com.alibaba.fastjson.JSON;
-import com.alibaba.fastjson.JSONObject;
+import com.alibaba.fastjson2.JSON;
+import com.alibaba.fastjson2.JSONObject;
 import com.currentbp.common.model.Student;
 import com.currentbp.util.all.StringUtil;
 import org.junit.Test;
