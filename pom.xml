@@ -152,7 +152,7 @@
         <!-- log end -->
 
         <dependency>
-            <groupId>com.alibaba.fastjson22</groupId>
+            <groupId>com.alibaba.fastjson2</groupId>
             <artifactId>fastjson2</artifactId>
             <version>2.0.11</version>
         </dependency>
