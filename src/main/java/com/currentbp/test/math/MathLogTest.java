@@ -39,14 +39,17 @@ public class MathLogTest {
         System.out.println(v);
         double v1 = MathUtil.compoundInterest3(3600, 0, 30, 3600, 2);
         System.out.println(v1 + " " + 3600 * 30 * 1.4);
-        double v2 = MathUtil.compoundInterest3(10000, 0.04, 27, 10000, 2);
+        double v2 = MathUtil.compoundInterest3(10000, 0.12, 27, 10000, 2);
         System.out.println(v2);
     }
 
     @Test
     public void tempInterest() {
-//        float[] all = new float[]{0.6f, 0.15f, 0.3f, 0.2f, 0.1f, -0.1f,0.03f,0.05f,0.12f,-0.2f,0.4f};
-        float[] all = new float[]{0.6f, 0.3f, 0.6f, 0.3f, 0.3f, 0.3f,0.3f,0.6f,0.6f,0.3f,0.3f,0.2f,0.15f,0.3f};
+//        float[] all = new float[]{0.6f, 0.15f, 0.3f, 0.2f, 0.1f, -0.1f,0.03f,0.05f,0.12f,-0.2f,0.4f};//351121.79
+//        float[] all = new float[]{0.6f, 0.15f, 0.12f, 0.11f, 0.1f, 0.12f,0.13f,0.19f,0.1f,0.02f,0.05f,0.2f,0.15f,0.02f};//634541.58
+//        float[] all = new float[]{0.6f, 0.15f, 0.12f, 0.11f, 0.1f, 0.12f,0.13f,0.2f,0.1f,0.02f,0.05f,0.2f,0.15f,0.2f};//749299.1
+//        float[] all = new float[]{0.6f, 0.15f, 0.12f, 0.11f, 0.1f, 0.12f,0.13f,0.2f,0.1f,0.02f,0.05f,0.2f,0.15f,0.2f,0.1f,0.02f,0.05f,0.09f};//1053075.79
+        float[] all = new float[]{0.6f, 3f, 2f, 1f, 1.5f, 2f,1.1f};//16621000
         double result = 0;
         float base = 10000;
         float eachAdd = 10000;

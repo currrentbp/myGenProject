@@ -22,7 +22,16 @@ public class StringTest {
     public List<String> l2 = new ArrayList<String>();
 
     @Test
-    public void test1(){
+    public void stringUtilsEqual() {
+        System.out.println(StringUtils.equals("baopan", "baopan"));
+        System.out.println(StringUtils.equals(null, "baopan"));
+        System.out.println(StringUtils.equals("baopan", null));
+        System.out.println(StringUtils.equals(null, null));
+        System.out.println(StringUtils.equals("baopan", "baopan1"));
+    }
+
+    @Test
+    public void test1() {
         System.out.println(StringUtils.endsWithIgnoreCase("ES", "es"));
         System.out.println(StringUtils.endsWithIgnoreCase("ES", "es_1"));
         System.out.println(StringUtils.endsWithIgnoreCase("ES", "2_es"));
@@ -31,26 +40,26 @@ public class StringTest {
     }
 
     @Test
-    public void format(){
+    public void format() {
         DecimalFormat decimalFormat = new DecimalFormat("##.##%");
         String format = decimalFormat.format((float) 10 / (float) 11);
         System.out.println(format);
     }
 
     @Test
-    public void testSort(){
+    public void testSort() {
         List<Student> students = new ArrayList<>();
-        students.add(new Student(1,"a"));
-        students.add(new Student(2,"Abc"));
-        students.add(new Student(3,"abc"));
-        students.add(new Student(4,"zab"));
-        students.add(new Student(5,"Zab"));
+        students.add(new Student(1, "a"));
+        students.add(new Student(2, "Abc"));
+        students.add(new Student(3, "abc"));
+        students.add(new Student(4, "zab"));
+        students.add(new Student(5, "Zab"));
         students.sort(Comparator.comparing(Student::getName, Comparator.nullsLast(String::compareTo)));
         StringUtil.printObject(students);
     }
 
     @Test
-    public void testFirstChar(){
+    public void testFirstChar() {
         System.out.println(getFirstChar("abc"));
         System.out.println(getFirstChar("Abc"));
         System.out.println(getFirstChar("Fbc"));
@@ -59,11 +68,11 @@ public class StringTest {
         System.out.println(getFirstChar("看"));
         System.out.println(getFirstChar("  "));
         System.out.println(getFirstChar(null));
-        System.out.println((int)'a');
-        System.out.println((int)'A');
+        System.out.println((int) 'a');
+        System.out.println((int) 'A');
     }
 
-    private String getFirstChar(String pinyin){
+    private String getFirstChar(String pinyin) {
         String firstChar = StringUtils.isEmpty(pinyin) ?
                 "{" : ('a' <= pinyin.charAt(0) && pinyin.charAt(0) <= 'z') || ('A' <= pinyin.charAt(0) && pinyin.charAt(0) <= 'Z')
                 ? ("" + pinyin.charAt(0)).toLowerCase() : "{";
@@ -72,28 +81,28 @@ public class StringTest {
 
 
     @Test
-    public void char2String(){
+    public void char2String() {
         char a = 'a';
-        System.out.println((""+a).toUpperCase());
+        System.out.println(("" + a).toUpperCase());
 
     }
 
     @Test
-    public void testTrim(){
+    public void testTrim() {
         String trim = " 123    ";
-        System.out.println("======="+trim.trim()+"+++++++++");
+        System.out.println("=======" + trim.trim() + "+++++++++");
         String trim2 = " 123\n";
-        System.out.println("======="+trim2.trim()+"+++++++++");
+        System.out.println("=======" + trim2.trim() + "+++++++++");
         String trim3 = " 123\r";
-        System.out.println("======="+trim3.trim()+"+++++++++");
+        System.out.println("=======" + trim3.trim() + "+++++++++");
         String trim4 = " 123\t   ";
-        System.out.println("======="+trim4.trim()+"+++++++++");
+        System.out.println("=======" + trim4.trim() + "+++++++++");
         String trim5 = " 123\r\n";
-        System.out.println("======="+trim5.trim()+"+++++++++");
+        System.out.println("=======" + trim5.trim() + "+++++++++");
     }
 
     @Test
-    public void stringSort(){
+    public void stringSort() {
         List<Student> students = new ArrayList<>();
         Student student2 = new Student(2, "2");
         Student student1 = new Student(1, "1");
@@ -124,18 +133,18 @@ public class StringTest {
     }
 
     @Test
-    public void intern(){
+    public void intern() {
         String str1 = new StringBuilder("计算机").append("软件").toString();
         String intern = str1.intern();
-        System.out.println("s1:"+(intern == str1));
+        System.out.println("s1:" + (intern == str1));
         String str2 = new StringBuilder("ja").append("va").toString();
-        System.out.println("s2:"+(str2.intern() == str2));
+        System.out.println("s2:" + (str2.intern() == str2));
     }
 
     //===================          测试方法          ========================================================//
 
     @Test
-    public void join(){
+    public void join() {
         List<Long> ids = new ArrayList<>();
         ids.add(1L);
         ids.add(2L);
@@ -145,22 +154,23 @@ public class StringTest {
     }
 
     @Test
-    public void specialStringSplit(){
+    public void specialStringSplit() {
         String names = "baopan.1";
         String[] split = names.split("\\.");
         StringUtil.printObject(split);
     }
 
     @Test
-    public void stringSplit(){
-        String s1= "DZFW_D";
+    public void stringSplit() {
+        String s1 = "DZFW_D";
         logger.info(s1.split("_")[0]);
     }
+
     /**
      * 将一个字符串转换成计算公式，求出结果
      */
     @Test
-    public void string2MathsGetValue(){
+    public void string2MathsGetValue() {
         try {
             String str = "a >= 0 && a <= 5";//"(a >= 0 && a <= 5)";
             ScriptEngineManager manager = new ScriptEngineManager();
@@ -174,28 +184,31 @@ public class StringTest {
             ScriptEngine engine2 = manager2.getEngineByName("js");
             Object result2 = engine2.eval(str2);
             System.out.println("结果类型:" + result2.getClass().getName() + ",计算结果:" + result2);
-        }catch (Exception e){
+        } catch (Exception e) {
 
         }
     }
+
     //测试格式化问题
     @Test
-    public void stringFormat(){
+    public void stringFormat() {
         int i = 1;
         StringBuilder sb = new StringBuilder(11);
         sb.append("JCZB")
                 .append(String.format("%02d", 1))
                 .append(String.format("%03d", 2));
-        logger.info("===>sb:"+sb.toString());
+        logger.info("===>sb:" + sb.toString());
     }
+
     @Test
     //测试stringBuild有内容数时，超过时怎么样
     //结果：构造一个不带任何字符的字符串生成器，其初始容量由 capacity 参数指定。
-    public void stringBuildHasCan(){
+    public void stringBuildHasCan() {
         StringBuilder stringBuilder = new StringBuilder(3);
         stringBuilder.append("12345");
-        logger.info("===>sb:"+stringBuilder.toString());
+        logger.info("===>sb:" + stringBuilder.toString());
     }
+
     @Test
     //测试string、stringbuffer、stringbformat的效率问题
     public void someFunctionEffection() {
@@ -218,12 +231,12 @@ public class StringTest {
     /**
      * 比较string stringbuffer stringformat等的效率
      * 结论证明：stringformat 最差，
-     *
-     String add：446ns
-     StringBuilder add：447ns
-     StringFormat：11156ns
-     String add：2231ns
-     StringBuilder add：446ns
+     * <p>
+     * String add：446ns
+     * StringBuilder add：447ns
+     * StringFormat：11156ns
+     * String add：2231ns
+     * StringBuilder add：446ns
      */
     public void compareEfficiencyWithStringAndStringBufferAndStringFormat(int i) {
 
