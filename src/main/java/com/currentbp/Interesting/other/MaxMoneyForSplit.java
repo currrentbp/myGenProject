@@ -18,6 +18,8 @@ P:  1       5       8       9       10      17      17      20      24      30
 E:  1.0     2.5     2.667   2.25    2.0     2.833   2.4285  2.5     2.667   3.0
 
 按照效益排名：n：10,6,3,2,7,4,5,1
+
+参考博客：https://blog.csdn.net/u013309870/article/details/75193592
      */
 
     private static int[] p = new int[]{1, 5, 8, 9, 10, 17, 17, 20, 24, 30};
@@ -35,7 +37,7 @@ E:  1.0     2.5     2.667   2.25    2.0     2.833   2.4285  2.5     2.667   3.0
             Pair<Integer, Integer> kv = Pair.of(p[i], i + 1);
             kvs.add(kv);
         }
-        List<Pair<Integer, Integer>> kvs2 = kvs.stream().sorted(Comparator.comparing(x -> -1*(x.getKey() * 1.0f) / x.getRight())).collect(Collectors.toList());
+        List<Pair<Integer, Integer>> kvs2 = kvs.stream().sorted(Comparator.comparing(x -> -1 * (x.getKey() * 1.0f) / x.getRight())).collect(Collectors.toList());
         int remain = n;
         int result = 0;
         for (Pair<Integer, Integer> kv : kvs2) {
@@ -100,4 +102,17 @@ E:  1.0     2.5     2.667   2.25    2.0     2.833   2.4285  2.5     2.667   3.0
         }
         num2PriceMap.put(n, max);
     }
+
+    public static int buttom_up_cut(int[] p) {
+        int[] r = new int[p.length + 1];
+        for (int i = 1; i <= p.length; i++) {
+            int q = -1;
+            //
+            for (int j = 1; j <= i; j++)
+                q = Math.max(q, p[j - 1] + r[i - j]);
+            r[i] = q;
+        }
+        return r[p.length];
+    }
+
 }
