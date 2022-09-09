@@ -26,9 +26,16 @@ public class ListTest {
     private static Logger logger = LoggerFactory.getLogger(ListTest.class);
 
     @Test
+    public void listAdd(){
+        List<Integer> list = Lists.newArrayList(10,1, 2, 3, 4, 5, 7, 15, 16, 17);
+        list.add(7,11);
+        StringUtil.printObject(list);
+    }
+
+    @Test
     public void listSort(){
         List<Integer> list = Lists.newArrayList(10,1, 2, 3, 4, 5, 7, 15, 16, 17);
-        List<Integer> collect = list.stream().sorted().collect(Collectors.toList());
+        List<Integer> collect = list.stream().sorted(Comparator.comparing(x->-1*x.intValue())).collect(Collectors.toList());
 
         StringUtil.printObject(collect);
     }

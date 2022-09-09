@@ -2,6 +2,7 @@ package com.currentbp.common.entity;
 
 import java.util.ArrayList;
 import java.util.Arrays;
+import java.util.Iterator;
 import java.util.List;
 
 /**
@@ -18,6 +19,12 @@ public class TreeNode {
 
     public TreeNode(int x) {
         val = x;
+    }
+
+    public TreeNode(int val, TreeNode left, TreeNode right) {
+        this.val = val;
+        this.left = left;
+        this.right = right;
     }
 
     public TreeNode(List<Integer> list) {
@@ -81,5 +88,58 @@ public class TreeNode {
                 ", left=" + left +
                 ", right=" + right +
                 '}';
+    }
+
+    /*
+    分析：先生成一个全二叉树，然后再使用空白替换
+    1、遍历的出最大深度
+    2、获取全二叉树，
+    3、根据全二叉树计算出各自的位置并打印出
+     */
+    public void print() {
+        int dept = getMaxDept(this);
+        List<List<TreeNode>> fullTreeList = getFullTreeList(this,dept);
+        doPrint(fullTreeList);
+    }
+
+    private void doPrint(List<List<TreeNode>> fullTreeList) {
+        if(null == fullTreeList || 0 == fullTreeList.size()){
+            return;
+        }
+
+
+    }
+
+    private List<List<TreeNode>> getFullTreeList(TreeNode treeNode,int dept){
+        if(null == treeNode){
+            return new ArrayList<>();
+        }
+        List<List<TreeNode>> result = new ArrayList<>();
+
+        return result;
+    }
+
+    private int getMaxDept(TreeNode treeNode) {
+        if (treeNode == null) {
+            return 0;
+        }
+        int max = 0;
+        List<TreeNode> currentList = new ArrayList<>();
+        currentList.add(treeNode);
+
+        for (int i = 0; i < currentList.size(); i++) {
+            List<TreeNode> temps = new ArrayList<>();
+            if (null != currentList.get(i).left) {
+                temps.add(currentList.get(i).left);
+            }
+            if (null != currentList.get(i).right) {
+                temps.add(currentList.get(i).right);
+            }
+
+            max++;
+            currentList = temps;
+        }
+
+        return max;
     }
 }
