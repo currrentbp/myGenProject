@@ -26,6 +26,13 @@ public class ListTest {
     private static Logger logger = LoggerFactory.getLogger(ListTest.class);
 
     @Test
+    public void capacityTest(){
+        List<Integer> list = new ArrayList<>(10);
+        list.add(5,10);//error, java.lang.IndexOutOfBoundsException: Index: 5, Size: 0
+        StringUtil.printObject(list);
+    }
+
+    @Test
     public void listAdd(){
         List<Integer> list = Lists.newArrayList(10,1, 2, 3, 4, 5, 7, 15, 16, 17);
         list.add(7,11);

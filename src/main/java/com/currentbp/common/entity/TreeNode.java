@@ -1,5 +1,8 @@
 package com.currentbp.common.entity;
 
+import com.currentbp.util.all.StringUtil;
+import org.assertj.core.util.Lists;
+
 import java.util.ArrayList;
 import java.util.Arrays;
 import java.util.Iterator;
@@ -95,26 +98,100 @@ public class TreeNode {
     1、遍历的出最大深度
     2、获取全二叉树，
     3、根据全二叉树计算出各自的位置并打印出
+    3.1、最低层l0的数字间隔为1，倒数第二层l1的数字间隔为
      */
     public void print() {
         int dept = getMaxDept(this);
-        List<List<TreeNode>> fullTreeList = getFullTreeList(this,dept);
+        List<List<TreeNode>> fullTreeList = getFullTreeList(this, dept);
         doPrint(fullTreeList);
     }
 
     private void doPrint(List<List<TreeNode>> fullTreeList) {
-        if(null == fullTreeList || 0 == fullTreeList.size()){
+        if (null == fullTreeList || 0 == fullTreeList.size()) {
             return;
         }
 
+        List<TreeNode> downTreeNodes = fullTreeList.get(fullTreeList.size() - 1);
+        int maxSize = downTreeNodes.size();
+        List<List<String>> result = new ArrayList<>();
+        List<String> temp1 = getDefaultList(maxSize);
+        for (int i = 0; i < downTreeNodes.size(); i++) {
+            temp1.set(i * 2, "" + (downTreeNodes.get(i) == null ? "" : downTreeNodes.get(i).val));
+        }
+        result.add(temp1);
 
+        for (int i = 0; i < result.size(); i++) {
+            List<String> current = result.get(i);
+            int index = fullTreeList.size() - 2 - i;
+            if (index < 0) {
+                break;
+            }
+            List<TreeNode> topTreeNodes = fullTreeList.get(index);
+
+            List<String> temp = getDefaultList(maxSize);
+            int first = 0;
+            int second = 0;
+            int topIndex = 0;
+            for (int j = 0; j < temp.size(); j++) {
+                if (!current.get(j).equals("#")) {
+                    first = j;
+                } else {
+                    continue;
+                }
+                for (int k = j + 1; k < temp.size(); k++) {
+                    if (!current.get(k).equals("#")) {
+                        second = k;
+                        break;
+                    }
+                }
+                int middle = (first + second) / 2;
+                temp.set(middle, "" + (topTreeNodes.get(topIndex) == null ? "" : topTreeNodes.get(topIndex).val));
+                topIndex++;
+                j = second;
+            }
+            result.add(temp);
+        }
+
+//        for (int i = result.size() - 1; i >= 0; i--) {
+//            StringUtil.printObject(result.get(i));
+//        }
+
+        for (int i = result.size() - 1; i >= 0; i--) {
+            List<String> line = result.get(i);
+            for (int j = 0; j < line.size(); j++) {
+                if(line.get(j).equals("#")){
+                    System.out.print("  ");
+                }else if(line.get(j).equals("")){
+                    System.out.print("  ");
+                }else {
+                    System.out.print(line.get(j));
+                }
+            }
+            System.out.println();
+        }
     }
 
-    private List<List<TreeNode>> getFullTreeList(TreeNode treeNode,int dept){
-        if(null == treeNode){
+
+    private List<List<TreeNode>> getFullTreeList(TreeNode treeNode, int dept) {
+        if (null == treeNode) {
             return new ArrayList<>();
         }
         List<List<TreeNode>> result = new ArrayList<>();
+        result.add(Lists.newArrayList(treeNode));
+        for (int i = 0; i < dept; i++) {
+            List<TreeNode> temp = new ArrayList<>();
+            List<TreeNode> treeNodes = result.get(i);
+            for (TreeNode node : treeNodes) {
+                if (null == node) {
+                    temp.add(null);
+                    temp.add(null);
+                } else {
+                    temp.add(node.left);
+                    temp.add(node.right);
+                }
+            }
+            result.add(temp);
+        }
 
         return result;
     }
@@ -123,7 +200,7 @@ public class TreeNode {
         if (treeNode == null) {
             return 0;
         }
-        int max = 0;
+        int max = 1;
         List<TreeNode> currentList = new ArrayList<>();
         currentList.add(treeNode);
 
@@ -142,4 +219,13 @@ public class TreeNode {
 
         return max;
     }
+
+    private List<String> getDefaultList(int maxSize) {
+        List<String> temp = new ArrayList<>();
+        for (int i = 0; i < maxSize * 2 - 1; i++) {
+            temp.add("#");
+        }
+        return temp;
+    }
+
 }

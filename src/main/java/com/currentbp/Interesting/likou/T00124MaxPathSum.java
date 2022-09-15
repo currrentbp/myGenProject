@@ -39,6 +39,9 @@ public class T00124MaxPathSum {
         TreeNode treeNode = new TreeNode(Lists.newArrayList(-10, 9, 20, null, null, 15, 7));
 
         System.out.println(maxPathSum(treeNode));
+        treeNode.print();
+        TreeNode treeNode2 = new TreeNode(Lists.newArrayList(3, 9, 20, null, 3, 15, 7));
+        treeNode2.print();
     }
 
     public int maxPathSum(TreeNode root) {

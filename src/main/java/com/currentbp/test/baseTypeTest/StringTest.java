@@ -22,6 +22,13 @@ public class StringTest {
     public List<String> l2 = new ArrayList<String>();
 
     @Test
+    public void t1(){
+        String content = "sdef sdfsdf sdf";
+        String[] words = content.split("\\s");
+        System.out.println(words.length);
+    }
+
+    @Test
     public void stringUtilsEqual() {
         System.out.println(StringUtils.equals("baopan", "baopan"));
         System.out.println(StringUtils.equals(null, "baopan"));

@@ -49,7 +49,7 @@ public class MathLogTest {
 //        float[] all = new float[]{0.6f, 0.15f, 0.12f, 0.11f, 0.1f, 0.12f,0.13f,0.19f,0.1f,0.02f,0.05f,0.2f,0.15f,0.02f};//634541.58
 //        float[] all = new float[]{0.6f, 0.15f, 0.12f, 0.11f, 0.1f, 0.12f,0.13f,0.2f,0.1f,0.02f,0.05f,0.2f,0.15f,0.2f};//749299.1
 //        float[] all = new float[]{0.6f, 0.15f, 0.12f, 0.11f, 0.1f, 0.12f,0.13f,0.2f,0.1f,0.02f,0.05f,0.2f,0.15f,0.2f,0.1f,0.02f,0.05f,0.09f};//1053075.79
-        float[] all = new float[]{0.6f, 3f, 2f, 1f, 1.5f, 2f,1.1f};//16621000
+        float[] all = new float[]{0.624f};//真实的炒股金额
         double result = 0;
         float base = 10000;
         float eachAdd = 10000;
