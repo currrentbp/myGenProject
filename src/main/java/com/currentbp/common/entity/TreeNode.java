@@ -101,8 +101,7 @@ public class TreeNode {
     3.1、最低层l0的数字间隔为1，倒数第二层l1的数字间隔为
      */
     public void print() {
-        int dept = getMaxDept(this);
-        List<List<TreeNode>> fullTreeList = getFullTreeList(this, dept);
+        List<List<TreeNode>> fullTreeList = getFullTreeList(this);
         doPrint(fullTreeList);
     }
 
@@ -152,19 +151,24 @@ public class TreeNode {
             result.add(temp);
         }
 
-//        for (int i = result.size() - 1; i >= 0; i--) {
-//            StringUtil.printObject(result.get(i));
-//        }
-
         for (int i = result.size() - 1; i >= 0; i--) {
             List<String> line = result.get(i);
             for (int j = 0; j < line.size(); j++) {
-                if(line.get(j).equals("#")){
-                    System.out.print("  ");
-                }else if(line.get(j).equals("")){
-                    System.out.print("  ");
-                }else {
-                    System.out.print(line.get(j));
+                String s = line.get(j);
+                if (s.equals("#")) {
+                    System.out.print(" ");
+                } else {
+                    if (s.equals("")) {
+                        System.out.print(" ");
+                    } else {
+                        if (s.length() == 1) {
+                            System.out.print(s + "   ");
+                        } else if (s.length() == 2) {
+                            System.out.print(s + "  ");
+                        } else {
+                            System.out.print(s + " ");
+                        }
+                    }
                 }
             }
             System.out.println();
@@ -172,15 +176,16 @@ public class TreeNode {
     }
 
 
-    private List<List<TreeNode>> getFullTreeList(TreeNode treeNode, int dept) {
+    private List<List<TreeNode>> getFullTreeList(TreeNode treeNode) {
         if (null == treeNode) {
             return new ArrayList<>();
         }
         List<List<TreeNode>> result = new ArrayList<>();
         result.add(Lists.newArrayList(treeNode));
-        for (int i = 0; i < dept; i++) {
+        for (int i = 0; i < result.size(); i++) {
             List<TreeNode> temp = new ArrayList<>();
             List<TreeNode> treeNodes = result.get(i);
+            boolean isAllNull = true;
             for (TreeNode node : treeNodes) {
                 if (null == node) {
                     temp.add(null);
@@ -188,7 +193,11 @@ public class TreeNode {
                 } else {
                     temp.add(node.left);
                     temp.add(node.right);
+                    isAllNull = false;
                 }
+            }
+            if(isAllNull){
+                break;
             }
             result.add(temp);
         }

@@ -1,6 +1,8 @@
 package com.currentbp.util.all;
 
 import com.alibaba.fastjson2.JSON;
+import org.apache.commons.lang3.ArrayUtils;
+import org.apache.commons.lang3.StringUtils;
 import org.junit.Test;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
@@ -492,6 +494,33 @@ public class StringUtil {
             return false;
         }
         return false;
+    }
+
+    /**
+     * 计算字数
+     */
+    public static Integer computeWordCount(String content) {
+        if (StringUtils.isBlank(content)) {
+            return 0;
+        } else {
+            String[] words = content.split("\\s");
+            if (ArrayUtils.isEmpty(words)) {
+                return 0;
+            } else {
+                Integer count = 0;
+                String[] var3 = words;
+                int var4 = words.length;
+
+                for(int var5 = 0; var5 < var4; ++var5) {
+                    String word = var3[var5];
+                    if (StringUtils.isNotBlank(word)) {
+                        count = count + 1;
+                    }
+                }
+
+                return count;
+            }
+        }
     }
 
 }
