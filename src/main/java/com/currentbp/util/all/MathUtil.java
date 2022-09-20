@@ -828,4 +828,32 @@ public class MathUtil {
         return result.toString();
     }
 
+    /**
+     * 根据一个数字获取二进制或者16进制的字符串
+     */
+    public static String getBinary4Num(Object source) {
+        if (source instanceof Long) {
+            return getBinary4Long((Long) source);
+        } else if (source instanceof Integer) {
+            return getBinary4Int((Integer) source);
+        } else if (source instanceof Float) {
+            return getBinary4Float((Float) source);
+        } else {
+            Assert.isTrue(false, "object type not support");
+        }
+        return "";
+    }
+
+    private static String getBinary4Int(int source) {
+        return Integer.toBinaryString(source);
+    }
+
+    private static String getBinary4Long(long source) {
+        return Long.toBinaryString(source);
+    }
+
+    private static String getBinary4Float(float source) {
+        return Float.toHexString(source);
+    }
+
 }

@@ -14,7 +14,15 @@ import java.util.List;
  */
 public class StringUtilTest {
 
+    @Test
+    public void computeWordCount() {
+        System.out.println(StringUtil.computeWordCount("baopan baoyou haha"));
+        System.out.println(StringUtil.computeWordCount("My eyes saw black hair with dark red eyes holding a sinister"));
+        System.out.println(StringUtil.computeWordCount("익숙한 목소리에 마리는 안도의 한숨을"));
+        System.out.println(StringUtil.computeWordCount("Estoy muy ocupada atacando mis mechones castaños con una plancha de cabello"));
+        System.out.println(StringUtil.computeWordCount(""));
 
+    }
 
     @Test
     public void t1212(){

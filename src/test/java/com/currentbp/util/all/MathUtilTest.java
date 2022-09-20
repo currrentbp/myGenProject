@@ -15,6 +15,15 @@ public class MathUtilTest {
     private final static Logger logger = LoggerFactory.getLogger(MathUtilTest.class);
 
     @Test
+    public void printBinary4Num(){
+        System.out.println(MathUtil.getBinary4Num(9));
+        System.out.println(MathUtil.getBinary4Num(-9));
+        System.out.println(MathUtil.getBinary4Num(8L));
+//        System.out.println(MathUtil.getBinary4Num(null));
+        System.out.println(MathUtil.getBinary4Num(1.1F));
+    }
+
+    @Test
     public void combination2(){
         int[] source = {1,2,3,4};
         MathUtil.combination2(0,3,source);
