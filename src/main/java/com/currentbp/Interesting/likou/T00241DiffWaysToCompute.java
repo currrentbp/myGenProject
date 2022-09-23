@@ -30,7 +30,8 @@ public class T00241DiffWaysToCompute {
 (((2*3)-4)*5) = 10
 
 解题思路：
-1、
+1、入栈出栈问题
+2、
      */
 
 
