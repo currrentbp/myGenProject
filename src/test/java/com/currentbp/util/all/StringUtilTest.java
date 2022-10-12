@@ -1,6 +1,5 @@
 package com.currentbp.util.all;
 
-import com.alibaba.fastjson2.JSON;
 import com.currentbp.common.model.Student;
 import org.assertj.core.util.Lists;
 import org.junit.Test;
@@ -13,6 +12,12 @@ import java.util.List;
  * Created by issuser on 2017/5/25.
  */
 public class StringUtilTest {
+
+    @Test
+    public void stringFormat(){
+        String format = String.format("%02d", 5);
+        System.out.println(format);
+    }
 
     @Test
     public void computeWordCount() {
