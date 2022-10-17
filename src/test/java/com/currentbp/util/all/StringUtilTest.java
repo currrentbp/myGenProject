@@ -17,6 +17,7 @@ public class StringUtilTest {
     public void stringFormat(){
         String format = String.format("%02d", 5);
         System.out.println(format);
+        byte[] bytes = format.getBytes();
     }
 
     @Test
