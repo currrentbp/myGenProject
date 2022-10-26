@@ -172,7 +172,7 @@ public class RedisCacheUtilImpl implements RedisCacheUtil {
 
 
     public Double hincrByFloat(String key, String field, double value) {
-        return jedis.hincrByFloat(key, field, value);
+        return null;//jedis.hincrByFloat(key, field, value);
     }
 
 

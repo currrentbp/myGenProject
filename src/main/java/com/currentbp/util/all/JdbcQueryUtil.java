@@ -14,8 +14,6 @@ import java.text.SimpleDateFormat;
 import java.util.*;
 
 import org.apache.commons.collections4.ListUtils;
-import org.springframework.jdbc.core.BeanPropertyRowMapper;
-import org.springframework.jdbc.core.RowMapper;
 
 /**
  * 原生的jdbc查询数据库
