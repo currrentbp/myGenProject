@@ -22,7 +22,45 @@ public class StringTest {
     public List<String> l2 = new ArrayList<String>();
 
     @Test
-    public void t1(){
+    public void testListEmpty() {
+        List<String> codeType = new ArrayList<>();
+        codeType.add(null);
+        codeType.add(null);
+        codeType.add(null);
+        codeType.add("");
+        StringBuilder sb = new StringBuilder("UserInfo(");
+        sb.append(codeType);
+        System.out.println(sb.toString());
+    }
+
+    @Test
+    public void type2Change() {
+        List<String> codeType = new ArrayList<>();
+        codeType.add("UTF-8");
+        codeType.add("Unicode");
+        codeType.add("GB2312");
+        codeType.add("BIG5");
+        codeType.add("GBK");
+        codeType.add("ISO-8859-1");
+        String source = "包盼";
+        for (int i = 0; i < codeType.size(); i++) {
+            for (int j = 0; j < codeType.size(); j++) {
+                if (i == j) {
+                    continue;
+                }
+                try {
+                    byte[] bytes = source.getBytes(codeType.get(i));
+                    String s = new String(bytes, codeType.get(j));
+                    System.out.println("sourceType:" + codeType.get(i) + " currentType:" + codeType.get(j) + " str:" + s);
+                } catch (Exception e) {
+                    System.out.println("===>error" + e.getMessage());
+                }
+            }
+        }
+    }
+
+    @Test
+    public void t1() {
         String content = "sdef sdfsdf sdf";
         String[] words = content.split("\\s");
         System.out.println(words.length);

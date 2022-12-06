@@ -17,6 +17,10 @@ import java.util.List;
 public class IntTest {
 
     @Test
+    public void t1222(){
+        System.out.println(1 << 10);
+    }
+    @Test
     public void t11(){
         List<Student> students = new ArrayList<>();
         students.add(new Student(1,"1"));
