@@ -27,24 +27,25 @@ public class T010NumWays {
      */
 
     @Test
-    public void t1(){
+    public void t1() {
 //        StringUtil.printObject(numWays(1));
 //        StringUtil.printObject(numWays(2));
 //        StringUtil.printObject(numWays(3));
 //        StringUtil.printObject(numWays(4));
 //        StringUtil.printObject(numWays(5));
 //        StringUtil.printObject(numWays(6));
-//        StringUtil.printObject(numWays(7));
-        StringUtil.printObject(numWays(66));
+        StringUtil.printObject(numWays(7));
+        StringUtil.printObject(numWays(44));
     }
+
     public int numWays2(int n) {
-        if(n == 1){
+        if (n == 1) {
             return 1;
         }
-        if(n==2){
+        if (n == 2) {
             return 2;
         }
-        return numWays2(n-1)+numWays2(n-2);
+        return numWays2(n - 1) + numWays2(n - 2);
     }
 
     public long numWays(int n) {
@@ -62,14 +63,14 @@ public class T010NumWays {
 
         long first = 1;
         long second = 2;
-
+        final int MOD = 1000000007;
         for (int i = 3; i <= n; i++) {
-            result = first+second;
-            System.out.println("first:"+first+" second:"+second+" result:"+result);
+            result = first + second;
+//            System.out.println("first:" + first + " second:" + second + " result:" + result);
             first = second;
-            second = result;
+            second = result % MOD;
         }
 
-        return result;
+        return second;
     }
 }

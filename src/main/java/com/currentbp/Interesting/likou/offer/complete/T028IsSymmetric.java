@@ -105,4 +105,40 @@ public class T028IsSymmetric {
         return root1.val == root2.val && helper(root1.left, root2.right) &&
                 helper(root1.right, root2.left);
     }
+
+    public boolean isSymmetric3(TreeNode root) {
+        List<TreeNode> tops = new ArrayList<>();
+        tops.add(root);
+
+        while (true) {
+            List<TreeNode> nextTops = new ArrayList<>();
+            boolean isAllNull = true;
+            for (int i = 0; i < tops.size(); i++) {
+                TreeNode currentNode = tops.get(i);
+                if (currentNode != null) {
+                    nextTops.add(currentNode.left);
+                    nextTops.add(currentNode.right);
+                    isAllNull = false;
+                }
+            }
+            if(isAllNull){
+                break;
+            }
+            for (int i = 0; i < tops.size() / 2; i++) {
+                TreeNode currentNode = tops.get(i);
+                if (currentNode == null && tops.get(tops.size() - 1 - i) == null) {
+                    continue;
+                }
+                if (currentNode == null ^ tops.get(tops.size() - 1 - i) == null) {
+                    return false;
+                }
+
+                if (currentNode.val != tops.get(tops.size() - 1 - i).val) {
+                    return false;
+                }
+            }
+            tops = nextTops;
+        }
+        return true;
+    }
 }
