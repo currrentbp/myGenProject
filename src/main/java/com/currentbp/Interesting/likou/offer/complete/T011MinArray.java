@@ -19,19 +19,41 @@ public class T011MinArray {
 输出：0
      */
     @Test
-    public void t1(){
-        StringUtil.printObject(minArray(new int[]{3,4,5,1,2}));
-        StringUtil.printObject(minArray(new int[]{2,2,2,0,1}));
+    public void t1() {
+        StringUtil.printObject(minArray(new int[]{3, 4, 5, 1, 2}));
+        StringUtil.printObject(minArray(new int[]{2, 2, 2, 0, 1}));
     }
 
     public int minArray(int[] numbers) {
-        if(null == numbers || 0 == numbers.length){
+        if (null == numbers || 0 == numbers.length) {
             return 0;
         }
         int min = Integer.MAX_VALUE;
-        for(int i=0;i<numbers.length;i++){
-            min = Math.min(min,numbers[i]);
+        for (int i = 0; i < numbers.length; i++) {
+            min = Math.min(min, numbers[i]);
         }
+        return min;
+    }
+
+    public int minArray2(int[] numbers) {
+        if (null == numbers || 0 == numbers.length) {
+            return 0;
+        }
+        if (numbers.length == 1) {
+            return numbers[0];
+        }
+
+        boolean isFirst = numbers[0] < numbers[numbers.length - 1];
+        if (isFirst) {
+            return numbers[0];
+        }
+
+        int min = numbers[numbers.length - 1];
+        for (int i = numbers.length - 1; i >= 0; i--) {
+            min = Math.min(min, numbers[i]);
+        }
+
+
         return min;
     }
 }
