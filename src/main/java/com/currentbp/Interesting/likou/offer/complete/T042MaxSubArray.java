@@ -1,4 +1,4 @@
-package com.currentbp.Interesting.likou.offer;
+package com.currentbp.Interesting.likou.offer.complete;
 
 import com.currentbp.util.all.StringUtil;
 import org.junit.Test;
@@ -18,6 +18,8 @@ public class T042MaxSubArray {
 
 解题思路：
 1、写一个矩阵，矩阵的内容就是从一个点到另一个点的和，找出最大的值就行了，其中用了动态规划的思想，利用以前的数据计算现有的值
+第二种思路：
+1、max(f(n)) = max(mf(n-1)+n,mf(n-1),n)
      */
 
     @Test
@@ -54,4 +56,5 @@ public class T042MaxSubArray {
         }
         return max;
     }
+
 }
