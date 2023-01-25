@@ -1,4 +1,4 @@
-package com.currentbp.Interesting.likou.offer;
+package com.currentbp.Interesting.likou.offer.complete;
 
 import com.currentbp.util.all.ListUtil;
 import com.currentbp.util.all.StringUtil;
@@ -27,7 +27,7 @@ public class T013MovingCount {
 输出：1
 提示：
 1 <= n,m <= 100
-0 <= k <= 20
+0 <= k<= 20
      */
 
     @Test

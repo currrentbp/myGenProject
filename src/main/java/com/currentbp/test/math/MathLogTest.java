@@ -35,11 +35,11 @@ public class MathLogTest {
 
     @Test
     public void t3() {
-        double v = MathUtil.compoundInterest(10000, 0.5, 17);
+        double v = MathUtil.compoundInterest(8000, 0.12, 30);
         System.out.println(v);
         double v1 = MathUtil.compoundInterest3(3600, 0, 30, 3600, 2);
         System.out.println(v1 + " " + 3600 * 30 * 1.4);
-        double v2 = MathUtil.compoundInterest3(10000, 0.12, 27, 10000, 2);
+        double v2 = MathUtil.compoundInterest3(10000, 0.12, 35, 10000, 2);
         System.out.println(v2);
     }
 

@@ -4,10 +4,7 @@ import com.currentbp.util.all.ListUtil;
 import com.currentbp.util.all.StringUtil;
 import org.junit.Test;
 
-import java.util.ArrayList;
-import java.util.HashMap;
-import java.util.List;
-import java.util.Map;
+import java.util.*;
 
 /**
  * @author baopan
@@ -254,10 +251,62 @@ public class T012Exist {
     private void printArray(int[][] board) {
         for (int i = 0; i < board.length; i++) {
             for (int j = 0; j < board[0].length; j++) {
-                System.out.print(""+board[i][j]+" ");
+                System.out.print("" + board[i][j] + " ");
             }
             System.out.println();
         }
+    }
+
+
+    @Test
+    public void t3() {
+//        char[][] board = new char[][]{{'A', 'B', 'C', 'E'}, {'S', 'F', 'C', 'S'}, {'A', 'D', 'E', 'E'}};
+//        String word = "SEE";
+        char[][] board = new char[][]{{'A'}};
+        String word = "A";
+        System.out.println(exist3(board, word));
+    }
+
+    public boolean exist3(char[][] board, String word) {
+        for (int x = 0; x < board.length; x++) {
+            for (int y = 0; y < board[0].length; y++) {
+                int[][] pointFlag = new int[board.length][board[0].length];
+                boolean has = point(board, word, 0, x, y, pointFlag);
+                if (has) {
+                    return true;
+                }
+            }
+        }
+        return false;
+    }
+
+    private boolean point(char[][] board, String word, int index, int x, int y, int[][] pointFlag) {
+        if (x < 0 || y < 0 || x >= board.length || y >= board[0].length) {
+            return false;
+        }
+        if (index >= word.length()) {
+            return true;
+        }
+        if (pointFlag[x][y] == 1) {
+            return false;
+        }
+        if (board[x][y] == word.charAt(index)) {
+            if (index == word.length() - 1) {
+                return true;
+            }
+            pointFlag[x][y] = 1;
+            boolean has = point(board, word, index + 1, x - 1, y, pointFlag)
+                    || point(board, word, index + 1, x, y - 1, pointFlag)
+                    || point(board, word, index + 1, x + 1, y, pointFlag)
+                    || point(board, word, index + 1, x, y + 1, pointFlag);
+            if (has) {
+                return true;
+            } else {
+                pointFlag[x][y] = 0;
+                return false;
+            }
+        }
+        return false;
     }
 
 }
