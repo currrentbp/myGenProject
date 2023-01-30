@@ -1,4 +1,4 @@
-package com.currentbp.thread.producterConsumer.v1;
+package com.currentbp.thread.producerConsumer.v1;
 
 /**
  * 生产者消费者

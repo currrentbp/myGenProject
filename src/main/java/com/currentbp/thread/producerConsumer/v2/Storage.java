@@ -1,4 +1,4 @@
-package com.currentbp.thread.producterConsumer.v2;
+package com.currentbp.thread.producerConsumer.v2;
 
 /**
  * @author baopan

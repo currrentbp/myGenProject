@@ -49,7 +49,7 @@ public class MathLogTest {
 //        float[] all = new float[]{0.6f, 0.15f, 0.12f, 0.11f, 0.1f, 0.12f,0.13f,0.19f,0.1f,0.02f,0.05f,0.2f,0.15f,0.02f};//634541.58
 //        float[] all = new float[]{0.6f, 0.15f, 0.12f, 0.11f, 0.1f, 0.12f,0.13f,0.2f,0.1f,0.02f,0.05f,0.2f,0.15f,0.2f};//749299.1
 //        float[] all = new float[]{0.6f, 0.15f, 0.12f, 0.11f, 0.1f, 0.12f,0.13f,0.2f,0.1f,0.02f,0.05f,0.2f,0.15f,0.2f,0.1f,0.02f,0.05f,0.09f};//1053075.79
-        float[] all = new float[]{0.624f};//真实的炒股金额
+        float[] all = new float[]{0.624f, 0.15f};//真实的炒股金额
         double result = 0;
         float base = 10000;
         float eachAdd = 10000;
@@ -61,6 +61,24 @@ public class MathLogTest {
             input += eachAdd;
         }
         System.out.println(result + " " + input);
+    }
+
+    @Test
+    public void trueInterest() {
+        //从20年开始
+        int[] years = new int[]{20, 21, 22, 23};
+        float[] interest = new float[]{-0.1457f, 0.6024f, 0.1577f, 0.30f};//真实的炒股收益
+        float[] bases = new float[]{6505, 4500, 20000, 10000};//真实的炒股本金投入金额
+        double result = 0;
+        int newScale = 2;
+        double input = 0;
+        for (int i = 0; i < years.length; i++) {
+            double currentMoney = MoneyUtil.add(result, bases[i]);
+            result = MoneyUtil.add(currentMoney, MoneyUtil.multiply(currentMoney, interest[i], newScale));
+            input += bases[i];
+            System.out.println(years[i] + "\t" + input + "\t" + result);
+        }
+
     }
 
 }

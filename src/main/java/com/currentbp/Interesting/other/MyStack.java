@@ -5,6 +5,8 @@ import com.currentbp.util.all.StringUtil;
 
 import java.util.ArrayList;
 import java.util.List;
+import java.util.Stack;
+import java.util.Vector;
 
 /**
  * @author baopan
@@ -43,6 +45,8 @@ public class MyStack<T> {
 
     public static void main(String[] args) {
         MyStack myStack = new MyStack();
+        Vector vector = new Vector();
+        Stack<Integer> sta = new Stack<>();
 
         new Thread(() -> {
             for (int i = 1; i <= 10; i++) {

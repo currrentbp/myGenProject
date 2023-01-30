@@ -28,7 +28,7 @@ public class SortObject implements Comparable<SortObject>{
 	
 	public int compareTo(SortObject o) {
 		
-		return this.getKey()<o.getKey() ? -1 : this.getKey() == o.getKey() ? 0 : 1;
+		return Integer.compare(this.getKey(), o.getKey());
 	}
 	
 	

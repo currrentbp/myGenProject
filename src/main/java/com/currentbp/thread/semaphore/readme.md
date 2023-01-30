@@ -1,0 +1,4 @@
+Semaphore类（信号量）测试类
+
+其中SimpleUserSemaphore这个例子有问题
+StopCar是正确的

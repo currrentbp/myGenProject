@@ -1,4 +1,4 @@
-package com.currentbp.thread.producterConsumer.v1;
+package com.currentbp.thread.producerConsumer.v1;
 
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;

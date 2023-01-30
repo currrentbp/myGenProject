@@ -17,6 +17,11 @@ import java.util.List;
 public class IntTest {
 
     @Test
+    public void minNum(){
+        System.out.println("result:"+(-1-Integer.MAX_VALUE));
+    }
+
+    @Test
     public void t1222(){
         System.out.println(1 << 10);
     }

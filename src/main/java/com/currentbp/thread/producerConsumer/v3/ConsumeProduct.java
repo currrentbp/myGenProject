@@ -1,8 +1,6 @@
-package com.currentbp.thread.producterConsumer.v3;
+package com.currentbp.thread.producerConsumer.v3;
 
 import org.junit.Test;
-
-import java.util.concurrent.Semaphore;
 
 /**
  * @author baopan
