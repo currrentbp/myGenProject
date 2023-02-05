@@ -1,5 +1,7 @@
 package com.currentbp.thread.producerConsumer.v20230130;
 
+import java.util.HashMap;
+import java.util.Map;
 import java.util.concurrent.atomic.AtomicInteger;
 
 /**
@@ -30,6 +32,8 @@ public class Store0130 {
 
     public int subCount(int num) {
         Object o = new Object();
+        Map<Integer,Integer> map = new HashMap<>();
+        map.put(1,1);
         int i = retry;
         while (i > 0) {
             int old = count.get();
