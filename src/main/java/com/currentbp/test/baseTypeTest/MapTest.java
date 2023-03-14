@@ -4,6 +4,7 @@ import org.junit.Test;
 
 import java.util.HashMap;
 import java.util.Map;
+import java.util.concurrent.locks.LockSupport;
 import java.util.regex.Matcher;
 import java.util.regex.Pattern;
 
@@ -14,7 +15,7 @@ import java.util.regex.Pattern;
 public class MapTest {
 
     @Test
-    public void t4(){
+    public void t4() {
         String par = "^[0-9]{2}:[0-9]{2}$";
         Pattern pattern = Pattern.compile(par);
         Matcher matcher = pattern.matcher("10:10");
@@ -28,12 +29,13 @@ public class MapTest {
     }
 
     @Test
-    public void t3(){
+    public void t3() {
         long increment = 1L;
         int bannerFrequency = 3;
         long x = (increment - 1L) % bannerFrequency;
         boolean result = x != 0L;
-        System.out.println(result+",x:"+x);
+        System.out.println(result + ",x:" + x);
+        LockSupport.unpark(null);
     }
 
     @Test
@@ -61,4 +63,54 @@ public class MapTest {
         System.out.println("s3:" + s3);
 
     }
+
+    @Test
+    public void t1222() {
+        /*
+        测试如果只修改equals方法会不会有问题
+        结论：
+         */
+        for (int i = 0; i < 10000000; i++) {
+            String s = t12();
+            if (s.equals("10000_null")) {
+//                System.out.println("no"+s);
+            } else {
+                System.out.println("yes" + s);
+            }
+        }
+    }
+
+    public String t12() {
+        Map<HashMapChangeEqNoHashCode, Integer> map = new HashMap<>();
+        for (int i = 0; i < 10000; i++) {
+            map.put(new HashMapChangeEqNoHashCode(1, "1"), i);
+        }
+
+//        System.out.println(map.size());
+//        System.out.println(map.get(new HashMapChangeEqNoHashCode(1,"1")));
+//        System.out.println(new HashMapChangeEqNoHashCode(1,"1").equals(new HashMapChangeEqNoHashCode(1,"1")));
+        return map.size() + "_" + map.get(new HashMapChangeEqNoHashCode(1, "1"));
+    }
+
+
+}
+
+class HashMapChangeEqNoHashCode {
+    private int id;
+    private String name;
+
+    public HashMapChangeEqNoHashCode(int id, String name) {
+        this.id = id;
+        this.name = name;
+    }
+
+    @Override
+    public boolean equals(Object o) {
+        if (this == o) return true;
+        if (o == null || getClass() != o.getClass()) return false;
+        HashMapChangeEqNoHashCode that = (HashMapChangeEqNoHashCode) o;
+        return id == that.id;
+    }
+
+
 }

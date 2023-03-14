@@ -25,24 +25,26 @@ import java.util.stream.Collectors;
 public class ListTest {
     private static Logger logger = LoggerFactory.getLogger(ListTest.class);
 
+
+
     @Test
-    public void capacityTest(){
+    public void capacityTest() {
         List<Integer> list = new ArrayList<>(10);
-        list.add(5,10);//error, java.lang.IndexOutOfBoundsException: Index: 5, Size: 0
+        list.add(5, 10);//error, java.lang.IndexOutOfBoundsException: Index: 5, Size: 0
         StringUtil.printObject(list);
     }
 
     @Test
-    public void listAdd(){
-        List<Integer> list = Lists.newArrayList(10,1, 2, 3, 4, 5, 7, 15, 16, 17);
-        list.add(7,11);
+    public void listAdd() {
+        List<Integer> list = Lists.newArrayList(10, 1, 2, 3, 4, 5, 7, 15, 16, 17);
+        list.add(7, 11);
         StringUtil.printObject(list);
     }
 
     @Test
-    public void listSort(){
-        List<Integer> list = Lists.newArrayList(10,1, 2, 3, 4, 5, 7, 15, 16, 17);
-        List<Integer> collect = list.stream().sorted(Comparator.comparing(x->-1*x.intValue())).collect(Collectors.toList());
+    public void listSort() {
+        List<Integer> list = Lists.newArrayList(10, 1, 2, 3, 4, 5, 7, 15, 16, 17);
+        List<Integer> collect = list.stream().sorted(Comparator.comparing(x -> -1 * x.intValue())).collect(Collectors.toList());
 
         StringUtil.printObject(collect);
     }
@@ -78,7 +80,7 @@ public class ListTest {
         }
         //可以设置并行数量
         System.setProperty("java.util.concurrent.ForkJoinPool.common.parallelism", "20");
-        System.out.println("parallel:"+System.getProperty("java.util.concurrent.ForkJoinPool.common.parallelism"));
+        System.out.println("parallel:" + System.getProperty("java.util.concurrent.ForkJoinPool.common.parallelism"));
     }
 
 

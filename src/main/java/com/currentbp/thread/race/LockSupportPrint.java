@@ -1,5 +1,8 @@
 package com.currentbp.thread.race;
 
+import java.util.concurrent.ExecutorService;
+import java.util.concurrent.ThreadPoolExecutor;
+import java.util.concurrent.TimeUnit;
 import java.util.concurrent.locks.LockSupport;
 
 /**
@@ -14,9 +17,12 @@ public class LockSupportPrint {
     private static Thread thread1 = null;
     private static Thread thread2 = null;
 
-    public static void main(String[] args) {
+    public static void main(String[] args) throws InterruptedException {
+
         char[] chars1 = c1.toCharArray();
         char[] chars2 = c2.toCharArray();
+        Thread.sleep(10);
+        TimeUnit.MINUTES.sleep(11);
 
         thread1 = new Thread(() -> {
             for (char c : chars1) {
