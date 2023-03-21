@@ -15,6 +15,7 @@ public class SpecialSum {
 
     public int sum(int[] sources){
         int max = Integer.MIN_VALUE;
+        //0:未标记，1：已使用，2：废弃
         int[] flags = new int[sources.length];
         for(int i=0;i<sources.length;i++){
             flags[i] = 1;
@@ -29,7 +30,7 @@ public class SpecialSum {
             if(flags[i] == 1){
                 continue;
             }else{
-
+                
                 break;
             }
         }
