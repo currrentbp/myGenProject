@@ -1,4 +1,4 @@
-package com.currentbp.test.spring.startTest;
+package com.currentbp.test.spring.startTest.xmlTest;
 
 import org.springframework.context.ApplicationContext;
 import org.springframework.context.support.ClassPathXmlApplicationContext;
