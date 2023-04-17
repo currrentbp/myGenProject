@@ -37,12 +37,12 @@ public class T00328OddEvenList {
         List<Integer> source4 = Lists.newArrayList(1, 2, 3, 4);
         List<Integer> source5 = Lists.newArrayList(1, 2, 3, 4, 5);
         List<Integer> source6 = Lists.newArrayList(1, 2, 3, 4, 5,6);
-        ListNode temp1 = ListNode.init(source1);
-        ListNode temp2 = ListNode.init(source2);
-        ListNode temp3 = ListNode.init(source3);
-        ListNode temp4 = ListNode.init(source4);
-        ListNode temp5 = ListNode.init(source5);
-        ListNode temp6 = ListNode.init(source6);
+        ListNode temp1 = new ListNode(source1);
+        ListNode temp2 = new ListNode(source2);
+        ListNode temp3 = new ListNode(source3);
+        ListNode temp4 = new ListNode(source4);
+        ListNode temp5 = new ListNode(source5);
+        ListNode temp6 = new ListNode(source6);
 
 //        ListNode listNode1 = oddEvenList(temp1);
 //        ListNode.printListNodes(listNode1);

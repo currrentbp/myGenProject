@@ -20,8 +20,8 @@ public class T00021 {
 
     @Test
     public void t1() {
-        ListNode listNode = ListNode.init(Lists.newArrayList(1,2,4));
-        ListNode listNode2 = ListNode.init(Lists.newArrayList(1,3,4));
+        ListNode listNode = new ListNode(Lists.newArrayList(1,2,4));
+        ListNode listNode2 = new ListNode(Lists.newArrayList(1,3,4));
         ListNode.printListNodes(listNode);
         ListNode.printListNodes(listNode2);
         ListNode listNode1 = mergeTwoLists(listNode, listNode2);

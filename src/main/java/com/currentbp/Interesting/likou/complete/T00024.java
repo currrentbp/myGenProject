@@ -23,7 +23,7 @@ public class T00024 {
     //https://leetcode-cn.com/problems/swap-nodes-in-pairs/
     @Test
     public void t1(){
-        ListNode listNodes = ListNode.init(Lists.newArrayList(1));
+        ListNode listNodes = new ListNode(Lists.newArrayList(1));
         ListNode.printListNodes(swapPairs(listNodes));
     }
     public ListNode swapPairs(ListNode head) {

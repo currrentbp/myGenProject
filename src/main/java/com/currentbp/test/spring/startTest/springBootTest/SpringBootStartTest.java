@@ -6,6 +6,8 @@ import org.springframework.boot.autoconfigure.EnableAutoConfiguration;
 import org.springframework.boot.autoconfigure.SpringBootApplication;
 import org.springframework.context.ApplicationContext;
 
+import java.util.HashMap;
+
 /**
  * @author baopan
  * @createTime 20210625
@@ -19,5 +21,7 @@ public class SpringBootStartTest {
 
         System.out.println(EnableAutoConfiguration.class.getName());
 
+        HashMap<String, String> stringStringHashMap = new HashMap<>();
+        stringStringHashMap.put("1","2222");
     }
 }

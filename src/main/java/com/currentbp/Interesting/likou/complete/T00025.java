@@ -31,15 +31,15 @@ k 是一个正整数，它的值小于或等于链表的长度。如果节点总
 
     @Test
     public void t1() {
-        ListNode listNode1 = ListNode.init(Lists.newArrayList(1, 2, 3, 4, 5));
+        ListNode listNode1 = new ListNode(Lists.newArrayList(1, 2, 3, 4, 5));
         ListNode.printListNodes(reverseKGroup(listNode1,1));
-        ListNode listNode2 = ListNode.init(Lists.newArrayList(1, 2, 3, 4, 5));
+        ListNode listNode2 = new ListNode(Lists.newArrayList(1, 2, 3, 4, 5));
         ListNode.printListNodes(reverseKGroup(listNode2, 2));
-        ListNode listNode3 = ListNode.init(Lists.newArrayList(1, 2, 3, 4, 5));
+        ListNode listNode3 = new ListNode(Lists.newArrayList(1, 2, 3, 4, 5));
         ListNode.printListNodes(reverseKGroup(listNode3, 3));
-        ListNode listNode4 = ListNode.init(Lists.newArrayList(1, 2, 3, 4, 5));
+        ListNode listNode4 = new ListNode(Lists.newArrayList(1, 2, 3, 4, 5));
         ListNode.printListNodes(reverseKGroup(listNode4, 4));
-        ListNode listNode5 = ListNode.init(Lists.newArrayList(1, 2));
+        ListNode listNode5 = new ListNode(Lists.newArrayList(1, 2));
         ListNode.printListNodes(reverseKGroup(listNode5, 2));
     }
 

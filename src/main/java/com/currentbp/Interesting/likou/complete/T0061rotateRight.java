@@ -30,7 +30,7 @@ public class T0061rotateRight {
 
     @Test
     public void t1() {
-        StringUtil.printObject(rotateRight(ListNode.init(Lists.newArrayList(1, 2, 3, 4, 5)), 2));
+        StringUtil.printObject(rotateRight(new ListNode(Lists.newArrayList(1, 2, 3, 4, 5)), 2));
     }
 
     public ListNode rotateRight(ListNode head, int k) {

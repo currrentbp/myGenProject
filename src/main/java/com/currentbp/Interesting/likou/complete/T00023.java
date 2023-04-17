@@ -29,9 +29,9 @@ public class T00023 {
     //https://leetcode-cn.com/problems/merge-k-sorted-lists/
     @Test
     public void t1() {
-        ListNode listNode1 = ListNode.init(Lists.newArrayList(1, 4, 5));
-        ListNode listNode2 = ListNode.init(Lists.newArrayList(1, 3, 4));
-        ListNode listNode3 = ListNode.init(Lists.newArrayList(2, 6));
+        ListNode listNode1 = new ListNode(Lists.newArrayList(1, 4, 5));
+        ListNode listNode2 = new ListNode(Lists.newArrayList(1, 3, 4));
+        ListNode listNode3 = new ListNode(Lists.newArrayList(2, 6));
         List<ListNode> listNodes = Lists.newArrayList(listNode1, listNode2, listNode3);
         ListNode[] listNodes1 = ListUtil.list2Array(listNodes);
         ListNode listNode = mergeKLists(listNodes1);
