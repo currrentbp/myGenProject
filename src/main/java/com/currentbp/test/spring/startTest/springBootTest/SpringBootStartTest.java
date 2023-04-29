@@ -16,12 +16,12 @@ import java.util.HashMap;
 public class SpringBootStartTest {
     public static void main(String[] args) {
         ApplicationContext context = SpringApplication.run(SpringBootStartTest.class, args);
-        SpringPersonV1 bean = context.getBean(SpringPersonV1.class);
-        System.out.println(bean);
-
-        System.out.println(EnableAutoConfiguration.class.getName());
-
-        HashMap<String, String> stringStringHashMap = new HashMap<>();
-        stringStringHashMap.put("1","2222");
+//        SpringPersonV1 bean = context.getBean(SpringPersonV1.class);
+//        System.out.println(bean);
+//
+//        System.out.println(EnableAutoConfiguration.class.getName());
+//
+//        HashMap<String, String> stringStringHashMap = new HashMap<>();
+//        stringStringHashMap.put("1","2222");
     }
 }

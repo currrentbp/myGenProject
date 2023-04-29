@@ -6,10 +6,16 @@ import java.util.List;
 public class Node {
     public int val;
     public Node next;
+    public Node prev;
     public Node left;
     public Node right;
     public Node random;
+    public Node down;
+    public Node child;
     public List<Node> neighbors;
+
+    public Node() {
+    }
 
     public Node(int val) {
         this.val = val;
@@ -49,6 +55,71 @@ public class Node {
         }
 
         return lists.get(0);
+    }
+
+    public static Node createNode4Child(Integer[] sources) {
+        if (sources == null || sources.length == 0) {
+            return null;
+        }
+        /*
+        [1,2,3,4,5,6,null,null,null,7,8,9,10,null,null,11,12]
+        1-->2-->3-->4-->5-->6
+                7-->8-->9-->10
+                    11->12
+
+        1,null,2,null,3,null
+        1-->end
+        2-->end
+        3-->end
+         */
+
+        Node node = new Node(0), head = node;
+        //顶层
+        int index = 0;
+        for (; index < sources.length; index++) {
+            if (sources[index] == null) {
+                break;
+            }
+            head.next = new Node(sources[index]);
+            head.next.prev = head;
+            head = head.next;
+        }
+
+        doChild(node.next, sources, index);
+
+        node.next.prev = null;
+        return node.next;
+    }
+
+    private static void doChild(Node node, Integer[] sources, int index) {
+        if (index >= sources.length) {
+            return;
+        }
+        Node childHead = new Node(0), head = childHead;
+        Node parent = node;
+
+        for (index = index + 1; index < sources.length; index++) {
+            if (sources[index] == null) {
+                parent = parent.next;
+            } else {
+                break;
+            }
+        }
+
+        for (; index < sources.length; index++) {
+            if (sources[index] != null) {
+                head.next = new Node(sources[index]);
+                head.next.prev = head;
+                head = head.next;
+            } else {
+                break;
+            }
+        }
+
+        parent.child = childHead.next;
+        childHead.next.prev = null;
+
+        doChild(parent.child, sources, index);
     }
 
     @Override

@@ -12,7 +12,7 @@ import java.util.function.IntConsumer;
  * @author baopan
  * @createTime 2020/6/22 14:29
  */
-public class T01116 {
+public class T1116 {
 
     @Test
     public void t1() throws InterruptedException {

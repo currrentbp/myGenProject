@@ -7,7 +7,7 @@ import java.util.concurrent.locks.LockSupport;
  * @author baopan
  * @createTime 2020/6/22 10:28
  */
-public class T01115 {
+public class T1115 {
 
 
     public static void main(String[] args) throws InterruptedException {
