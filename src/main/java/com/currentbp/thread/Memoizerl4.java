@@ -31,7 +31,7 @@ public class Memoizerl4<A,V> implements Computable<A,V>{
 
                 FutureTask<V> ft = new FutureTask<V>(eval);
                 //此处注释，原因因为编译不过去，，，
-//                f = cache.putIfAbsent(arg,ft);
+                f = cache.putIfAbsent(arg,ft);
 
                 if(null == f){
                     f = ft;
@@ -43,7 +43,7 @@ public class Memoizerl4<A,V> implements Computable<A,V>{
                 return f.get();
             }catch (CancellationException e1){
                 //此处注释，原因因为编译不过去，，，
-//                cache.remove(arg,f);
+                cache.remove(arg,f);
             } catch (Exception e) {
                 throw new RuntimeException(e.getCause());
             }

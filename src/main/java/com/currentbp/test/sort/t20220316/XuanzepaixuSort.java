@@ -3,6 +3,7 @@ package com.currentbp.test.sort.t20220316;
 import com.currentbp.util.all.StringUtil;
 import org.junit.Test;
 
+import java.util.*;
 import java.util.concurrent.atomic.AtomicInteger;
 
 public class XuanzepaixuSort {
@@ -17,6 +18,8 @@ public class XuanzepaixuSort {
         AtomicInteger atomicInteger = new AtomicInteger(1);
         atomicInteger.compareAndSet(1,2);
         System.out.println(atomicInteger.get());
+        Map<String,String> map = new HashMap<>();
+        map.put("1","1");
     }
 
     private void myXuanzepaixu(int[] ints) {

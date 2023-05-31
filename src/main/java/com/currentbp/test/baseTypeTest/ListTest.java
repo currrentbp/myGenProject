@@ -226,9 +226,14 @@ public class ListTest {
     @Test
     public void listRemove() {
         List<Integer> integers = Lists.newArrayList(1, 2, 3, 0);
-        integers.remove(Integer.valueOf(0));
-        integers.remove(0);
-        System.out.println(integers.toString());
+//        integers.remove(Integer.valueOf(0));
+//        integers.remove(0);
+//        System.out.println(integers.toString());
+
+        Iterator<Integer> iterator = integers.iterator();
+        while(iterator.hasNext()){
+            iterator.remove();
+        }
     }
 
     @Test

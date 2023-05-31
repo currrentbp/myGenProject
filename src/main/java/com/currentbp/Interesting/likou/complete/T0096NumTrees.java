@@ -20,6 +20,11 @@ ri = rl * rr
 以i为根节点，左树和右树的乘积就是以i为根节点的所有情况
 rsum = r0+...+ri+rn
 所有情况就是遍历所有数字为根节点的所有情况
+解题思路2：
+1、可以先确定根节点，然后在根节点确定的情况下的数量 = 左边情况的数量 * 右边各种情况的数量 。即： allCount = sumI( leftCount * rightCount ),
+        I是从1到N的,left+right=length-1
+2、其中leftCount的计算过程中，可以确定的是从low->high的队列，也就是说它的排列情况和数字的多少有关，和数字本身无关
+3、可以定义一个数组a[i]表示i个数字时有多少种
      */
     @Test
     public void t1() {
@@ -27,6 +32,31 @@ rsum = r0+...+ri+rn
     }
 
     public int numTrees(int n) {
+        if (n <= 2) {
+            return n;
+        }
+        int[] a = new int[n + 1];
+        a[0] = 1;
+        a[1] = 1;
+        a[2] = 2;
+        for (int i = 3; i <= n; i++) {
+            int sum = 0;
+            for (int j = 0; j <= i; j++) {
+                if (i - j - 1 < 0) {
+                    continue;
+                }
+                sum = sum + a[j] * a[i - j - 1];
+            }
+            a[i] = sum;
+        }
+
+        return a[n];
+    }
+
+    /*
+    我的超时了
+     */
+    public int numTrees1(int n) {
         if (n <= 1) {
             return n;
         }
