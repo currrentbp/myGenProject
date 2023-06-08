@@ -4,4 +4,5 @@ import com.currentbp.common.model.Student;
 
 public interface OnlyInterface {
     Student getOneStudent(Integer id);
+    int createStudent(Student student);
 }

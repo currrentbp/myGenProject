@@ -15,6 +15,21 @@ import java.util.List;
  */
 public class FatherReflectionTest {
 
+
+    @Test
+    public void testFatherHasTwoFather(){
+        Class<? super SimpleReflectionTwo> superclass = SimpleReflectionTwo.class.getSuperclass();
+        StringUtil.printObject(superclass);
+        Class<? super SimpleReflectionTwo> superclass2 = SimpleReflectionOne.class.getSuperclass();
+        StringUtil.printObject(superclass2);
+        //打印结果：表明一个类只能有一个父类，如果一个类A已经有一个父类了，那类A的父类就不是Object
+        /*
+        "com.currentbp.test.reflection.SimpleReflectionOne"
+        "java.lang.Object"
+         */
+
+    }
+
     @Test
     public void fatherClassReflection() throws  Exception{
         Human human = new Persion();

@@ -19,9 +19,18 @@ public class OnlyInterfaceProxy implements InvocationHandler {
 
     @Override
     public Object invoke(Object proxy, Method method, Object[] args) throws Throwable {
-        int arg = (Integer)args[0];
-        Student result = new Student();
-        result.setId(arg);
+
+        if(method.getName().equals("getOneStudent")){
+            int arg = (Integer)args[0];
+            Student result = new Student();
+            result.setId(arg);
+            return result;
+        }
+        if(method.getName().equals("createStudent")){
+            Student result = (Student)args[0];
+            result.setId(2);
+            return result.getId();
+        }
 
         if (Object.class.equals(method.getDeclaringClass())) {
             return method.invoke(this, args);
@@ -29,6 +38,6 @@ public class OnlyInterfaceProxy implements InvocationHandler {
         StringUtil.printObject(args);
         System.out.println("调用前，参数：{}" + args);
 
-        return result;
+        return 1;
     }
 }

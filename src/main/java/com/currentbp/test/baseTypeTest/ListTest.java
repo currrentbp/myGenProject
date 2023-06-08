@@ -25,6 +25,34 @@ import java.util.stream.Collectors;
 public class ListTest {
     private static Logger logger = LoggerFactory.getLogger(ListTest.class);
 
+    @Test
+    public void iterator() {
+        List<Student> students = Lists.newArrayList(new Student(1, "1"), new Student(2, "2"));
+        Iterator<Student> iterator = students.iterator();
+
+        while (iterator.hasNext()) {
+            StringUtil.printObject(iterator.next());
+        }
+
+        List<Integer> lists = new ArrayList<>();
+        for (int i = 1; i <= 100; i++) {
+            lists.add(i);
+        }
+
+        int index = 1;
+        while (lists.size() > 1) {
+            Iterator<Integer> iter = lists.iterator();
+            while (iter.hasNext()) {
+                Integer next = iter.next();
+                if (index % 2 == 1) {
+                    iter.remove();
+                    System.out.println("remove :" + next);
+                }
+                index++;
+            }
+        }
+        StringUtil.printObject(lists);
+    }
 
 
     @Test
@@ -231,7 +259,7 @@ public class ListTest {
 //        System.out.println(integers.toString());
 
         Iterator<Integer> iterator = integers.iterator();
-        while(iterator.hasNext()){
+        while (iterator.hasNext()) {
             iterator.remove();
         }
     }
