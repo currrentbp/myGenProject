@@ -7,6 +7,7 @@ import org.junit.Test;
 
 import java.util.ArrayList;
 import java.util.List;
+import java.util.Random;
 
 /**
  * 关于int的测试
@@ -17,22 +18,59 @@ import java.util.List;
 public class IntTest {
 
     @Test
-    public void minNum(){
-        System.out.println("result:"+(-1-Integer.MAX_VALUE));
+    public void modAndYuTest() {
+        //测试%和&的速度问题
+        //日志打印：    time1:4 time2:2           time1:82 time2:63
+        //结论：使用%运算比&运算的速度要慢
+        int length = 220000000;
+        int[] nums = new int[length];
+        int[] nums1 = new int[length];
+        int[] nums2 = new int[length];
+        for (int i = 0; i < length; i++) {
+            nums[i] = new Random().nextInt(1000000000);
+        }
+
+        long start1 = System.currentTimeMillis();
+        for (int i = 0; i < nums.length; i++) {
+            int x = nums[i] % 4;
+            nums1[i] = x;
+        }
+        long end1 = System.currentTimeMillis();
+        long start2 = System.currentTimeMillis();
+        for (int i = 0; i < nums.length; i++) {
+            int x = nums[i] & (4 - 1);
+            nums2[i] = x;
+        }
+        long end2 = System.currentTimeMillis();
+        System.out.println("time1:" + (end1 - start1) + " time2:" + (end2 - start2));
+        long start3 = System.currentTimeMillis();
+        for (int i = 0; i < nums1.length; i++) {
+            if (nums1[i] != nums2[i]) {
+                System.out.println("not equals: " + nums1[i] + " " + nums2[i]);
+            }
+        }
+        long end3 = System.currentTimeMillis();
+        System.out.println("time3:" + (end3 - start3));
     }
 
     @Test
-    public void t1222(){
+    public void minNum() {
+        System.out.println("result:" + (-1 - Integer.MAX_VALUE));
+    }
+
+    @Test
+    public void t1222() {
         System.out.println(1 << 10);
     }
+
     @Test
-    public void t11(){
+    public void t11() {
         List<Student> students = new ArrayList<>();
-        students.add(new Student(1,"1"));
-        students.add(new Student(2,"2"));
-        students.add(new Student(3,"3"));
-        students.add(new Student(4,"4"));
-        students.add(new Student(5,"5"));
+        students.add(new Student(1, "1"));
+        students.add(new Student(2, "2"));
+        students.add(new Student(3, "3"));
+        students.add(new Student(4, "4"));
+        students.add(new Student(5, "5"));
 
         StringUtil.printObject(students);
         List<Integer> ids = new ArrayList<>();
@@ -46,24 +84,24 @@ public class IntTest {
     }
 
     @Test
-    public void IntegerEqString(){
+    public void IntegerEqString() {
         Integer integer = 2;
-        String str  = "2";
+        String str = "2";
         System.out.println(integer.toString().equals(str));
-        System.out.println(1<<2);
+        System.out.println(1 << 2);
     }
 
     @Test
-    public void t3(){
-        int i=5;
+    public void t3() {
+        int i = 5;
         int a = i++;
         int b = ++i;
-        i= (a) + (b);
-        System.out.println(i+" a:"+a+" b:"+b);
+        i = (a) + (b);
+        System.out.println(i + " a:" + a + " b:" + b);
     }
 
     @Test
-    public void t1(){
+    public void t1() {
         String s1 = " 1, 2";
         String[] split = s1.split(",");
         int i = Integer.parseInt(split[0]);
@@ -71,7 +109,7 @@ public class IntTest {
     }
 
     @Test
-    public void cacheTest(){
+    public void cacheTest() {
         int i = 128;
         Integer i2 = 128;
         Integer i3 = new Integer(128);
@@ -93,10 +131,10 @@ public class IntTest {
     }
 
     @Test
-    public void getTime(){
+    public void getTime() {
         System.out.println(System.currentTimeMillis());
-        System.out.println((System.currentTimeMillis()-(1000*(2019)*365*24*60*60)));
-        System.out.println(System.currentTimeMillis()/1000/60);
+        System.out.println((System.currentTimeMillis() - (1000 * (2019) * 365 * 24 * 60 * 60)));
+        System.out.println(System.currentTimeMillis() / 1000 / 60);
     }
 
     @Test
@@ -111,7 +149,7 @@ public class IntTest {
 
 
     @Test
-    public void IntegerEquals(){
+    public void IntegerEquals() {
         Integer i1 = 1;
         Integer i2 = 1;
         Integer i3 = new Integer(1);
@@ -123,7 +161,7 @@ public class IntTest {
 
 
     @Test
-    public void IntegerEquals2(){
+    public void IntegerEquals2() {
         Integer i1 = 1;
         Integer i2 = 1;
         Integer i3 = new Integer(1);

@@ -17,4 +17,12 @@ public class CreateStudentEvent extends ApplicationEvent {
         super(source);
         this.student = student;
     }
+
+    public Student getStudent() {
+        return student;
+    }
+
+    public void setStudent(Student student) {
+        this.student = student;
+    }
 }

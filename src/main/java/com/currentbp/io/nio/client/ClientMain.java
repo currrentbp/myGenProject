@@ -10,14 +10,16 @@ import io.netty.channel.socket.SocketChannel;
 import io.netty.channel.socket.nio.NioSocketChannel;
 import io.netty.handler.codec.string.StringDecoder;
 import io.netty.handler.codec.string.StringEncoder;
+import io.netty.handler.logging.LogLevel;
+import io.netty.handler.logging.LoggingHandler;
 
 /**
  * @author baopan
  * @createTime 6/8/2023 7:52 AM
  */
 public class ClientMain {
-    public static String host = "";
-    public static int port = 1000;
+    public static String host = "127.0.0.1";
+    public static int port = 8088;
 
     public static void main(String[] args) {
         EventLoopGroup worker = new NioEventLoopGroup();
@@ -30,12 +32,13 @@ public class ClientMain {
             bootstrap.channel(NioSocketChannel.class);
             //参数：Socket的标准参数（key，value）:保持呼吸
             bootstrap.option(ChannelOption.SO_KEEPALIVE, true);
-
+            bootstrap.handler(new LoggingHandler(LogLevel.DEBUG));
             bootstrap.handler(new ChannelInitializer<SocketChannel>() {
                 @Override
                 public void initChannel(SocketChannel ch) throws Exception {
                     ch.pipeline().addLast("decoder", new StringDecoder());
                     ch.pipeline().addLast("encoder", new StringEncoder());
+                    ch.pipeline().addLast(new ClientMsgHandler());
                 }
             });
 
