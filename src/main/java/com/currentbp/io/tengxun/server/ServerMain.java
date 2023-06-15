@@ -1,17 +1,13 @@
-package com.currentbp.io.nio.server;
+package com.currentbp.io.tengxun.server;
 
-import com.currentbp.io.nio.client.ClientMsgHandler;
+
+import com.currentbp.io.tengxun.bean.*;
 import io.netty.bootstrap.ServerBootstrap;
 import io.netty.channel.ChannelFuture;
 import io.netty.channel.ChannelInitializer;
-import io.netty.channel.ChannelOption;
-import io.netty.channel.EventLoopGroup;
 import io.netty.channel.nio.NioEventLoopGroup;
 import io.netty.channel.socket.SocketChannel;
-import io.netty.channel.socket.nio.NioChannelOption;
 import io.netty.channel.socket.nio.NioServerSocketChannel;
-import io.netty.handler.codec.string.StringDecoder;
-import io.netty.handler.codec.string.StringEncoder;
 import io.netty.handler.logging.LogLevel;
 import io.netty.handler.logging.LoggingHandler;
 
@@ -36,9 +32,10 @@ public class ServerMain {
                     .handler(new LoggingHandler(LogLevel.DEBUG))
                     .childHandler(new ChannelInitializer<SocketChannel>() {  // 子处理器，用于处理workerGroup
                         protected void initChannel(SocketChannel socketChannel) throws Exception {
-                            socketChannel.pipeline().addLast("decoder", new StringDecoder());
-                            socketChannel.pipeline().addLast("encoder", new StringEncoder());
+                            socketChannel.pipeline().addLast("decoder", new CustomDecoder());
+                            socketChannel.pipeline().addLast("encoder", new CustomEncoder());
                             socketChannel.pipeline().addLast(new ServerMsgHandler());
+//                            socketChannel.pipeline().addLast( new CustomEncoder(),new CustomDecoder(),new ServerMsgHandler());
                         }
                     });
 

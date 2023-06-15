@@ -1,6 +1,7 @@
-package com.currentbp.io.nio.client;
+package com.currentbp.io.tengxun.client;
 
-import io.netty.buffer.ByteBuf;
+import com.alibaba.fastjson2.JSON;
+import com.currentbp.io.tengxun.bean.*;
 import io.netty.channel.ChannelHandlerContext;
 import io.netty.channel.ChannelInboundHandlerAdapter;
 
@@ -38,12 +39,13 @@ public class ClientMsgHandler extends ChannelInboundHandlerAdapter {
     public void channelActive(ChannelHandlerContext ctx) throws Exception {
         System.out.println("===>ClientMsgHandler.channelActive======================");
         //todo 出现粘包问题了
-        for (int i = 0; i < 100; i++) {
-            String msg = "====sendValue==>" + atomicInteger.getAndIncrement();
-            ByteBuf encoded = ctx.alloc().buffer(4 * msg.length());
-            encoded.writeBytes(msg.getBytes());
-            ctx.write(encoded);
-            ctx.flush();
+        for (int i = 0; i < 1; i++) {
+            MessageBody messageBody = new MessageBody();
+            messageBody.setId("" + atomicInteger.getAndIncrement());
+            messageBody.setBody("");
+            String temp = JSON.toJSONString(messageBody);
+            CustomMessage customMessage = new CustomMessage((short) 1, temp.getBytes());
+            ctx.writeAndFlush(customMessage);
         }
     }
 

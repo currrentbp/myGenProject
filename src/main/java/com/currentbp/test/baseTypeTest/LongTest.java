@@ -8,6 +8,7 @@ import java.lang.reflect.Proxy;
 import java.util.ArrayList;
 import java.util.Date;
 import java.util.List;
+import java.util.concurrent.atomic.LongAdder;
 import java.util.stream.Collectors;
 
 /**
@@ -17,6 +18,13 @@ import java.util.stream.Collectors;
  *
  */
 public class LongTest {
+
+	@Test
+	public void testLongAdd(){
+		LongAdder longAdder = new LongAdder();
+		longAdder.increment();
+		System.out.println(longAdder.longValue());
+	}
 	static class S4{
 
 	}

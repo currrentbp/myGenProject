@@ -1,5 +1,7 @@
-package com.currentbp.io.nio.client;
+package com.currentbp.io.nio.netty.client;
 
+import com.currentbp.io.nio.netty.common.CustomDecoder;
+import com.currentbp.io.nio.netty.common.CustomEncoder;
 import io.netty.bootstrap.Bootstrap;
 import io.netty.channel.ChannelFuture;
 import io.netty.channel.ChannelInitializer;
@@ -8,8 +10,6 @@ import io.netty.channel.EventLoopGroup;
 import io.netty.channel.nio.NioEventLoopGroup;
 import io.netty.channel.socket.SocketChannel;
 import io.netty.channel.socket.nio.NioSocketChannel;
-import io.netty.handler.codec.string.StringDecoder;
-import io.netty.handler.codec.string.StringEncoder;
 import io.netty.handler.logging.LogLevel;
 import io.netty.handler.logging.LoggingHandler;
 
@@ -36,9 +36,10 @@ public class ClientMain {
             bootstrap.handler(new ChannelInitializer<SocketChannel>() {
                 @Override
                 public void initChannel(SocketChannel ch) throws Exception {
-                    ch.pipeline().addLast("decoder", new StringDecoder());
-                    ch.pipeline().addLast("encoder", new StringEncoder());
+                    ch.pipeline().addLast("decoder", new CustomDecoder());
+                    ch.pipeline().addLast("encoder", new CustomEncoder());
                     ch.pipeline().addLast(new ClientMsgHandler());
+//                    ch.pipeline().addLast( new CustomEncoder(),new CustomDecoder(),new ClientMsgHandler());
                 }
             });
 

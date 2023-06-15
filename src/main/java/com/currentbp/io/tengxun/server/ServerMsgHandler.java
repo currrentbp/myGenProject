@@ -1,6 +1,6 @@
-package com.currentbp.io.nio.server;
+package com.currentbp.io.tengxun.server;
 
-import io.netty.buffer.ByteBuf;
+import com.currentbp.io.tengxun.bean.*;
 import io.netty.channel.Channel;
 import io.netty.channel.ChannelHandlerContext;
 import io.netty.channel.ChannelInboundHandlerAdapter;
@@ -65,16 +65,15 @@ public class ServerMsgHandler extends ChannelInboundHandlerAdapter {
     @Override
     public void channelRead(ChannelHandlerContext ctx, Object msg) throws Exception {
         System.out.println("========>ServerMsgHandler.channelRead,msg:"+msg);
-        String result = (String) msg;
+        CustomMessage result = (CustomMessage) msg;
         // 接收并打印客户端的信息
         System.out.println("===Client said:" + result);
 
         // 向客户端发送消息
         String response = "";
         // 在当前场景下，发送的数据必须转换成ByteBuf数组
-        ByteBuf encoded = ctx.alloc().buffer(4 * response.length());
-        encoded.writeBytes(response.getBytes());
-        ctx.write(encoded);
+
+        ctx.write(msg);
         ctx.flush();
 //        ctx.close();
     }
