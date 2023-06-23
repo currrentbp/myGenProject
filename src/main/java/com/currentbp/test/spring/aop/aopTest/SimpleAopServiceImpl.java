@@ -8,9 +8,10 @@ import org.springframework.stereotype.Service;
  * @createTime 2023-06-14 16:29:29
  */
 @Service
-public class SimpleAopServiceImpl implements SimpleAopService{
+public class SimpleAopServiceImpl implements SimpleAopService {
     @Override
     public Student getById(Integer id) {
-        return null;
+        Student student = new Student(id, "id" + id);
+        return student;
     }
 }

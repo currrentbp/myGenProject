@@ -22,10 +22,15 @@ public class MySimpleAopAspect {
 
     @Around("pointCut()")
     public Object around(ProceedingJoinPoint pjp) {
-        System.out.println("====>aspect around one start ....");
         try {
+            System.out.println("====>aspect around  start ....");
+            Object[] args = pjp.getArgs();
+            StringUtil.printObject(args);
+            System.out.println("====>aspect around function start ....");
             Object proceed = pjp.proceed();
-            System.out.println("====>aspect around one end !!!");
+            System.out.println("====>aspect around function end !!!");
+            StringUtil.printObject(proceed);
+            System.out.println("====>aspect around  end !!!");
             return proceed;
         } catch (Throwable e) {
             System.out.println("====>aspect around one error !!!");
@@ -34,20 +39,27 @@ public class MySimpleAopAspect {
     }
 
     @Before("pointCut()")
-    public void before(JoinPoint joinPoint){
-        Object[] objs = joinPoint.getArgs();
+    public void before(JoinPoint joinPoint) {
         System.out.println("=======before====>");
+        Object[] objs = joinPoint.getArgs();
         StringUtil.printObject(objs);
         System.out.println("<===args====before====>");
     }
 
     @After("pointCut()")
-    public void after(JoinPoint joinPoint){
+    public void after(JoinPoint joinPoint) {
+        System.out.println("=======after====>");
+        Object[] args = joinPoint.getArgs();
+        StringUtil.printObject(args);
         System.out.println("=======after====>");
     }
 
-    @AfterReturning("pointCut()")
-    public Object afterReturning(JoinPoint joinPoint){
+    @AfterReturning(value = "pointCut()", returning = "obj")
+    public Object afterReturning(JoinPoint joinPoint, Object obj) {
+        System.out.println("=======afterReturning====>");
+        Object[] args = joinPoint.getArgs();
+        StringUtil.printObject(args);
+        StringUtil.printObject(obj);
         System.out.println("=======afterReturning====>");
         return joinPoint;
     }
