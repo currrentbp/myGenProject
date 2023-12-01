@@ -40,7 +40,7 @@ public class MergeSort20230714 {
     private void doMerge(int[] sources, int oneLeft, int oneRight, int twoLeft, int twoRight) {
         int oneIndex = oneLeft, twoIndex = twoLeft, newIndex = 0;
         int[] newSources = new int[twoRight - oneLeft];
-        while (newIndex < newSources.length) {
+        while (oneIndex<=oneRight || twoIndex<=twoRight) {
             if (oneIndex > oneRight) {
                 newSources[newIndex++] = sources[twoIndex++];
             }

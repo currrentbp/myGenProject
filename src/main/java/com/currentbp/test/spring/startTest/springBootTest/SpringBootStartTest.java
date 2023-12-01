@@ -11,7 +11,7 @@ import org.springframework.context.ApplicationContext;
  * @author baopan
  * @createTime 20210625
  */
-@SpringBootApplication
+@SpringBootApplication(scanBasePackages = {"com.currentbp.test.spring.startTest"})
 public class SpringBootStartTest {
     public static void main(String[] args) {
         ApplicationContext context = SpringApplication.run(SpringBootStartTest.class, args);
