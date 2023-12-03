@@ -146,6 +146,11 @@ todo not work
 
 代码在compositePattern文件夹下，
 
+
+##16、责任链模式 chainOfResponsibilityPatern
+
+
+
 ```
 
 
