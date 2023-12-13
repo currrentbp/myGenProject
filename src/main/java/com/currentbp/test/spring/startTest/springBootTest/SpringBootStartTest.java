@@ -23,6 +23,8 @@ public class SpringBootStartTest {
 //
 //        System.out.println(EnableAutoConfiguration.class.getName());
 //          1111
+        //333
+        //444
 //        HashMap<String, String> stringStringHashMap = new HashMap<>();
 //        stringStringHashMap.put("1","2222");
     }
