@@ -174,6 +174,24 @@ public class ListUtil<V> {
         return result;
     }
 
+    public static List<List<Integer>> arrays2Lists(int[][] sources){
+        if(sources == null){
+            return null;
+        }
+        if(sources.length==0){
+            return new ArrayList<>();
+        }
+        List<List<Integer>> result = new ArrayList<>();
+        for (int[] levels : sources) {
+            List<Integer> temps = new ArrayList<>();
+            for (int i = 0; i < levels.length; i++) {
+                temps.add(levels[i]);
+            }
+            result.add(temps);
+        }
+        return result;
+    }
+
     /**
      * 将list转换成array
      */
@@ -197,8 +215,8 @@ public class ListUtil<V> {
         return result;
     }
 
-    public  static <V> List<V> newArrayList(V... values){
-        if(null == values || 0 == values.length){
+    public static <V> List<V> newArrayList(V... values) {
+        if (null == values || 0 == values.length) {
             return new ArrayList<>();
         }
         List<V> result = new ArrayList<>(values.length);
@@ -260,14 +278,16 @@ public class ListUtil<V> {
         }
         System.out.println("]");
     }
+
     public static void printList(int[][] array) {
         for (int i = 0; i < array.length; i++) {
             for (int j = 0; j < array[0].length; j++) {
-                System.out.print(""+array[i][j]+" ");
+                System.out.print("" + array[i][j] + " ");
             }
             System.out.println();
         }
     }
+
     public static void printList(int[] array) {
         System.out.print("[");
         if (null != array) {
@@ -299,6 +319,52 @@ public class ListUtil<V> {
             System.out.print(o + ", ");
         } else {
             System.out.print(o);
+        }
+    }
+
+    public static <V> void printTri(List<List<V>> tris) {
+        if (tris == null || tris.size() == 0) {
+            return;
+        }
+        int level = tris.size() - 1;
+        int maxLength = tris.get(level).size();
+        for (int currentLevel = 0; currentLevel <= level; currentLevel++) {
+            for (int whiteIndex = 0; whiteIndex < (maxLength / 2) - currentLevel + 1; whiteIndex++) {
+                System.out.print(String.format("%3s", " "));
+            }
+            List<V> currentLevels = tris.get(currentLevel);
+            for (int index = 0; index < currentLevels.size(); index++) {
+                System.out.print(String.format("%3s", currentLevels.get(index)));
+            }
+            System.out.println();
+        }
+    }
+
+    public static <V> void printTri1(List<List<V>> tris) {
+        if (tris == null || tris.size() == 0) {
+            return;
+        }
+
+        // 获取最大宽度（即杨辉三角最底层元素的数量）
+        int maxWidth = tris.get(tris.size() - 1).size();
+
+        // 遍历每一层
+        for (int level = 0; level < tris.size(); level++) {
+            List<V> currentLevel = tris.get(level);
+
+            // 计算并打印前置空格，以对齐元素
+            int leadingSpaces = maxWidth / 2 - currentLevel.size() / 2;
+            for (int i = 0; i < leadingSpaces; i++) {
+                System.out.print("   ");
+            }
+
+            // 打印当前层的元素
+            for (V value : currentLevel) {
+                System.out.print(String.format("%3s", value.toString()));
+            }
+
+            // 换行
+            System.out.println();
         }
     }
 }
